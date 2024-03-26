@@ -1,4 +1,4 @@
-<img src="img/Logo_PyEvALL_round.png" alt="image" width="150" height="auto" style="border-radius:50%">
+<img src="img/Logo_PyEvALL.png" alt="image" width="150" height="auto" style="border-radius:50%">
 
 
 
