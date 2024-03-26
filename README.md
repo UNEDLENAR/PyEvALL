@@ -1,6 +1,6 @@
-<p align="center">
-    <img src="img/Logo_PyEvALL.png#gh-light-mode-only" height="auto" width="200"/>
-    <img src="img/Logo_PyEvALL_dark.png#gh-dark-mode-only" height="auto" width="200"/>
+<p>
+    <img src="img/Logo_PyEvALL.png#gh-light-mode-only" height="auto" width="300"/>
+    <img src="img/Logo_PyEvALL_dark.png#gh-dark-mode-only" height="auto" width="300"/>
 </p>
 
 
