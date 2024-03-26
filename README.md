@@ -1,5 +1,8 @@
 <img src="img/Logo_PyEvALL.png" alt="image" width="300" height="auto" style="border-radius:50%">
-<a href="url"><img src="img/Logo_PyEvALL.png" height="auto" width="200" style="display: block;    border-radius: 50%;  "></a>
+<a href="url"><img src="img/Logo_PyEvALL.png" height="auto" width="200" style="display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  max-width: 50%;"></a>
 
 
 PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
