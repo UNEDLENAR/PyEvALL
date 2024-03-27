@@ -12,6 +12,8 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
 - [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
    * [Mono-label Classification Format](#mono-label-classification-format)
    * [Multi-label Classification Format](#multi-label-classification-format)
+   * [LeWiDi Classification Format](#LeWiDi-classification-format)
+   * [Ranking Format](#Ranking-format)
 
 # What evaluation contexts does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
@@ -120,3 +122,57 @@ The multi-label classification format is one in which each item can be classifie
 
 
 As seen in the example, the file consists of an array of JSON objects with three elements with the same fields as in the previous case, but with the difference that, in this case, the "value" attribute is composed of an array with the target classes of each item.
+
+## LeWiDi Classification Format
+
+The disagreement classification format allows assigning a probability distribution to each class for every element in the dataset. Instead of selecting a single absolute category for each item, the label distribution by annotator is assigned to each element. In this format, as shown in the example below, PyEvALL uses the same structure, except that in this case, the "value" attribute is represented with a dictionary where each element represents a target class and its value represents the probability of assignment. Note that in the case of monolabel disagreement classification, the sum for each element must be 1, while for multilabel classification, it is not necessary.
+
+```python
+[
+	  {  
+	    "test_case":"1",
+	    "id":"I1",
+	    "value":{
+	            "B": 0.6, 
+		    "C": 0.4 			
+	        } 
+	  },
+	  {  
+	    "test_case":"1",
+	    "id":"I2",
+	    "value":{
+	            "B": 0.5,
+	    	    "C": 0.5           
+	        } 
+	  },  
+	  {  
+	    "test_case":"1",
+	    "id":"I3",
+	    "value":{
+	            "B": 0.9, 
+	            "C": 0.1            
+	        } 
+	  }
+]
+```
+
+## Ranking Format
+
+In the ranking evaluation context, each item is assigned a value indicating its position in the ranking for predictions, and the relevance value for the gold standard. As shown in the example below, the format is exactly the same as in the previous cases, but in this case, the value of the "value" attribute consists of numbers representing, in each case, the item's ranking or relevance.
+
+```python
+[
+	  {  
+	    "test_case":"GOLD1",
+	    "id":"A",
+	    "value":1  
+	  },
+	  {  
+	    "test_case":"GOLD1",
+	    "id":"B",
+	    "value":2
+	  }  
+]
+```
+
+As seen in the example, this shows the predictions of a ranking system indicating that the item with identifier "A" is assigned position 1 in the ranking, while the item with identifier "B" is assigned position 2 in the ranking.
