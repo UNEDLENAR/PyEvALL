@@ -9,9 +9,11 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
 
 - [What evaluation contexts does PyEvALL include?](#what-evaluation-contexts-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
-- [What is the input format in PyEvALL?](#What-is-the-input-format-in-PyEvALL)
+- [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
+   * [Mono-label Classification Format](#mono-label-classification-format)
+   * [Multi-label Classification Format](#multi-label-classification-format)
 
-## What evaluation contexts does PyEvALL include?
+# What evaluation contexts does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 
 - **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
