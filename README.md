@@ -7,9 +7,9 @@
 
 PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
-   * [What evaluation contexts does PyEvALL include?](#what-evaluation-contexts-does-pyevall-include)
+- [What evaluation contexts does PyEvALL include?](#what-evaluation-contexts-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
-
+- [What is the input format in PyEvALL?](#What-is-the-input-format-in-PyEvALL?)
 
 ## What evaluation contexts does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
@@ -30,7 +30,41 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 # Quickstart Guide
 
 
+# What is the input format in PyEvALL?
+The default format for EvALL is JSON due to its great versatility and ease of controlling potential errors according to the format. For this purpose, a schema has been created in which the allowed attributes are defined, as well as their types, declaring for each of them whether they are required or not.
 
+```python
+    FORMAT_JSON_SCHEMA= {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "test_case": {"type": "string"},
+                "id": {"type": "string"},
+                "value": {
+                    "anyOf": [
+                        {"type": "string"},
+                        {"type": "array", "items": {"type": "string"}},
+                        {"type": "integer"},
+                        {
+                            "type": "object",
+                            "patternProperties": {
+                            "^.*$": {"type": "number"},    }
+                        },
+                    ]
+                },              
+            },
+            "required": ["test_case", "id", "value"],
+            "additionalProperties": False
+        },
+    }
+```
 
+Specifically, each attribute represents:
+- **test_case**: in string format, a specific experiment or use case, which could be, for example, different runs of a classification algorithm or different queries in a ranking context.
+- **id**: accepts both string or int format, but it has to be the same for both the predictions and gold standard files. It is the unique identifier of the instance in the dataset.
+- **value**: this field represents the value assigned to each item, and its type will vary depending on the applied evaluation context. For example, for mono-label classification, the element will be composed of a string, while for multi-label classification, the element will be composed of a vector of strings.
+
+This format can be adapted for different evaluation contexts. Below are examples of the format based on the context:
 
 
