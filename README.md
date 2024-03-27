@@ -9,7 +9,7 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
 
 - [What evaluation contexts does PyEvALL include?](#what-evaluation-contexts-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
-- [What is the input format in PyEvALL?](#What-is-the-input-format-in-PyEvALL?)
+- [What is the input format in PyEvALL?](#What-is-the-input-format-in-PyEvALL)
 
 ## What evaluation contexts does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
@@ -67,4 +67,54 @@ Specifically, each attribute represents:
 
 This format can be adapted for different evaluation contexts. Below are examples of the format based on the context:
 
+## Mono-label Classification Format
 
+This format is the typical format for mono-label classification tasks where each item has a single associated class. In this format, the label can be any string of characters. An example for this format is:
+
+```python
+[
+	{  
+            "test_case":"EXIST2023",
+  	    	 "id":"I1",
+            "value":"A"  
+          },
+          {  
+            "test_case":"EXIST2023",
+	    	 "id":"I2",
+            "value":"B"
+          },
+          {  
+            "test_case":"EXIST2023",
+	    	 "id":"I3",
+            "value":"C"
+          }  
+]
+```
+In the example shown, it can be seen that the array consists of three elements belonging to the same test_case, 'EXIST2023', with three different identifiers (I1, I2, and I3), and three different target classes ('A', 'B', and 'C').
+
+## Multi-label Classification Format
+
+The multi-label classification format is one in which each item can be classified with one or several target classes. For this reason, the PyEvALL format for this type is composed of the same elements as in the previous case, with the difference that the "value" attribute in this case is an array of elements. These elements, in turn, must be strings. An example for this format can be found in the following code snippet:
+
+```python
+[
+	  {  
+	    "test_case":"EXIST2023",
+	    "id":"I1",
+	    "value":["A"]  
+	  },
+	  {  
+	    "test_case":"EXIST2023",
+	    "id":"I2",
+	    "value":["A", "B", "C", "D"] 
+	  },
+	  {  
+	    "test_case":"EXIST2023",
+	    "id":"I3",
+	    "value":["C", "E"]
+	  }
+]	
+```
+
+
+As seen in the example, the file consists of an array of JSON objects with three elements with the same fields as in the previous case, but with the difference that, in this case, the "value" attribute is composed of an array with the target classes of each item.
