@@ -9,11 +9,17 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
 
 - [What evaluation contexts and metrics does PyEvALL include?](#what-evaluation-contexts-and-metrics-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
+   * [Intallating PyEvALL](#intallating-pyevall)
+   * [Evaluating a prediction file](#evaluating-a-prediction-file)
+      + [Input format parameter](#input-format-parameter)
+      + [Report format parameter](#report-format-parameter)
+      + [Hierarchy parameter](#hierarchy-parameter)
+   * [Evaluating a list of prediction files](#evaluating-a-list-of-prediction-files)
 - [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
    * [Mono-label Classification Format](#mono-label-classification-format)
    * [Multi-label Classification Format](#multi-label-classification-format)
-   * [LeWiDi Classification Format](#LeWiDi-classification-format)
-   * [Ranking Format](#Ranking-format)
+   * [LeWiDi Classification Format](#lewidi-classification-format)
+   * [Ranking Format](#ranking-format)
 
 # What evaluation contexts and metrics does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
