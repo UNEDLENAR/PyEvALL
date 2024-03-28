@@ -7,7 +7,7 @@
 
 PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
-- [What evaluation contexts does PyEvALL include?](#what-evaluation-contexts-does-pyevall-include)
+- [What evaluation contexts and metrics does PyEvALL include?](#what-evaluation-contexts-and-metrics-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
 - [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
    * [Mono-label Classification Format](#mono-label-classification-format)
@@ -15,7 +15,7 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
    * [LeWiDi Classification Format](#LeWiDi-classification-format)
    * [Ranking Format](#Ranking-format)
 
-# What evaluation contexts does PyEvALL include?
+# What evaluation contexts and metrics does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 
 - **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
@@ -32,6 +32,55 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 
 
 # Quickstart Guide
+
+## Intallating PyEvALL
+
+## Evaluating a prediction file
+The main method to use PyEvALL is the *evaluate()* method included in the class **PyEvALLEvaluation** and whose header is:
+
+```python  
+'''
+predictions: file in one of the supported formats with the system predictions.
+            The default format is JSON.
+
+goldstandard: file in one of the supported formats with the ground truth labels.
+              The default format is JSON.
+
+metrics: list with the metrics to evaluate.
+
+params: dictionary with different parameters that can be configured for each evaluation.
+'''
+def evaluate(self, predictions, goldstandard, lst_metrics, **params):
+
+```
+As seen in the above code, the function requires three mandatory parameters and one optional. The mandatory parameters represent the file with the predictions, the file with the gold standard, and the list of metrics to evaluate, respectively. On the other hand, the optional parameter params allows configuring different aspects of the evaluation.
+
+
+### Input format parameter
+PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to emphasize that both files, both predictions, and the gold standard, must be in the same format for the evaluation to be carried out correctly. To modify the format of the input files, it is necessary to indicate it in the params parameter as follows:
+
+```python
+
+    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
+
+```
+
+By using this option, PyEvALL will understand that both files are in the selected format, in this case, in TSV format. The different possibilities of this parameter are:
+
+```python
+
+    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_JSON
+    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
+    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_CSV
+
+```
+
+Note that JSON format is the default format, so it is not necessary to specify it if not desired.
+
+### Report format parameter
+### Hierarchy parameter
+
+## Evaluating a list of prediction files
 
 
 # What is the input format in PyEvALL?
