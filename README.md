@@ -7,6 +7,10 @@
 
 PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
+<!---
+************************		INDEX		************************
+-->
+
 - [What evaluation contexts and metrics does PyEvALL include?](#what-evaluation-contexts-and-metrics-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
    * [Intallating PyEvALL](#intallating-pyevall)
@@ -20,6 +24,14 @@ PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information system
    * [Multi-label Classification Format](#multi-label-classification-format)
    * [LeWiDi Classification Format](#lewidi-classification-format)
    * [Ranking Format](#ranking-format)
+
+
+
+
+
+<!---
+************************		SECTION 1		************************
+-->
 
 # What evaluation contexts and metrics does PyEvALL include?
 PyEvALL 2.0 allows evaluation in the following evaluation contexts:
@@ -36,6 +48,11 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 
 - **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
 
+
+
+<!---
+************************		SECTION 2		************************
+-->
 
 # Quickstart Guide
 
@@ -85,8 +102,31 @@ Note that JSON format is the default format, so it is not necessary to specify i
 
 ### Report format parameter
 ### Hierarchy parameter
+PyEvALL allows evaluating with certain metrics that can address hierarchical evaluation contexts, where the set of options available for each item is structured in a hierarchical form. To indicate this hierarchy to the system, this parameter has been introduced, representing the hierarchy through a Python dictionary. To indicate PyEvALL the hierarchical structure of the problem, it is necessary to specify it in the params parameter as follows:
+
+```python
+
+    DIPROMATS_TASK3={"True":{
+        "1 appeal to commonality":["1 appeal to commonality - ad populum", "1 appeal to commonality - flag waving"],
+        "2 discrediting the opponent":["2 discrediting the opponent - absurdity appeal","2 discrediting the opponent - demonization", "2 discrediting the opponent - doubt", "2 discrediting the opponent - fear appeals (destructive)", "2 discrediting the opponent - name calling", "2 discrediting the opponent - propaganda slinging", "2 discrediting the opponent - scapegoating", "2 discrediting the opponent - undiplomatic assertiveness/whataboutism"],
+        "3 loaded language":[], 
+        "4 appeal to authority":["4 appeal to authority - appeal to false authority", "4 appeal to authority - bandwagoning"]}, 
+        "False":[]}
+
+    params[PyEvALLUtils.PARAM_HIERARCHY]= DIPROMATS_TASK3
+
+```
+
+As shown in the code snippet, the hierarchy is a Python dictionary where each level is formed by a new dictionary, and the leaves are formed by arrays. Note that if the parameter is not specified, metrics that require it cannot be evaluated, or they will be evaluated in a non-hierarchical manner.
 
 ## Evaluating a list of prediction files
+
+
+
+
+<!---
+************************		SECTION 3		************************
+-->
 
 
 # What is the input format in PyEvALL?
