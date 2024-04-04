@@ -105,6 +105,11 @@ report.print_report()
 
 ```
 
+It is important to notice that all metrics name can be accessed via *MetricFactory* class:
+
+```python
+metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value
+```
 
 ### Input format parameter
 PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to emphasize that both files, both predictions, and the gold standard, must be in the same format for the evaluation to be carried out correctly. To modify the format of the input files, it is necessary to indicate it in the params parameter as follows:
