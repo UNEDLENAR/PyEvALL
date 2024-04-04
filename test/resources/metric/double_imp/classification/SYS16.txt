@@ -1,0 +1,13 @@
+accuracy	1.0
+systemprecision	null
+utility	1.0
+lam	0.0
+macroaverageaccuracy	1.0
+cohenskappa	1.0
+mutualinformation	0.9709505944546686
+precision	1.0
+recall	1.0
+fmeasure	1.0
+reliability	1.0
+sensitivity	1.0
+fmeasurers	1.0

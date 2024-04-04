@@ -1,0 +1,37 @@
+[
+  {  
+    "test_case":"1",
+	"id":"1",
+    "value":"TRUE"  
+  },
+  {  
+    "test_case":"1",
+	"id":"2",
+    "value":"TRUE"  
+  },
+  {  
+    "test_case":"1",
+	"id":"3",
+    "value":"TRUE"  
+  },  
+  {  
+    "test_case":"1",
+	"id":"4",
+    "value":"B"  
+  },
+  {  
+    "test_case":"1",
+	"id":"5",
+    "value":"B"  
+  },
+  {  
+    "test_case":"1",
+	"id":"6",
+    "value":"B"  
+  },  
+  {  
+    "test_case":"1",
+	"id":"7",
+    "value":"C"  
+  }  
+]	

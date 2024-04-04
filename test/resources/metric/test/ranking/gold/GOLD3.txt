@@ -1,0 +1,6 @@
+test_case	id	value
+GOLD3	A	1
+GOLD3	B	1
+GOLD3	C	0
+GOLD3	D	0
+GOLD3	E	0

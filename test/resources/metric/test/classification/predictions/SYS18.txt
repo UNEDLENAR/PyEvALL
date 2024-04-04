@@ -1,0 +1,6 @@
+test_case	id	value
+18	1	B
+18	2	B
+18	3	TRUE
+18	4	TRUE
+18	5	TRUE

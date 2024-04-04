@@ -1,0 +1,7 @@
+test_case	id	value
+6	1	TRUE
+6	2	TRUE
+6	3	TRUE
+6	4	B
+6	5	B
+6	8	C

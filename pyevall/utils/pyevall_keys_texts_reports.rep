@@ -1,0 +1,45 @@
+#
+#
+# FILES
+#
+#
+FILE_CORRECTLY_PARSED=The file is correctly parser without errors or warnings.
+FILE_INCORRECTLY_PARSED=The file contains errors or warnings, please review them.
+EVALUATION_STATUS=\nThe evaluation 
+FILE_NAME_DESCRIPTION=\nFile name: 
+TEST_CASE_DESCRIPTION=\nTest case(s) name: 
+LINES_DESCRIPTION=\nLine(s): 
+#Format parser errors
+FORMAT_FILE_NOT_EXIST_ERROR=File not found error: wrong file's path.
+FORMAT_EMPTY_FILE_ERROR=Empty file.
+#Format parser json
+FORMAT_INCORRECT_JSON_ERROR=The file does not contain a correct json format.
+FORMAT_INCORRECT_SCHEMA_JSON_ERROR=The file contains an incorrect json format according to the schema.
+#Format parser tsv
+FORMAT_NO_HEADERS_ROW_ERROR=The file does not contains headers.
+FORMAT_NUMBER_COLUMNS_ROW_ERROR=The number of columns is incorrect. 
+FORMAT_EMPTY_VALUE_ROW_ERROR=The atributo VALUE is empty.
+FORMAT_IDS_REPEATED_ROW_ERROR=The file contains repeated ids of items.
+#Format generic error
+FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR=The file contains differents formats in the attribute VALUE. Please checkt it.
+FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED=The gold and prediction files contain different formats in the attribute VALUE. Please check it.
+#
+#
+# METRICS
+#
+#
+METRIC_NAME_DESCRIPTION=\nThe metric name is: 
+#Generic errors
+METRIC_UNKONW_METRIC_ERROR=The selected metric does not exist.
+#Preconditions
+METRIC_PRECONDITION_DIFFERENT_ITEMS_IN_GOLD_AND_PRED_ERROR=The selected metric cannot be evaluated because the gold and predictions have the same number of items.
+METRIC_PRECONDITION_1INSTANCE_ALL_CLASSES_IN_GOLD_ERROR=The selected metric cannot be evaluated because all clases in the gold have only one item.
+METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR=The selected metric cannot be evaluated because the gold and the predictions have only one clase with the same number of items.
+METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION= The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.
+METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT= The selected context of evaluation for this metric is not implemented.
+#
+#
+#DATAFRAME
+#
+#
+HEADER_TABLE_REPORT=This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check error if any metric has the value "-" or is an empty table

@@ -1,0 +1,8 @@
+precisionatk	0.0
+rprecision	0.0
+mainreciprocalrank	0.0
+map	0.0
+dcg	0.0
+ndcg	0.0
+err	0.0
+rbp	0.0

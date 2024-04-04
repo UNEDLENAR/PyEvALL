@@ -1,0 +1,8 @@
+precisionatk	0.1
+rprecision	0.2
+mainreciprocalrank	0.3333333333333333
+map	0.06666666666666667
+dcg	511.5
+ndcg	0.4990494843416056
+err	0.3330078125
+rbp	1.25

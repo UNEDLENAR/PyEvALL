@@ -5,7 +5,7 @@
 
 
 
-PyEvALL (The Python to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
+PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
 <!---
 ************************		INDEX		************************
@@ -55,8 +55,15 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 -->
 
 # Quickstart Guide
+PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface using the [EvALL](http://evall.uned.es/) evaluation framework (available soon, may 2024).
 
 ## Intallating PyEvALL
+PyEvALL can be installed via source code, downloading the content of this repository, or installing the [PyEvALL](https://pypi.org/project/PyEvALL/#description)
+
+```python  
+pip install PyEvALL
+
+```
 
 ## Evaluating a prediction file
 The main method to use PyEvALL is the *evaluate()* method included in the class **PyEvALLEvaluation** and whose header is:
@@ -100,7 +107,175 @@ By using this option, PyEvALL will understand that both files are in the selecte
 
 Note that JSON format is the default format, so it is not necessary to specify it if not desired.
 
-### Report format parameter
+### PyEvALL report format parameter
+PyEvALL evaluation reports are generated in JSON format by concatenating different Python dictionaries containing information generated during the evaluation process. This composition of different dictionaries generates a generic JSON used by PyEvALL for its entire internal evaluation process. PyEvALL is designed around the pair *prediction file, gold standard file*, and likewise, the reports focus on this pair.
+
+```python
+{
+  "metrics": {
+    "PrecisionAtK": {
+      "name": "Precision at k",
+      "acronym": "P@k",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [{
+          "name": "GOLD1",
+          "average": 0.2
+        }],
+        "average_per_test_case": 0.2
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": "Use parameter: report=\"embedded\"!",
+          "status": "FAIL",
+          "test_cases": ["GOLD1"]
+        }
+      }
+    }
+  },
+  "files": {
+    "SYS1.txt": {
+      "name": "SYS1.txt",
+      "status": "OK",
+      "gold": false,
+      "description": "Use parameter: report=\"embedded\"!",
+      "errors": {}
+    },
+    "GOLD1.txt": {
+      "name": "GOLD1.txt",
+      "status": "OK",
+      "gold": true,
+      "description": "Use parameter: report=\"embedded\"!",
+      "errors": {}
+    }
+  }
+}
+```
+In the metrics element, the main attributes of the metric are found, which can be useful for generating reports of other types, such as the name or acronym, as well as the results of the metric itself. Additionally, this element includes any potential errors in the analysis of the preconditions of each metric, if any. For example, as seen in the Figure, the metric *precision* has not met its input format precondition for the provided file pair, so it has not been executed, and this is reported to the user.
+
+On the other hand, the files element collects any potential errors detected in the files analyzed during the evaluation, i.e., the prediction file and the gold standard file. Each element also includes a description of each error or analysis, allowing for the generation of more explanatory and comprehensive reports. Specifically, to obtain textual explanations of the errors and the analysis of the evaluation process with embedded explanations, the parameter *report=embedded* is used.
+
+The proposed format can be interpreted by various analyzers, providing users with enriched reports tailored to their needs, such as the report with embedded explanations.
+
+#### PyEvALL embedded report
+The embedded explanations report of PyEvALL is a JSON report with embedded textual information describing the errors and analysis processes carried out during the evaluation. It provides clear and precise details about the errors detected in the input files.
+
+```python
+{
+  "metrics": {
+    "PrecisionAtK": {
+      "name": "Precision at k",
+      "acronym": "P@k",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [{
+          "name": "GOLD1",
+          "average": 0.2
+        }],
+        "average_per_test_case": 0.2
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Precision.\\nTest case(s) name: GOLD1.",
+          "status": "FAIL",
+          "test_cases": ["GOLD1"]
+        }
+      }
+    }
+  },
+  "files": {
+    "SYS1.txt": {
+      "name": "SYS1.txt",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: SYS1.txt.",
+      "errors": {}
+    },
+    "GOLD1.txt": {
+      "name": "GOLD1.txt",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: GOLD1.txt.",
+      "errors": {}
+    }
+  }
+}
+```
+An example of the embedded explanations report format can be seen in Figure. As shown in the image, this report is almost identical to the previous one except that the description field includes descriptions. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
+
+#### PyEvALL dataframe report
+Finally, geared towards a detailed analysis across various metrics, PyEvALL includes the DataFrame report. This report, as its name suggests, consists of multiple Pandas Python library dataframes. Specifically, the report contains 3 dataframes: one with the averages per test case, another with the results disaggregated by test case, and finally another one with the results disaggregated by class, in case any metric operates at the class level. This report can be obtained through code for subsequent analysis, or printed in tabular format for better visualization.
+
+```csv
+
+This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check error if any metric has the value "-" or is an empty table
+
+Table with average results over test cases
++----+----------+----------+------+----------+
+|    | files    |      Acc |   Pr |       Re |
+|----+----------+----------+------+----------|
+|  0 | SYS5.txt | 0.857143 |    1 | 0.666667 |
++----+----------+----------+------+----------+
+
+Table at the test case level
++----+------------+----------+------+----------+
+|    | files      |      Acc |   Pr |       Re |
+|----+------------+----------+------+----------|
+|  0 | SYS5.txt_5 | 0.857143 |    1 | 0.666667 |
++----+------------+----------+------+----------+
+
+Table at the class level
++----+------------+-----------+--------+--------+-----------+--------+--------+
+|    | files      |   Pr_TRUE |   Pr_B | Pr_C   |   Re_TRUE |   Re_B |   Re_C |
+|----+------------+-----------+--------+--------+-----------+--------+--------|
+|  0 | SYS5.txt_5 |         1 |      1 | -      |         1 |      1 |      0 |
++----+------------+-----------+--------+--------+-----------+--------+--------+
+
+```
+
+
+In this case, the report shown in the image is generated using PyEvALL's method, which enables evaluation given a list of prediction files across a set of metrics. As depicted in the image, these types of reports are often highly useful for in-depth analysis of various models across different metrics, a common practice in the scientific community.
+
+Moreover, this format enables the generation of reports in other useful formats such as **Markdown** or **tsv**.
+
+```python
+
+report = test.evaluate(predictions, gold, metrics, **params)
+report.print_report_to_markdown()
+
+```
+
+```python
+
+report = test.evaluate(predictions, gold, metrics, **params)
+report.print_report_tsv()
+
+```
+
 ### Hierarchy parameter
 PyEvALL allows evaluating with certain metrics that can address hierarchical evaluation contexts, where the set of options available for each item is structured in a hierarchical form. To indicate this hierarchy to the system, this parameter has been introduced, representing the hierarchy through a Python dictionary. To indicate PyEvALL the hierarchical structure of the problem, it is necessary to specify it in the params parameter as follows:
 
