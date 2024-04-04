@@ -13,7 +13,7 @@ PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for informatio
 
 - [What evaluation contexts and metrics does PyEvALL include?](#what-evaluation-contexts-and-metrics-does-pyevall-include)
 - [Quickstart Guide](#quickstart-guide)
-   * [Intallating PyEvALL](#intallating-pyevall)
+   * [Installing PyEvALL](#installing-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
       + [Input format parameter](#input-format-parameter)
       + [PyEvALL report format parameter](#pyevall-report-format-parameter)
@@ -59,7 +59,7 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 # Quickstart Guide
 PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface (available soon, may 2024).
 
-## Intallating PyEvALL
+## Installing PyEvALL
 PyEvALL can be installed via source code, downloading the content of this repository, or installing the [PyEvALL](https://pypi.org/project/PyEvALL/#description)
 
 ```python  
