@@ -192,7 +192,13 @@ The proposed format can be interpreted by various analyzers, providing users wit
 
 
 #### PyEvALL embedded report
-The embedded explanations report of PyEvALL is a JSON report with embedded textual information describing the errors and analysis processes carried out during the evaluation. It provides clear and precise details about the errors detected in the input files.
+The embedded explanations report of PyEvALL is a JSON report with embedded textual information describing the errors and analysis processes carried out during the evaluation. It provides clear and precise details about the errors detected in the input files. The parameter included should be the following:
+
+```python
+params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED  
+```
+
+An example of the embedded explanations report format can be seen in Figure. As shown in the image, this report is almost identical to the previous one except that the description field includes descriptions. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
 
 ```python
 {
@@ -247,11 +253,19 @@ The embedded explanations report of PyEvALL is a JSON report with embedded textu
   }
 }
 ```
-An example of the embedded explanations report format can be seen in Figure. As shown in the image, this report is almost identical to the previous one except that the description field includes descriptions. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
+
 
 
 #### PyEvALL dataframe report
 Finally, geared towards a detailed analysis across various metrics, PyEvALL includes the DataFrame report. This report, as its name suggests, consists of multiple Pandas Python library dataframes. Specifically, the report contains 3 dataframes: one with the averages per test case, another with the results disaggregated by test case, and finally another one with the results disaggregated by class, in case any metric operates at the class level. This report can be obtained through code for subsequent analysis, or printed in tabular format for better visualization.
+
+```python
+    params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME  
+```
+
+
+In this case, the report shown in the image is generated using PyEvALL's method, which enables evaluation given a list of prediction files across a set of metrics. As depicted in the image, these types of reports are often highly useful for in-depth analysis of various models across different metrics, a common practice in the scientific community.
+
 
 ```csv
 
@@ -281,7 +295,6 @@ Table at the class level
 ```
 
 
-In this case, the report shown in the image is generated using PyEvALL's method, which enables evaluation given a list of prediction files across a set of metrics. As depicted in the image, these types of reports are often highly useful for in-depth analysis of various models across different metrics, a common practice in the scientific community.
 
 Moreover, this format enables the generation of reports in other useful formats such as **Markdown** or **tsv**.
 

@@ -1,3 +1,4 @@
+MANIFEST.in
 README.md
 setup.py
 PyEvALL.egg-info/PKG-INFO
@@ -20,6 +21,8 @@ pyevall/metrics/metricfactory.py
 pyevall/metrics/metrics.py
 pyevall/reports/__init__.py
 pyevall/reports/reports.py
+pyevall/utils/file.conf
+pyevall/utils/pyevall_keys_texts_reports.rep
 pyevall/utils/utils.py
 test/testformats.py
 test/testmetrics.py
