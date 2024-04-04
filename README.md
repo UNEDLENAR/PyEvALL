@@ -108,7 +108,7 @@ report.print_report()
 It is important to notice that all metrics name can be accessed via *MetricFactory* class:
 
 ```python
-metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value
+metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
 ```
 
 ### Input format parameter
