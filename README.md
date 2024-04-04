@@ -57,7 +57,7 @@ PyEvALL 2.0 allows evaluation in the following evaluation contexts:
 -->
 
 # Quickstart Guide
-PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface using the [EvALL](http://evall.uned.es/) evaluation framework (available soon, may 2024).
+PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface (available soon, may 2024).
 
 ## Intallating PyEvALL
 PyEvALL can be installed via source code, downloading the content of this repository, or installing the [PyEvALL](https://pypi.org/project/PyEvALL/#description)
@@ -86,6 +86,24 @@ def evaluate(self, predictions, goldstandard, lst_metrics, **params):
 
 ```
 As seen in the above code, the function requires three mandatory parameters and one optional. The mandatory parameters represent the file with the predictions, the file with the gold standard, and the list of metrics to evaluate, respectively. On the other hand, the optional parameter params allows configuring different aspects of the evaluation.
+
+An example code of how to evaluate a prediction file is:
+
+```python
+from pyevall.evaluation import PyEvALLEvaluation
+from pyevall.utils.utils import PyEvALLUtils
+predictions = "test/resources/metric/test/classification/predictions/SYS5.txt"
+gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
+test = PyEvALLEvaluation()
+metrics=["Accuracy", "Precision", "Recall"]
+
+params= dict()
+params={PyEvALLUtils.PARAM_FORMAT: PyEvALLUtils.PARAM_OPTION_FORMAT_TSV }   
+report = test.evaluate(predictions, gold, metrics, **params)
+report.print_report()
+
+
+```
 
 
 ### Input format parameter
