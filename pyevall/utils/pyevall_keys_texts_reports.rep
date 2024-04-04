@@ -42,4 +42,4 @@ METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT= The selected context of 
 #DATAFRAME
 #
 #
-HEADER_TABLE_REPORT=This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check error if any metric has the value "-" or is an empty table
+HEADER_TABLE_REPORT=This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check errors if any metric has the value "-" or is an empty value or table.

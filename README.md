@@ -16,7 +16,9 @@ PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for informatio
    * [Intallating PyEvALL](#intallating-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
       + [Input format parameter](#input-format-parameter)
-      + [Report format parameter](#report-format-parameter)
+      + [PyEvALL report format parameter](#pyevall-report-format-parameter)
+         - [PyEvALL embedded report](#pyevall-embedded-report)
+         - [PyEvALL dataframe report](#pyevall-dataframe-report)
       + [Hierarchy parameter](#hierarchy-parameter)
    * [Evaluating a list of prediction files](#evaluating-a-list-of-prediction-files)
 - [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
@@ -169,6 +171,8 @@ On the other hand, the files element collects any potential errors detected in t
 
 The proposed format can be interpreted by various analyzers, providing users with enriched reports tailored to their needs, such as the report with embedded explanations.
 
+
+
 #### PyEvALL embedded report
 The embedded explanations report of PyEvALL is a JSON report with embedded textual information describing the errors and analysis processes carried out during the evaluation. It provides clear and precise details about the errors detected in the input files.
 
@@ -227,12 +231,13 @@ The embedded explanations report of PyEvALL is a JSON report with embedded textu
 ```
 An example of the embedded explanations report format can be seen in Figure. As shown in the image, this report is almost identical to the previous one except that the description field includes descriptions. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
 
+
 #### PyEvALL dataframe report
 Finally, geared towards a detailed analysis across various metrics, PyEvALL includes the DataFrame report. This report, as its name suggests, consists of multiple Pandas Python library dataframes. Specifically, the report contains 3 dataframes: one with the averages per test case, another with the results disaggregated by test case, and finally another one with the results disaggregated by class, in case any metric operates at the class level. This report can be obtained through code for subsequent analysis, or printed in tabular format for better visualization.
 
 ```csv
 
-This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check error if any metric has the value "-" or is an empty table
+This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check errors if any metric has the value "-" or is an empty value or table.
 
 Table with average results over test cases
 +----+----------+----------+------+----------+
@@ -295,6 +300,59 @@ PyEvALL allows evaluating with certain metrics that can address hierarchical eva
 As shown in the code snippet, the hierarchy is a Python dictionary where each level is formed by a new dictionary, and the leaves are formed by arrays. Note that if the parameter is not specified, metrics that require it cannot be evaluated, or they will be evaluated in a non-hierarchical manner.
 
 ## Evaluating a list of prediction files
+PyEvALL also provides a method by which a list of prediction files can be evaluated, allowing multiple systems to be evaluated at once. In this mode, PyEvALL generates a meta-report that includes the reports of each prediction file, gold standard file pair. The execution of this method would be as follows:
+
+```python
+from pyevall.evaluation import PyEvALLEvaluation
+from pyevall.utils.utils import PyEvALLUtils
+predictions_1 = "test/resources/metric/test/classification/predictions/SYS3.txt"
+predictions_2 = "test/resources/metric/test/classification/predictions/SYS4.txt"
+predictions_3 = "test/resources/metric/test/classification/predictions/SYS5.txt"
+gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
+lst_pred= [predictions_1, predictions_2, predictions_3]
+test = PyEvALLEvaluation()
+metrics=["Accuracy", "Precision", "Recall"]
+
+params= dict()
+params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
+params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME 
+report = test.evaluate_lst(lst_pred, gold, metrics, **params)
+report.print_report()
+
+
+```
+
+And outputs the following report:
+
+```python
+This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check errors if any metric has the value "-" or is an empty value or table.
+
+Table with average results over test cases
++----+----------+------------+------+------------+
+|    | files    |        Acc |   Pr |         Re |
+|----+----------+------------+------+------------|
+|  0 | SYS3.txt | nan        |  nan | nan        |
+|  1 | SYS4.txt | nan        |  nan | nan        |
+|  2 | SYS5.txt |   0.857143 |    1 |   0.666667 |
++----+----------+------------+------+------------+
+
+Table at the test case level
++----+------------+----------+------+----------+
+|    | files      |      Acc |   Pr |       Re |
+|----+------------+----------+------+----------|
+|  0 | SYS5.txt_5 | 0.857143 |    1 | 0.666667 |
++----+------------+----------+------+----------+
+
+Table at the class level
++----+------------+-----------+--------+--------+-----------+--------+--------+
+|    | files      |   Pr_TRUE |   Pr_B | Pr_C   |   Re_TRUE |   Re_B |   Re_C |
+|----+------------+-----------+--------+--------+-----------+--------+--------|
+|  0 | SYS5.txt_5 |         1 |      1 | -      |         1 |      1 |      0 |
++----+------------+-----------+--------+--------+-----------+--------+--------+
+
+
+
+```
 
 
 

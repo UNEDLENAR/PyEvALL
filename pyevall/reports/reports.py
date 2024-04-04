@@ -535,7 +535,7 @@ class PyEvALLMetaReport(PyEvALLReport):
         
 class PyEvALLMetaReportDataFrame(PyEvALLDataframeReport):             
     def add_pyevall_report(self, rep, i):  
-            if i==0:
+            if i==1:
                 df_report= PyEvALLDataframeReport(rep)
                 df_report.generate_pyevall_df_report()
                 self.df_average=df_report.df_average
@@ -544,9 +544,23 @@ class PyEvALLMetaReportDataFrame(PyEvALLDataframeReport):
             else:
                 df_report = PyEvALLDataframeReport(rep)
                 df_report.generate_pyevall_df_report()
-                self.df_average = pd.concat([self.df_average,df_report.df_average], ignore_index=True)
-                self.df_test_case = pd.concat([self.df_test_case,df_report.df_test_case], ignore_index=True)
-                self.df_test_case_classes = pd.concat([self.df_test_case_classes,df_report.df_test_case_classes], ignore_index=True)       
+                
+                if self.df_average is not None:
+                    self.df_average = pd.concat([self.df_average,df_report.df_average], ignore_index=True)
+                else:
+                    self.df_average=df_report.df_average
+                    
+                    
+                if self.df_test_case_classes is not None:
+                    self.df_test_case = pd.concat([self.df_test_case,df_report.df_test_case], ignore_index=True)
+                else:
+                    self.df_test_case=df_report.df_test_case
+                    
+                    
+                if self.df_test_case_classes is not None:
+                    self.df_test_case_classes = pd.concat([self.df_test_case_classes,df_report.df_test_case_classes], ignore_index=True)  
+                else:
+                    self.df_test_case_classes= df_report.df_test_case_classes     
 
         
         
