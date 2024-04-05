@@ -5,7 +5,7 @@
 
 
 
-PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWeDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, generalization is achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
+PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWiDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
 <!---
 ************************		INDEX		************************
@@ -36,7 +36,7 @@ PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for informatio
 -->
 
 # What evaluation contexts and metrics does PyEvALL include?
-PyEvALL 2.0 allows evaluation in the following evaluation contexts:
+PyEvALL 2.0 allows evaluation in the following contexts:
 
 - **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
 
@@ -85,7 +85,7 @@ params: dictionary with different parameters that can be configured for each eva
 def evaluate(self, predictions, goldstandard, lst_metrics, **params):
 
 ```
-As seen in the above code, the function requires three mandatory parameters and one optional. The mandatory parameters represent the file with the predictions, the file with the gold standard, and the list of metrics to evaluate, respectively. On the other hand, the optional parameter params allows configuring different aspects of the evaluation.
+As seen in the code above, the function requires three mandatory parameters and one optional. The mandatory parameters represent the file with the predictions, the file with the gold standard, and the list of metrics to evaluate, respectively. On the other hand, the optional parameter "params" allows configuring different aspects of the evaluation.
 
 An example code of how to evaluate a prediction file is:
 
@@ -105,14 +105,14 @@ report.print_report()
 
 ```
 
-It is important to notice that all metrics name can be accessed via *MetricFactory* class:
+It is important to notice that all metrics' names can be accessed via *MetricFactory* class:
 
 ```python
 metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
 ```
 
 ### Input format parameter
-PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to emphasize that both files, both predictions, and the gold standard, must be in the same format for the evaluation to be carried out correctly. To modify the format of the input files, it is necessary to indicate it in the params parameter as follows:
+PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to emphasize that both files, the predictions and the gold standard, must be in the same format for the evaluation to be carried out correctly. To modify the format of the input files, it is necessary to indicate it in the "params" parameter as follows:
 
 ```python
 
@@ -130,7 +130,7 @@ By using this option, PyEvALL will understand that both files are in the selecte
 
 ```
 
-Note that JSON format is the default format, so it is not necessary to specify it if not desired.
+Note that JSON format is the default format, so it is not necessary to specify it.
 
 ### PyEvALL report format parameter
 PyEvALL evaluation reports are generated in JSON format by concatenating different Python dictionaries containing information generated during the evaluation process. This composition of different dictionaries generates a generic JSON used by PyEvALL for its entire internal evaluation process. PyEvALL is designed around the pair *prediction file, gold standard file*, and likewise, the reports focus on this pair.
@@ -188,9 +188,9 @@ PyEvALL evaluation reports are generated in JSON format by concatenating differe
   }
 }
 ```
-In the metrics element, the main attributes of the metric are found, which can be useful for generating reports of other types, such as the name or acronym, as well as the results of the metric itself. Additionally, this element includes any potential errors in the analysis of the preconditions of each metric, if any. For example, as seen in the Figure, the metric *precision* has not met its input format precondition for the provided file pair, so it has not been executed, and this is reported to the user.
+In the "metrics" element, the main attributes of the metric are found, which can be useful for generating reports of other types, such as the name or acronym, as well as the results of the metric itself. Additionally, this element includes any potential errors in the analysis of the preconditions of each metric, if any. For example, as seen in the Figure, the metric *precision* has not met its input format precondition for the provided file pair, so it has not been executed, and this is reported to the user.
 
-On the other hand, the files element collects any potential errors detected in the files analyzed during the evaluation, i.e., the prediction file and the gold standard file. Each element also includes a description of each error or analysis, allowing for the generation of more explanatory and comprehensive reports. Specifically, to obtain textual explanations of the errors and the analysis of the evaluation process with embedded explanations, the parameter *report=embedded* is used.
+On the other hand, the "files" element collects any potential errors detected in the files analyzed during the evaluation, i.e., the prediction file and the gold standard file. Each element also includes a description of each error or analysis, allowing for the generation of more explanatory and comprehensive reports. Specifically, to obtain textual explanations of the errors and the analysis of the evaluation process with embedded explanations, the parameter *report=embedded* is used.
 
 The proposed format can be interpreted by various analyzers, providing users with enriched reports tailored to their needs, such as the report with embedded explanations.
 
@@ -203,7 +203,7 @@ The embedded explanations report of PyEvALL is a JSON report with embedded textu
 params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED  
 ```
 
-An example of the embedded explanations report format can be seen in Figure. As shown in the image, this report is almost identical to the previous one except that the description field includes descriptions. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
+An example of the embedded explanations report format can be seen in next figure. As shown in the image, this report is almost identical to the previous one except that the description field includes explanations to describe the process. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
 
 ```python
 {
@@ -336,7 +336,7 @@ PyEvALL allows evaluating with certain metrics that can address hierarchical eva
 As shown in the code snippet, the hierarchy is a Python dictionary where each level is formed by a new dictionary, and the leaves are formed by arrays. Note that if the parameter is not specified, metrics that require it cannot be evaluated, or they will be evaluated in a non-hierarchical manner.
 
 ## Evaluating a list of prediction files
-PyEvALL also provides a method by which a list of prediction files can be evaluated, allowing multiple systems to be evaluated at once. In this mode, PyEvALL generates a meta-report that includes the reports of each prediction file, gold standard file pair. The execution of this method would be as follows:
+PyEvALL also provides a method by which a list of prediction files can be evaluated, allowing multiple systems to be evaluated at once. In this mode, PyEvALL generates a meta-report that includes the reports of each *prediction file, gold standard* file pair. The execution of this method would be as follows:
 
 ```python
 from pyevall.evaluation import PyEvALLEvaluation
@@ -458,11 +458,11 @@ This format is the typical format for mono-label classification tasks where each
           }  
 ]
 ```
-In the example shown, it can be seen that the array consists of three elements belonging to the same test_case, 'EXIST2023', with three different identifiers (I1, I2, and I3), and three different target classes ('A', 'B', and 'C').
+In the example above, it can be seen that the array consists of three elements belonging to the same test_case, 'EXIST2023', with three different identifiers (I1, I2, and I3), and three different target classes ('A', 'B', and 'C').
 
 ## Multi-label Classification Format
 
-The multi-label classification format is one in which each item can be classified with one or several target classes. For this reason, the PyEvALL format for this type is composed of the same elements as in the previous case, with the difference that the "value" attribute in this case is an array of elements. These elements, in turn, must be strings. An example for this format can be found in the following code snippet:
+In the multi-label classification format, each item can be classified with one or several target classes. For this reason, the PyEvALL format for this type is composed of the same elements as in the previous case, with the difference that the "value" attribute is now an array of elements. These elements, in turn, must be strings. An example for this format can be found in the following code snippet:
 
 ```python
 [
@@ -489,7 +489,7 @@ As seen in the example, the file consists of an array of JSON objects with three
 
 ## LeWiDi Classification Format
 
-The disagreement classification format allows assigning a probability distribution to each class for every element in the dataset. Instead of selecting a single absolute category for each item, the label distribution by annotator is assigned to each element. In this format, as shown in the example below, PyEvALL uses the same structure, except that in this case, the "value" attribute is represented with a dictionary where each element represents a target class and its value represents the probability of assignment. Note that in the case of monolabel disagreement classification, the sum for each element must be 1, while for multilabel classification, it is not necessary.
+The disagreement classification format allows assigning a probability distribution to each class for every element in the dataset. Instead of selecting a single absolute category for each item, the label distribution by annotator is assigned to each element. In this format, as shown in the example below, PyEvALL uses the same structure, except that, in this case, the "value" attribute is represented with a dictionary where each element represents a target class and its value represents the probability of assignment. Note that in the case of mono-label disagreement classification, the sum for each element must be 1, while for multi-label classification, it is not necessary.
 
 ```python
 [
@@ -539,4 +539,4 @@ In the ranking evaluation context, each item is assigned a value indicating its 
 ]
 ```
 
-As seen in the example, this shows the predictions of a ranking system indicating that the item with identifier "A" is assigned position 1 in the ranking, while the item with identifier "B" is assigned position 2 in the ranking.
+As seen in the example, this shows the predictions of a ranking system indicating that the item with identifier "A" is assigned the position 1 in the ranking, while the item with identifier "B" is assigned the position 2 in the ranking.
