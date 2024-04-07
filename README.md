@@ -433,6 +433,16 @@ Specifically, each attribute represents:
 - **id**: accepts both string or int format, but it has to be the same for both the predictions and gold standard files. It is the unique identifier of the instance in the dataset.
 - **value**: this field represents the value assigned to each item, and its type will vary depending on the applied evaluation context. For example, for mono-label classification, the element will be composed of a string, while for multi-label classification, the element will be composed of a vector of strings.
 
+This format can be easily obtained form a dataframe by using the code:
+
+```python
+gold_df = pd.DataFrame({'test_case': ['EXIST2023','EXIST2023','EXIST2023','EXIST2023'], 
+                        'id': ['101','102','103','104'],
+                        'value': ["0","1","0","1"]})
+with open(output_file_json, 'w', encoding='utf-8') as output_file: 
+            output_file.write(gold_df.to_json(orient="records"))                   
+```
+
 This format can be adapted for different evaluation contexts. Below are examples of the format based on the context:
 
 ## Mono-label Classification Format
@@ -458,7 +468,9 @@ This format is the typical format for mono-label classification tasks where each
           }  
 ]
 ```
+
 In the example above, it can be seen that the array consists of three elements belonging to the same test_case, 'EXIST2023', with three different identifiers (I1, I2, and I3), and three different target classes ('A', 'B', and 'C').
+
 
 ## Multi-label Classification Format
 

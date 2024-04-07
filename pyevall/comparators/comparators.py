@@ -286,22 +286,9 @@ class RankingComparator(Comparator):
     def preprocess_df_format_ranking(self):         
         #Si el gold tiene diferentes tipos de datos en value es un error          
         lst_g_type=self.gold_df[PyEvALLFormat.VALUE].apply(type).unique()
-                   
         if not (lst_g_type[0]==type(1)):
-            try:
-                self.gold_df[PyEvALLFormat.VALUE] = pd.to_numeric(self.gold_df[PyEvALLFormat.VALUE])
-            except ValueError as e:
-                self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]= False
-                return 
-            
-        lst_p_type=self.pred_df[PyEvALLFormat.VALUE].apply(type).unique()
-                   
-        if not (lst_p_type[0]==type(1)):
-            try:
-                self.pred_df[PyEvALLFormat.VALUE] = pd.to_numeric(self.pred_df[PyEvALLFormat.VALUE])
-            except ValueError as e:
-                self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]= False
-                return 
+            self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]= False
+            return 
         
     
     def get_first_k_relevant_items_in_pred(self, param_k):

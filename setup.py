@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='PyEvALL',
-    version='0.1.60',
+    version='0.1.62',
     description='PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWiDi (Learning with disagreement).',
     author='JORGE CARRILLO-DE-ALBORNOZ',
     author_email='jcalbornoz@lsi.uned.es',

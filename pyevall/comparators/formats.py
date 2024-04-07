@@ -369,26 +369,38 @@ class PyEvALLFormat(object):
         # The first line consist of headings of the record  
         # so we will store it in an array and move to  
         # next line in input_file. 
+        df_data=None
         
-        titles = [t.strip() for t in a.split('\t')] 
+        #We read with pandas to preserver the format
+        titles = [t.strip() for t in a.split(self.delimiter)] 
         if not self.check_headers(titles):
             titles[0]=PyEvALLFormat.TEST_CASE
             titles[1]=PyEvALLFormat.ID
-            titles[2]=PyEvALLFormat.VALUE            
-            
-        for line in file: 
-            d = {} 
-            for t, f in zip(titles, line.split('\t')):                 
-                # Convert each row into dictionary with keys as titles 
-                d[t] = f.strip()                   
-            # we will use strip to remove '\n'. 
-            arr.append(d) 
-              
-            # we will append all the individual dictionaires into list  
-            # and dump into file. 
+            titles[2]=PyEvALLFormat.VALUE       
+            df_data = pd.read_csv(path_input_file, sep=self.delimiter, index_col=False, header=None,
+                          skip_blank_lines=False, names=titles, dtype={
+                            PyEvALLFormat.TEST_CASE: 'str',
+                            PyEvALLFormat.ID: 'str',
+                            PyEvALLFormat.VALUE: 'str'
+                        })   
+        else:
+            df_data = pd.read_csv(path_input_file, sep=self.delimiter, index_col=False,
+                          skip_blank_lines=False, dtype={
+                            PyEvALLFormat.TEST_CASE: 'str',
+                            PyEvALLFormat.ID: 'str',
+                            PyEvALLFormat.VALUE: 'str'
+                        })                                
+        
+        #if all the value columns are numbers convert to ranking format, otherwise mataint str
+        try:
+            df_data[PyEvALLFormat.VALUE] = pd.to_numeric(df_data[PyEvALLFormat.VALUE])
+        except ValueError as e:
+            df_data[PyEvALLFormat.VALUE]=df_data[PyEvALLFormat.VALUE].astype("str")
+
+        
         output_file_json= self.get_temp_file(input_file_name)   
         with open(output_file_json, 'w', encoding='utf-8') as output_file: 
-            output_file.write(json.dumps(arr, indent=4)) 
+            output_file.write(df_data.to_json(orient="records"))            
         
         return output_file_json
 
