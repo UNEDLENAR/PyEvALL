@@ -58,7 +58,7 @@ class PyEvALLUtils(object):
                 "value": {
                     "anyOf": [
                         {"type": "string"},
-                        {"type": "array", "items": {"type": "string"}},
+                        {"type": "array", "items": {"type": "string"},"minItems": 1},
                         {"type": "integer"},
                         {
                             "type": "object",
