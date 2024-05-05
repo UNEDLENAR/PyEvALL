@@ -51,27 +51,27 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 - **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
 
 
-		|**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
-		|------------------------------------------|-------------|-------------------------------|
-		|Accuracy                                  |Acc          |MetricFactory.Accuracy         |
-		|System Precision                          |SP           |MetricFactory.SystemPrecision  |
-		|Cohen's Kappa                             |Kappa        |MetricFactory.Kappa            |
-		|Precision                                 |Pr           |MetricFactory.Precision        |
-		|Recall                                    |Re           |MetricFactory.Recall           |
-		|F-Measure                                 |F1           |MetricFactory.FMeasure         |
-		|Information Contrast model                |ICM          |MetricFactory.ICM              |
-		|Normalized Information Contrast Model     |ICM-Norm     |MetricFactory.ICMNorm          |
-		|Information Contrast Model Soft           |ICM-Soft     |MetricFactory.ICMSoft          |
-		|Normalized Information Contrast Model Soft|ICM-Soft-Norm|MetricFactory.ICMSoftNorm      |
-		|Cross Entropy                             |CE           |MetricFactory.CrossEntropy     |
-		|Precision at k                            |P@k          |MetricFactory.PrecisionAtK     |
-		|R Precision                               |RPre.        |MetricFactory.RPrecision       |
-		|Main Reciprocal Rank                      |MRR          |MetricFactory.MRR              |
-		|Mean Average Precision                    |MAP          |MetricFactory.MAP              |
-		|Discounted Cumulative Gain                |DCG          |MetricFactory.DCG              |
-		|Normalized Discounted Cumulative Gain     |nDCG         |MetricFactory.nDCG             |
-		|Expected Reciprocal Rank                  |ERR          |MetricFactory.ERR              |
-		|Rank Biased Precision                     |RBP          |MetricFactory.RBP              |
+|**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
+|------------------------------------------|-------------|-------------------------------|
+|Accuracy                                  |Acc          |MetricFactory.Accuracy         |
+|System Precision                          |SP           |MetricFactory.SystemPrecision  |
+|Cohen's Kappa                             |Kappa        |MetricFactory.Kappa            |
+|Precision                                 |Pr           |MetricFactory.Precision        |
+|Recall                                    |Re           |MetricFactory.Recall           |
+|F-Measure                                 |F1           |MetricFactory.FMeasure         |
+|Information Contrast model                |ICM          |MetricFactory.ICM              |
+|Normalized Information Contrast Model     |ICM-Norm     |MetricFactory.ICMNorm          |
+|Information Contrast Model Soft           |ICM-Soft     |MetricFactory.ICMSoft          |
+|Normalized Information Contrast Model Soft|ICM-Soft-Norm|MetricFactory.ICMSoftNorm      |
+|Cross Entropy                             |CE           |MetricFactory.CrossEntropy     |
+|Precision at k                            |P@k          |MetricFactory.PrecisionAtK     |
+|R Precision                               |RPre.        |MetricFactory.RPrecision       |
+|Main Reciprocal Rank                      |MRR          |MetricFactory.MRR              |
+|Mean Average Precision                    |MAP          |MetricFactory.MAP              |
+|Discounted Cumulative Gain                |DCG          |MetricFactory.DCG              |
+|Normalized Discounted Cumulative Gain     |nDCG         |MetricFactory.nDCG             |
+|Expected Reciprocal Rank                  |ERR          |MetricFactory.ERR              |
+|Rank Biased Precision                     |RBP          |MetricFactory.RBP              |
 
 
 
