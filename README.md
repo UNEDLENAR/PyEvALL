@@ -11,7 +11,7 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 ************************		INDEX		************************
 -->
 
-- [Implemented Evaluation Contexts and Metrics?](#implemented-evaluation-contexts-and-metrics)
+- [Implemented Evaluation Contexts and Metrics](#implemented-evaluation-contexts-and-metrics)
 - [Quickstart Guide](#quickstart-guide)
    * [Installing PyEvALL](#installing-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
@@ -35,7 +35,7 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 ************************		SECTION 1		************************
 -->
 
-# Implemented Evaluation Contexts and Metrics?
+# Implemented Evaluation Contexts and Metrics
 PyEvALL 2.0 allows evaluation in the following contexts:
 
 - **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
@@ -51,7 +51,7 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 - **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
 
 
-		|Metrics                                   |Acronym      |MetricFactory Name             |
+		|**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
 		|------------------------------------------|-------------|-------------------------------|
 		|Accuracy                                  |Acc          |MetricFactory.Accuracy         |
 		|System Precision                          |SP           |MetricFactory.SystemPrecision  |
