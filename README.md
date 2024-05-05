@@ -53,25 +53,25 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 
 |**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
 |------------------------------------------|-------------|-------------------------------|
-|Accuracy                                  |Acc          |MetricFactory.Accuracy         |
-|System Precision                          |SP           |MetricFactory.SystemPrecision  |
-|Cohen's Kappa                             |Kappa        |MetricFactory.Kappa            |
-|Precision                                 |Pr           |MetricFactory.Precision        |
-|Recall                                    |Re           |MetricFactory.Recall           |
-|F-Measure                                 |F1           |MetricFactory.FMeasure         |
-|Information Contrast model                |ICM          |MetricFactory.ICM              |
-|Normalized Information Contrast Model     |ICM-Norm     |MetricFactory.ICMNorm          |
-|Information Contrast Model Soft           |ICM-Soft     |MetricFactory.ICMSoft          |
-|Normalized Information Contrast Model Soft|ICM-Soft-Norm|MetricFactory.ICMSoftNorm      |
-|Cross Entropy                             |CE           |MetricFactory.CrossEntropy     |
-|Precision at k                            |P@k          |MetricFactory.PrecisionAtK     |
-|R Precision                               |RPre.        |MetricFactory.RPrecision       |
-|Main Reciprocal Rank                      |MRR          |MetricFactory.MRR              |
-|Mean Average Precision                    |MAP          |MetricFactory.MAP              |
-|Discounted Cumulative Gain                |DCG          |MetricFactory.DCG              |
-|Normalized Discounted Cumulative Gain     |nDCG         |MetricFactory.nDCG             |
-|Expected Reciprocal Rank                  |ERR          |MetricFactory.ERR              |
-|Rank Biased Precision                     |RBP          |MetricFactory.RBP              |
+|Accuracy                                  |Acc          |*MetricFactory.Accuracy*         |
+|System Precision                          |SP           |*MetricFactory.SystemPrecision*  |
+|Cohen's Kappa                             |Kappa        |*MetricFactory.Kappa*            |
+|Precision                                 |Pr           |*MetricFactory.Precision*        |
+|Recall                                    |Re           |*MetricFactory.Recall*           |
+|F-Measure                                 |F1           |*MetricFactory.FMeasure*         |
+|Information Contrast model                |ICM          |*MetricFactory.ICM*              |
+|Normalized Information Contrast Model     |ICM-Norm     |*MetricFactory.ICMNorm*          |
+|Information Contrast Model Soft           |ICM-Soft     |*MetricFactory.ICMSoft*          |
+|Normalized Information Contrast Model Soft|ICM-Soft-Norm|*MetricFactory.ICMSoftNorm*      |
+|Cross Entropy                             |CE           |*MetricFactory.CrossEntropy*     |
+|Precision at k                            |P@k          |*MetricFactory.PrecisionAtK*     |
+|R Precision                               |RPre        |*MetricFactory.RPrecision*       |
+|Main Reciprocal Rank                      |MRR          |*MetricFactory.MRR*              |
+|Mean Average Precision                    |MAP          |*MetricFactory.MAP*              |
+|Discounted Cumulative Gain                |DCG          |*MetricFactory.DCG*              |
+|Normalized Discounted Cumulative Gain     |nDCG         |*MetricFactory.nDCG*             |
+|Expected Reciprocal Rank                  |ERR          |*MetricFactory.ERR*              |
+|Rank Biased Precision                     |RBP          |*MetricFactory.RBP*              |
 
 
 
@@ -118,7 +118,7 @@ from pyevall.utils.utils import PyEvALLUtils
 predictions = "test/resources/metric/test/classification/predictions/SYS5.txt"
 gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
 test = PyEvALLEvaluation()
-metrics=["Accuracy", "Precision", "Recall"]
+metrics=[MetricFactory.Accuracy.value, MetricFactory.Precision.value]
 
 params= dict()
 params={PyEvALLUtils.PARAM_FORMAT: PyEvALLUtils.PARAM_OPTION_FORMAT_TSV }   
@@ -370,7 +370,7 @@ predictions_3 = "test/resources/metric/test/classification/predictions/SYS5.txt"
 gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
 lst_pred= [predictions_1, predictions_2, predictions_3]
 test = PyEvALLEvaluation()
-metrics=["Accuracy", "Precision", "Recall"]
+metrics=[MetricFactory.Accuracy.value, MetricFactory.Precision.value]
 
 params= dict()
 params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
