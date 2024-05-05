@@ -11,7 +11,7 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 ************************		INDEX		************************
 -->
 
-- [What evaluation contexts and metrics does PyEvALL include?](#what-evaluation-contexts-and-metrics-does-pyevall-include)
+- [Implemented Evaluation Contexts and Metrics?](#implemented-evaluation-contexts-and-metrics)
 - [Quickstart Guide](#quickstart-guide)
    * [Installing PyEvALL](#installing-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
@@ -35,7 +35,7 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 ************************		SECTION 1		************************
 -->
 
-# What evaluation contexts and metrics does PyEvALL include?
+# Implemented Evaluation Contexts and Metrics?
 PyEvALL 2.0 allows evaluation in the following contexts:
 
 - **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
@@ -49,6 +49,29 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 - **Ranking**: In the ranking evaluation context, the metrics aim to quantify the extent to which a ranking produced by systems is compatible with the relevance values assigned in the gold standard. In this context, the following metrics are available: *Precision at K, R Precision, MRR, MAP, DCG* and *nDCG*.
 
 - **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
+
+
+		|Metrics                                   |Acronym      |MetricFactory Name             |
+		|------------------------------------------|-------------|-------------------------------|
+		|Accuracy                                  |Acc          |MetricFactory.Accuracy         |
+		|System Precision                          |SP           |MetricFactory.SystemPrecision  |
+		|Cohen's Kappa                             |Kappa        |MetricFactory.Kappa            |
+		|Precision                                 |Pr           |MetricFactory.Precision        |
+		|Recall                                    |Re           |MetricFactory.Recall           |
+		|F-Measure                                 |F1           |MetricFactory.FMeasure         |
+		|Information Contrast model                |ICM          |MetricFactory.ICM              |
+		|Normalized Information Contrast Model     |ICM-Norm     |MetricFactory.ICMNorm          |
+		|Information Contrast Model Soft           |ICM-Soft     |MetricFactory.ICMSoft          |
+		|Normalized Information Contrast Model Soft|ICM-Soft-Norm|MetricFactory.ICMSoftNorm      |
+		|Cross Entropy                             |CE           |MetricFactory.CrossEntropy     |
+		|Precision at k                            |P@k          |MetricFactory.PrecisionAtK     |
+		|R Precision                               |RPre.        |MetricFactory.RPrecision       |
+		|Main Reciprocal Rank                      |MRR          |MetricFactory.MRR              |
+		|Mean Average Precision                    |MAP          |MetricFactory.MAP              |
+		|Discounted Cumulative Gain                |DCG          |MetricFactory.DCG              |
+		|Normalized Discounted Cumulative Gain     |nDCG         |MetricFactory.nDCG             |
+		|Expected Reciprocal Rank                  |ERR          |MetricFactory.ERR              |
+		|Rank Biased Precision                     |RBP          |MetricFactory.RBP              |
 
 
 
