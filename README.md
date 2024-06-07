@@ -15,11 +15,12 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 - [Quickstart Guide](#quickstart-guide)
    * [Installing PyEvALL](#installing-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
-      + [Input format parameter](#input-format-parameter)
+   * [Input format ](#input-format)
       + [PyEvALL report format parameter](#pyevall-report-format-parameter)
          - [PyEvALL embedded report](#pyevall-embedded-report)
          - [PyEvALL dataframe report](#pyevall-dataframe-report)
       + [Hierarchy parameter](#hierarchy-parameter)
+      + [Log Level parameter](#log-level-parameter)
    * [Evaluating a list of prediction files](#evaluating-a-list-of-prediction-files)
 - [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
    * [Mono-label Classification Format](#mono-label-classification-format)
@@ -59,11 +60,12 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 |Precision                                 |Pr           |*MetricFactory.Precision*        |
 |Recall                                    |Re           |*MetricFactory.Recall*           |
 |F-Measure                                 |F1           |*MetricFactory.FMeasure*         |
-|Information Contrast model                |ICM          |*MetricFactory.ICM*              |
-|Normalized Information Contrast Model     |ICM-Norm     |*MetricFactory.ICMNorm*          |
-|Information Contrast Model Soft           |ICM-Soft     |*MetricFactory.ICMSoft*          |
-|Normalized Information Contrast Model Soft|ICM-Soft-Norm|*MetricFactory.ICMSoftNorm*      |
+|Raw Information Contrast model            |Raw ICM      |*MetricFactory.RawICM*              |
+|Information Contrast Model   			   |ICM		     |*MetricFactory.ICM*          |
+|Raw Soft Information Contrast Model       |Raw Soft ICM |*MetricFactory.RawSoftICM*          |
+|Soft Information Contrast Model			|Soft ICM	 |*MetricFactory.SoftICM*      |
 |Cross Entropy                             |CE           |*MetricFactory.CrossEntropy*     |
+|Mean Absolute Error                       |MAE          |*MetricFactory.MAE*     		|
 |Precision at k                            |P@k          |*MetricFactory.PrecisionAtK*     |
 |R Precision                               |RPre        |*MetricFactory.RPrecision*       |
 |Main Reciprocal Rank                      |MRR          |*MetricFactory.MRR*              |
@@ -80,7 +82,7 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 -->
 
 # Quickstart Guide
-PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface (available soon, may 2024).
+PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface (available soon, July 2024).
 
 ## Installing PyEvALL
 PyEvALL can be installed via source code, downloading the content of this repository, or installing the [PyEvALL](https://pypi.org/project/PyEvALL/#description)
@@ -121,7 +123,6 @@ test = PyEvALLEvaluation()
 metrics=[MetricFactory.Accuracy.value, MetricFactory.Precision.value]
 
 params= dict()
-params={PyEvALLUtils.PARAM_FORMAT: PyEvALLUtils.PARAM_OPTION_FORMAT_TSV }   
 report = test.evaluate(predictions, gold, metrics, **params)
 report.print_report()
 
@@ -134,26 +135,10 @@ It is important to notice that all metrics' names can be accessed via *MetricFac
 metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
 ```
 
-### Input format parameter
-PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to emphasize that both files, the predictions and the gold standard, must be in the same format for the evaluation to be carried out correctly. To modify the format of the input files, it is necessary to indicate it in the "params" parameter as follows:
+## Input format 
+PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to note that it is not necessary that the files are in the same formats, the gold can be in json and the predictions in tsv. PyEvALL automatically detects the input format and converts it to json to check, by means of its schema, the validation of the input format and informs about the conversion by means of a warning.
 
-```python
 
-    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
-
-```
-
-By using this option, PyEvALL will understand that both files are in the selected format, in this case, in TSV format. The different possibilities of this parameter are:
-
-```python
-
-    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_JSON
-    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
-    params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_CSV
-
-```
-
-Note that JSON format is the default format, so it is not necessary to specify it.
 
 ### PyEvALL report format parameter
 PyEvALL evaluation reports are generated in JSON format by concatenating different Python dictionaries containing information generated during the evaluation process. This composition of different dictionaries generates a generic JSON used by PyEvALL for its entire internal evaluation process. PyEvALL is designed around the pair *prediction file, gold standard file*, and likewise, the reports focus on this pair.
@@ -357,6 +342,27 @@ PyEvALL allows evaluating with certain metrics that can address hierarchical eva
 ```
 
 As shown in the code snippet, the hierarchy is a Python dictionary where each level is formed by a new dictionary, and the leaves are formed by arrays. Note that if the parameter is not specified, metrics that require it cannot be evaluated, or they will be evaluated in a non-hierarchical manner.
+
+
+### Log Level parameter
+The log level can be configured via parameter. PyEvALL defaults to the INFO level and can be changed as shown:
+
+```python
+
+	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE
+
+```
+
+The different configuration options for the log level are:
+
+```python
+
+	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_DEBUG
+	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_INFO
+	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE	
+
+```
+
 
 ## Evaluating a list of prediction files
 PyEvALL also provides a method by which a list of prediction files can be evaluated, allowing multiple systems to be evaluated at once. In this mode, PyEvALL generates a meta-report that includes the reports of each *prediction file, gold standard* file pair. The execution of this method would be as follows:

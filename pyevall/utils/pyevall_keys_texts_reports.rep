@@ -18,10 +18,12 @@ FORMAT_INCORRECT_SCHEMA_JSON_ERROR=The file contains an incorrect json format ac
 #Format parser tsv
 FORMAT_NO_HEADERS_ROW_ERROR=The file does not contains headers.
 FORMAT_NUMBER_COLUMNS_ROW_ERROR=The number of columns is incorrect. 
-FORMAT_EMPTY_VALUE_ROW_ERROR=The atributo VALUE is empty.
+FORMAT_EMPTY_VALUE_ROW_ERROR=The attribute VALUE is empty.
 FORMAT_IDS_REPEATED_ROW_ERROR=The file contains repeated ids of items.
+FORMAT_TSV_FORMAT_IDENTIFIED_WARNING=PyEvALL has identified a tsv format and has converted it to json.
+FORMAT_CSV_FORMAT_IDENTIFIED_WARNING=PyEvALL has identified a csv format and has converted it to json.
 #Format generic error
-FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR=The file contains differents formats in the attribute VALUE. Please checkt it.
+FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR=The file contains different formats in the attribute VALUE. Please check it.
 FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED=The gold and prediction files contain different formats in the attribute VALUE. Please check it.
 #
 #
@@ -31,12 +33,15 @@ FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED=The gold and prediction files cont
 METRIC_NAME_DESCRIPTION=\nThe metric name is: 
 #Generic errors
 METRIC_UNKONW_METRIC_ERROR=The selected metric does not exist.
+METRIC_NOT_TEST_CASE_IN_COMMON_ERROR=The gold does not have any test_case in common with the preconditions file.
 #Preconditions
 METRIC_PRECONDITION_DIFFERENT_ITEMS_IN_GOLD_AND_PRED_ERROR=The selected metric cannot be evaluated because the gold and predictions have the same number of items.
-METRIC_PRECONDITION_1INSTANCE_ALL_CLASSES_IN_GOLD_ERROR=The selected metric cannot be evaluated because all clases in the gold have only one item.
-METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR=The selected metric cannot be evaluated because the gold and the predictions have only one clase with the same number of items.
+METRIC_PRECONDITION_1INSTANCE_ALL_CLASSES_IN_GOLD_ERROR=The selected metric cannot be evaluated because all classes in the gold have only one item.
+METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR=The selected metric cannot be evaluated because the gold and the predictions have only one class with the same number of items.
 METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION= The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.
 METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT= The selected context of evaluation for this metric is not implemented.
+METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC=The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.
+METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING=There are duplicated values in the attribute value. Evaluation cannot be accurate.
 #
 #
 #DATAFRAME

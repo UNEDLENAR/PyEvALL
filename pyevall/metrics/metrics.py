@@ -32,11 +32,8 @@ import numpy as np
 import pandas as pd
 from statistics import NormalDist
 import math
-import logging.config
 
-# Setting up the logger
-logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)
-logger = logging.getLogger(__name__)
+logger = PyEvALLUtils.get_logger(__name__)
 
 
 
@@ -66,7 +63,22 @@ class PyEvALLMetric(object):
                 precondition[PyEvALLReport.STATUS_TAG]=PyEvALLReport.FAIL 
                 precondition[PyEvALLReport.TEST_CASES_TAG]=[]
                 self.preconditions[error]=precondition
-            self.preconditions[error][PyEvALLReport.TEST_CASES_TAG].append(test_case)               
+            self.preconditions[error][PyEvALLReport.TEST_CASES_TAG].append(test_case)    
+            self.status=PyEvALLReport.FAIL      
+            
+    def fire_warning(self, warning, test_case):
+        if warning==None:
+            return False  
+        else:
+            if not warning in self.preconditions:
+                precondition=dict()
+                precondition[PyEvALLReport.NAME_TAG]=warning
+                precondition[PyEvALLReport.DESCRIPTION_TAG]=PyEvALLReport.EMBEDDED_OPTION
+                precondition[PyEvALLReport.STATUS_TAG]=PyEvALLReport.WARNING 
+                precondition[PyEvALLReport.TEST_CASES_TAG]=[]
+                self.preconditions[warning]=precondition
+            self.preconditions[warning][PyEvALLReport.TEST_CASES_TAG].append(test_case)   
+            self.status=PyEvALLReport.WARNING     
 
          
     @abstractmethod
@@ -89,7 +101,7 @@ class Accuracy(PyEvALLMetric):
                     
         @preconditions: None                
     """     
-    def __init__(self, **params):        
+    def __init__(self):        
         super().__init__(MetricFactory.Accuracy.value, "Accuracy", "Acc")    
 
     def evaluate(self, comparator):  
@@ -97,7 +109,6 @@ class Accuracy(PyEvALLMetric):
         
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return 
                 
         sum_diagonal= comparator.get_diagonal_conf_matrix().sum()
@@ -111,6 +122,8 @@ class Accuracy(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION] and comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MONOLABEL]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return False
 
         
@@ -127,7 +140,7 @@ class SystemPrecision(PyEvALLMetric):
                     
         @preconditions: Predition and goldstandard files should contain different number of elements in all testcases               
     """     
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.SystemPrecision.value, "System Precision", "SP")        
 
 
@@ -135,7 +148,6 @@ class SystemPrecision(PyEvALLMetric):
         logger.info("Executing System Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
                  
         sp= 0
@@ -153,14 +165,14 @@ class SystemPrecision(PyEvALLMetric):
                 and comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MONOLABEL]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
-
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return False   
-        
-                
+                        
         
                 
 class Kappa(PyEvALLMetric):         
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.Kappa.value, "Cohen's Kappa", "Kappa")           
         
         
@@ -168,7 +180,6 @@ class Kappa(PyEvALLMetric):
         logger.info("Executing kappa evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
 
         sum_diagonal= comparator.get_diagonal_conf_matrix().sum()
@@ -199,13 +210,15 @@ class Kappa(PyEvALLMetric):
         if comparator.is_1_category_in_value_goldAndPred_and_same_instances():
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR, comparator.get_testcase())
             error=True
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return error              
                 
 
 
 
 class Precision(PyEvALLMetric):        
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.Precision.value, "Precision", "Pr")           
         
         
@@ -213,7 +226,6 @@ class Precision(PyEvALLMetric):
         logger.info("Executing precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
 
         classes = comparator.get_classes_gold()
@@ -247,14 +259,15 @@ class Precision(PyEvALLMetric):
                      comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MULTILABEL])):  
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
-
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return False     
                         
                 
             
                     
 class Recall(PyEvALLMetric):          
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.Recall.value, "Recall", "Re")          
         
         
@@ -262,7 +275,6 @@ class Recall(PyEvALLMetric):
         logger.info("Executing recall evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
 
         classes = comparator.get_classes_gold()
@@ -286,14 +298,15 @@ class Recall(PyEvALLMetric):
                      comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MULTILABEL])):   
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
-              
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())              
         return False       
                
                 
                 
         
 class FMeasure(PyEvALLMetric):     
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.FMeasure.value, "F-Measure", "F1")  
         self.alfa_param=0.5          
                 
@@ -302,7 +315,6 @@ class FMeasure(PyEvALLMetric):
         logger.info("Executing fmeasure evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return 
 
         classes = comparator.get_classes_gold()
@@ -335,15 +347,16 @@ class FMeasure(PyEvALLMetric):
                      comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MULTILABEL])):  
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
-
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return False
 
         
 
 
-class ICM(PyEvALLMetric):   
-    def __init__(self, **params):
-        super().__init__(MetricFactory.ICM.value, "Information Contrast model", "ICM")
+class RawICM(PyEvALLMetric):   
+    def __init__(self):
+        super().__init__(MetricFactory.RawICM.value, "Raw Information Contrast model", "Raw ICM")
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -475,9 +488,8 @@ class ICM(PyEvALLMetric):
     #                                                                    #
     ###################################################################### 
     def evaluate(self, comparator):   
-        logger.info("Executing ICM evaluation method")
+        logger.info("Executing Raw ICM evaluation method")
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
         
         self.generate_prob(comparator) 
@@ -585,34 +597,33 @@ class ICM(PyEvALLMetric):
                 
                 
                 
-class ICMNorm(PyEvALLMetric):       
-    def __init__(self, **params):
-        super().__init__(MetricFactory.ICMNorm.value, "Normalized Information Contrast Model", "ICM-Norm")
+class ICM(PyEvALLMetric):       
+    def __init__(self):
+        super().__init__(MetricFactory.ICM.value, "Information Contrast Model", "ICM")
        
     
     def evaluate(self, comparator):   
-        logger.info("Executing ICM Normalized evaluation method")
+        logger.info("Executing ICM evaluation method")
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
         
-        #Evaluate ICM pred vs gold
-        icm = ICM()
+        #Evaluate Raw ICM pred vs gold
+        icm = RawICM()
         icm.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_pred = icm.result[PyEvALLReport.AVERAGE_TAG] 
                    
-        #Evaluate ICM gold vs gold       
+        #Evaluate Raw ICM gold vs gold       
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
         comp_gold.hierarchy= comparator.hierarchy
-        icm = ICM()
+        icm = RawICM()
         icm.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_gold=icm.result[PyEvALLReport.AVERAGE_TAG]
         
-        #Calculate ICM Norm and truncate to 0 if the value is less than 0.
+        #Calculate ICM and truncate to 0 if the value is less than 0.
         icm_norm= (float(res_pred) - (res_gold*-1))/(res_gold-(res_gold*-1))
         if icm_norm<0:
             icm_norm=0
@@ -641,9 +652,9 @@ class ICMNorm(PyEvALLMetric):
     ##                        CLASSIFICATION LEWEDI METRICS                   ##  
     ##                                                                        ##
     ############################################################################
-class ICMSoft(PyEvALLMetric): 
-    def __init__(self, **params):
-        super().__init__(MetricFactory.ICMSoft.value, "Information Contrast Model Soft", "ICM-Soft")       
+class RawSoftICM(PyEvALLMetric): 
+    def __init__(self):
+        super().__init__(MetricFactory.RawSoftICM.value, "Raw Soft Information Contrast Model", "Raw Soft ICM")       
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -780,9 +791,8 @@ class ICMSoft(PyEvALLMetric):
     #                                                                    #
     ######################################################################    
     def evaluate(self, comparator):   
-        logger.info("Executing ICM Soft evaluation method")
+        logger.info("Executing Raw Soft ICM evaluation method")
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
                
         self.get_list_classes(comparator)
@@ -845,25 +855,25 @@ class ICMSoft(PyEvALLMetric):
         size = len(classes)
         if size==0:
             return 0
-        return self.get_prob_class(classes[0]) + self.information_content(classes[1:size], comparator) - \
+        return self.get_prob_class(classes[0], comparator) + self.information_content(classes[1:size], comparator) - \
         self.information_content(self.calculate_set_deepest_common_ancestor(classes[0], classes[1:size], comparator), comparator)
                     
     
-    def get_prob_class(self, tupla):
+    def get_prob_class(self, tupla,comparator):
         #Empty set
         if tupla==None or not tupla[0]:
             return 0
         
         #Class does not exist in gold we add minimal information
         if not tupla[0] in self.gold_average:
-            return -math.log2(1/len(self.gold_df))        
+            return -math.log2(1/len(comparator.gold_df))        
         else:
             if tupla[1]==0.0:
                 return 0.0
             else:
                 prob = 1-NormalDist(mu=self.gold_average[tupla[0]], sigma=self.gold_deviation[tupla[0]]).cdf(tupla[1])  
                 if prob==0.0:
-                    return -math.log2(1/len(self.gold_df)) 
+                    return -math.log2(1/len(comparator.gold_df)) 
                 else:         
                     return -math.log2(prob)    
         
@@ -908,19 +918,18 @@ class ICMSoft(PyEvALLMetric):
 
 
 
-class ICMSoftNorm(PyEvALLMetric):       
-    def __init__(self, **params):
-        super().__init__(MetricFactory.ICMSoftNorm.value, "Normalized Information Contrast Model Soft", "ICM-Soft-Norm")      
+class SoftICM(PyEvALLMetric):       
+    def __init__(self):
+        super().__init__(MetricFactory.SoftICM.value, "Soft Information Contrast Model", "Soft ICM")      
 
    
     def evaluate(self, comparator):   
-        logger.info("Executing ICM-Soft Normalized evaluation method")
+        logger.info("Executing Soft ICM evaluation method")
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
         
         #Evaluate ICM pred vs gold
-        icm_soft = ICMSoft()
+        icm_soft = RawSoftICM()
         icm_soft.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
@@ -929,13 +938,13 @@ class ICMSoftNorm(PyEvALLMetric):
         #Evaluate ICM gold vs gold       
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
         comp_gold.hierarchy= comparator.hierarchy
-        icm_soft = ICMSoft()
+        icm_soft = RawSoftICM()
         icm_soft.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
             res_gold=icm_soft.result[PyEvALLReport.AVERAGE_TAG]
         
-        #Calculate ICM Norm and truncate to 0 if the value is less than 0.
+        #Calculate Soft ICM and truncate to 0 if the value is less than 0.
         icm_norm= (float(res_pred) - (res_gold*-1))/(res_gold-(res_gold*-1))
         if icm_norm<0:
             icm_norm=0
@@ -958,7 +967,7 @@ class CrossEntropy(PyEvALLMetric):
     SMOOTH_VALUE=0.001
     
     
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.CrossEntropy.value, "Cross Entropy", "CE")
        
        
@@ -1001,7 +1010,6 @@ class CrossEntropy(PyEvALLMetric):
     def evaluate(self, comparator):
         logger.info("Executing Cross Entropy evaluation method")
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return
         pred_df = comparator.pred_df.copy()
         gold_df = comparator.gold_df.copy() 
@@ -1019,6 +1027,8 @@ class CrossEntropy(PyEvALLMetric):
                 and comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_LEWEDI]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())  
             return True
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
         return False 
 
 
@@ -1040,6 +1050,86 @@ class CrossEntropy(PyEvALLMetric):
         return cross_entropy_instance*-1
 
 
+class MAE(PyEvALLMetric):    
+    def __init__(self):
+        super().__init__(MetricFactory.MAE.value, "Mean Absolute Error", "MAE")  
+        self.lst_classes=[] 
+
+
+    def get_list_classes(self, comparator):
+        comparator.gold_df[PyEvALLFormat.VALUE].apply(lambda value: self.search_classes(value))
+
+    def search_classes(self, value):
+        gold_dict = value
+        for c in gold_dict:
+            if c not in self.lst_classes:
+                self.lst_classes.append(c)  
+
+    def expand_df(self, value):
+        gold_dict = value
+        new_columns=[]
+        for c in self.lst_classes:
+            if c in gold_dict:
+                new_columns.append(gold_dict[c])
+            else:
+                new_columns.append(0.0)
+
+        return pd.Series(new_columns, index=[self.lst_classes])  
+
+    #We need to expand the dataframe
+    def evaluate(self, comparator):   
+        logger.info("Executing MAE evaluation method")
+        #Check preconditions of the metric
+        if self.fire_preconditions(comparator):
+            return   
+        
+        self.get_list_classes(comparator)        
+        
+        #copy dataframe modify it
+        gold_df_extended= comparator.gold_df.copy()  
+        gold_df_extended[self.lst_classes] =gold_df_extended[PyEvALLFormat.VALUE].apply(lambda row: self.expand_df(row))
+        gold_df_extended = gold_df_extended.drop(PyEvALLFormat.VALUE, axis=1)         
+        
+        number_classes= len(self.lst_classes)
+        result_mae = gold_df_extended.apply(lambda row: self.calculate_mae_instance(row, comparator.pred_df, number_classes), axis=1).tolist()
+        gold_size = len(gold_df_extended)
+        average = sum(result_mae)/gold_size
+        
+        self.result[PyEvALLReport.AVERAGE_TAG]=average  
+             
+                
+    def fire_preconditions(self, comparator):
+        if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION] 
+                and comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_LEWEDI]): 
+            super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())  
+            return True
+        if comparator.hierarchy!=None:
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC, comparator.get_testcase())
+        return False 
+
+
+    def calculate_mae_instance(self, gold_row, pred_df, number_classes):    
+        pred_row= pred_df[pred_df[PyEvALLFormat.ID] == gold_row[PyEvALLFormat.ID]]
+        mae_instance=0.0        
+           
+        for ind, column in enumerate(gold_row.index):
+            if column==PyEvALLFormat.ID or column==PyEvALLFormat.TEST_CASE:
+                continue
+            
+            score_pred= 0
+            if not pred_row.empty:
+                pred_dict=pred_row[PyEvALLFormat.VALUE].tolist()[0]
+                if column in pred_dict: 
+                    score_pred= pred_row[PyEvALLFormat.VALUE].tolist()[0][column]            
+            mae_instance= mae_instance+ abs(gold_row[column]-score_pred)
+            
+            
+            
+        if ind>0:
+            mae_instance=mae_instance/number_classes
+            
+        return mae_instance
+
 
 
     ############################################################################
@@ -1048,7 +1138,7 @@ class CrossEntropy(PyEvALLMetric):
     ##                                                                        ##
     ############################################################################     
 class PrecisionAtK(PyEvALLMetric):     
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.PrecisionAtK.value, "Precision at k", "P@k")    
         self.k_param=10     
 
@@ -1057,7 +1147,6 @@ class PrecisionAtK(PyEvALLMetric):
         logger.info("Executing Precision at K evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
                  
         p_at_k=None
@@ -1073,21 +1162,22 @@ class PrecisionAtK(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False     
     
     
     
     
 class RPrecision(PyEvALLMetric):       
-    def __init__(self, **params):
-        super().__init__(MetricFactory.RPrecision.value, "R Precision", "RPre.")    
+    def __init__(self):
+        super().__init__(MetricFactory.RPrecision.value, "R Precision", "RPre")    
 
 
     def evaluate(self, comparator):   
         logger.info("Executing R Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
                  
         r_p=None
@@ -1104,20 +1194,21 @@ class RPrecision(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False  
     
     
     
     
 class MRR(PyEvALLMetric):    
-    def __init__(self, **params):
-        super().__init__(MetricFactory.MRR.value, "Main Reciprocal Rank", "MRR")    
+    def __init__(self):
+        super().__init__(MetricFactory.MRR.value, "Mean Reciprocal Rank", "MRR")    
 
     def evaluate(self, comparator):   
         logger.info("Executing Main Reciprocal Rank evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
                  
         #check if there are relevants elements in the gold
@@ -1137,13 +1228,15 @@ class MRR(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]):  
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase())
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False      
     
     
     
     
 class MAP(PyEvALLMetric):       
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.MAP.value, "Mean Average Precision", "MAP") 
         self.r_param=1000   
 
@@ -1152,7 +1245,6 @@ class MAP(PyEvALLMetric):
         logger.info("Executing MAP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
         
         relevants_in_gold= comparator.get_all_relevants_items_in_gold()   
@@ -1177,13 +1269,15 @@ class MAP(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase()) 
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False     
     
     
     
     
 class DCG(PyEvALLMetric):     
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.DCG.value, "Discounted Cumulative Gain", "DCG")   
 
 
@@ -1191,7 +1285,6 @@ class DCG(PyEvALLMetric):
         logger.info("Executing DCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
         
         values_gold= comparator.get_dict_values_gold_by_id()  
@@ -1220,13 +1313,15 @@ class DCG(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase()) 
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False 
     
     
     
     
 class nDCG(PyEvALLMetric):    
-    def __init__(self, **params):
+    def __init__(self):
         super().__init__(MetricFactory.nDCG.value, "Normalized Discounted Cumulative Gain", "nDCG")   
 
 
@@ -1234,7 +1329,6 @@ class nDCG(PyEvALLMetric):
         logger.info("Executing nDCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
-            self.status=PyEvALLReport.FAIL
             return   
         
         #Calculamos dcg sobre el ranking normal.
@@ -1277,13 +1371,119 @@ class nDCG(PyEvALLMetric):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
             super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase()) 
             return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
         return False    
         
     
     
+class ERR(PyEvALLMetric):    
+    def __init__(self):
+        super().__init__(MetricFactory.ERR.value, "Expected Reciprocal Rank", "ERR")   
+
+
+    def evaluate(self, comparator):   
+        logger.info("Executing ERR evaluation method")
+        #Check preconditions of the metric
+        if self.fire_preconditions(comparator):
+            return   
+        
+        #if there are no relevants in gold it makes no sense calculate the metric
+        relevants_in_gold= comparator.get_all_relevants_items_in_gold()  
+        if relevants_in_gold==None or relevants_in_gold==0:
+            self.result[PyEvALLReport.AVERAGE_TAG]=None
+            return 
+       
+        # get the max value in the gold     
+        values_gold= comparator.get_dict_values_gold_by_id()
+        perfect_rank= comparator.get_list_perfect_rank_gold()
+        maxValue = 0 if len(perfect_rank)==0 else values_gold[perfect_rank[0]] 
+        powMaxValue =0
+        if maxValue>0:
+            powMaxValue= pow(2, maxValue)
+        lst_ids_pred_sorted = comparator.get_list_ids_ordered_pred()
+         
+        
+        err=0
+        for k in range(0,len(lst_ids_pred_sorted)):
+            id_pred = lst_ids_pred_sorted[k]
+            RELk = 0
+            errMulti=1
+            if id_pred in values_gold:
+                for j in range(0,k):
+                    RELi=0
+                    id_pred_j = lst_ids_pred_sorted[j]
+                    if id_pred_j in values_gold:
+                        if powMaxValue!=0.0:
+                            RELi = (pow(2, values_gold[id_pred_j])-1)/powMaxValue
+                    errMulti= errMulti*(1-RELi);
+                if powMaxValue!=0.0:
+                    RELk = (pow(2, values_gold[id_pred])-1)/powMaxValue;
+                    
+            err=err +(RELk/(float)(k+1))* errMulti;                     
+
+
+        self.result[PyEvALLReport.AVERAGE_TAG]=err
+        logger.debug("ERR for the testcase %s is: %s", comparator.get_testcase(), err)   
+             
+                
+    def fire_preconditions(self, comparator):
+        if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
+            super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase()) 
+            return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())  
+        return False        
     
     
     
+class RBP(PyEvALLMetric):    
+    def __init__(self):
+        super().__init__(MetricFactory.RBP.value, "Rank Biased Precision", "RBP")   
+        self.p_param=0.8 
+
+
+    def evaluate(self, comparator):   
+        logger.info("Executing RBP evaluation method")
+        #Check preconditions of the metric
+        if self.fire_preconditions(comparator):
+            return   
+        
+        #if there are no relevants in gold it makes no sense calculate the metric
+        relevants_in_gold= comparator.get_all_relevants_items_in_gold()  
+        if relevants_in_gold==None or relevants_in_gold==0:
+            self.result[PyEvALLReport.AVERAGE_TAG]=None
+            return 
+       
+        # get the max value in the gold     
+        values_gold= comparator.get_dict_values_gold_by_id()
+        lst_ids_pred_sorted = comparator.get_list_ids_ordered_pred()       
+        
+        rbpAux=0
+        for k in range(0,len(lst_ids_pred_sorted)):
+            id_pred = lst_ids_pred_sorted[k]            
+            posI= k+1;
+            if id_pred in values_gold:
+                rbpAux = rbpAux + values_gold[id_pred]* pow(self.p_param, posI-1)
+                    
+        rbp = (1-self.p_param)*rbpAux;   
+        self.result[PyEvALLReport.AVERAGE_TAG]=rbp
+        logger.debug("RBP for the testcase %s is: %s", comparator.get_testcase(), rbp)   
+             
+                
+    def fire_preconditions(self, comparator):
+        if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_RANKING]): 
+            super().fire_preconditions(PyEvALLReport.METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION, comparator.get_testcase()) 
+            return True
+        if comparator.is_duplicate_values_true():
+            super().fire_warning(PyEvALLReport.METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING, comparator.get_testcase())             
+        return False 
+
+
+
+
+
+
 
 
         

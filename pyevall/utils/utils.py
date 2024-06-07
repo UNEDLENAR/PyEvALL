@@ -25,25 +25,35 @@
 import os
 import tempfile
 import uuid
+import logging.config
 
 class PyEvALLUtils(object):   
     dirname = os.path.dirname(__file__)
-    LOG_FILENAME = os.path.join(dirname, 'file.conf' )
+    LOG_FILENAME = os.path.join(dirname, 'file.conf' )   
     PYEVALL_KEYS_TEXTS_REPORTS=os.path.join(dirname, 'pyevall_keys_texts_reports.rep' )
     MODULE_NAME="pyevall.metrics.metrics" 
     TEMP_FOLDER_EXECUTION= os.path.join(tempfile.gettempdir(), "pyevall_"+str(uuid.uuid4()))
 
+
     #PARAMS
     PARAM_HIERARCHY = "hierarchy"
-    PARAM_FORMAT = "format" #options:"json", "tsv", "csv"
     PARAM_REPORT = "report" #options: "embedded", "dataframe"
+    PARAM_LOG_LEVEL="log_level"
     
     #OPTIONS PARAMS
-    PARAM_OPTION_FORMAT_JSON= "json"
-    PARAM_OPTION_FORMAT_TSV= "tsv"
-    PARAM_OPTION_FORMAT_CSV= "csv"
+    PARAM_OPTION_REPORT_SIMPLE= "simple"    
     PARAM_OPTION_REPORT_EMBEDDED= "embedded"
     PARAM_OPTION_REPORT_DATAFRAME= "dataframe"
+    PARAM_OPTION_LOG_LEVEL_DEBUG="debug"
+    PARAM_OPTION_LOG_LEVEL_INFO="info"
+    PARAM_OPTION_LOG_LEVEL_NONE="none"
+    
+    #Default evaluation configuration
+    CONFIGURATION={
+                PARAM_HIERARCHY:None,
+                PARAM_REPORT:PARAM_OPTION_REPORT_SIMPLE,
+                PARAM_LOG_LEVEL:PARAM_OPTION_LOG_LEVEL_INFO               
+        }    
        
     #REPORTS
     keys_texts_reports = dict()
@@ -153,6 +163,32 @@ class PyEvALLUtils(object):
             }, 
         },             
     }
+    
+    @classmethod
+    def load_configuration(cls, **params):
+        if PyEvALLUtils.PARAM_HIERARCHY in params:
+            cls.CONFIGURATION[PyEvALLUtils.PARAM_HIERARCHY]=params[PyEvALLUtils.PARAM_HIERARCHY]        
+        if PyEvALLUtils.PARAM_REPORT in params:
+            cls.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]=params[PyEvALLUtils.PARAM_REPORT]                       
+        if PyEvALLUtils.PARAM_LOG_LEVEL in params:
+            cls.CONFIGURATION[PyEvALLUtils.PARAM_LOG_LEVEL]=params[PyEvALLUtils.PARAM_LOG_LEVEL]
+            
+    
+    
+    @classmethod
+    def get_logger(cls, name):
+        logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)        
+        logger= logging.getLogger(name) 
+        if cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_NONE:
+            logging.getLogger().removeHandler(logging.getLogger().handlers[0]) 
+            hl= logging.NullHandler()
+            logger.addHandler(hl)
+        elif cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_DEBUG:
+            logger.setLevel(logging.DEBUG)
+        elif cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_INFO:
+            logger.setLevel(logging.INFO)
+        return logger  
+    
     
     @classmethod
     def load_pair_texts(cls):

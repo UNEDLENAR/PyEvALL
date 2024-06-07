@@ -25,12 +25,8 @@
 from enum import Enum
 from pyevall.utils.utils import PyEvALLUtils
 import importlib
-import logging.config
 
-# Setting up the logger
-logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)
-logger = logging.getLogger(__name__)
-
+logger = PyEvALLUtils.get_logger(__name__)
 
     
 class MetricFactory(Enum):  
@@ -41,13 +37,14 @@ class MetricFactory(Enum):
     Precision = "Precision"
     Recall = "Recall"
     FMeasure = "FMeasure"    
+    RawICM = "RawICM"
     ICM = "ICM"
-    ICMNorm = "ICMNorm"
     
     #CLASSIFICATION LeWiDi
-    ICMSoft="ICMSoft"
-    ICMSoftNorm = "ICMSoftNorm"
+    RawSoftICM="RawSoftICM"
+    SoftICM = "SoftICM"
     CrossEntropy="CrossEntropy"
+    MAE="MAE"
     
     #RANKING
     PrecisionAtK= "PrecisionAtK"
@@ -56,17 +53,18 @@ class MetricFactory(Enum):
     MAP= "MAP"
     DCG= "DCG"
     nDCG= "nDCG"
+    ERR= "ERR"
+    RBP = "RBP"
       
     
     @classmethod   
-    def get_instance_metric(cls, metric, **params):
+    def get_instance_metric(cls, metric):
         logger.debug("Generating instance of metric " + str(metric))
         instance=None
         try:
             module_ = importlib.import_module(str(PyEvALLUtils.MODULE_NAME))
             try:
-                #instance = getattr(module_, metric)(comparator, **params)
-                instance = getattr(module_, metric)(**params)
+                instance = getattr(module_, metric)()
             except AttributeError:
                 logger.debug("ERROR: The metric " + str(metric) + " does not exist.")
         except ImportError:
@@ -91,6 +89,7 @@ class MetricFactory(Enum):
         lst_metrics.append(MetricFactory.ICMSoft)     
         lst_metrics.append(MetricFactory.ICMSoftNorm)     
         lst_metrics.append(MetricFactory.CrossEntropy)  
+        lst_metrics.append(MetricFactory.MAE)  
                     
         #RANKING
         lst_metrics.append(MetricFactory.PrecisionAtK)  
@@ -99,6 +98,8 @@ class MetricFactory(Enum):
         lst_metrics.append(MetricFactory.MAP) 
         lst_metrics.append(MetricFactory.DCG) 
         lst_metrics.append(MetricFactory.nDCG) 
+        lst_metrics.append(MetricFactory.ERR) 
+        lst_metrics.append(MetricFactory.RBP) 
         return lst_metrics
 
         

@@ -24,15 +24,9 @@
 # ============================================================================== 
 from pyevall.comparators.formats import PyEvALLFormat
 from pyevall.utils.utils import PyEvALLUtils
-import pandas as pd
 import numpy as np
-import logging.config
-
     
-# Setting up the logger
-logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)
-logger = logging.getLogger(__name__)   
-       
+logger = PyEvALLUtils.get_logger(__name__)       
        
        
 class Comparator(object):
@@ -70,8 +64,8 @@ class Comparator(object):
         return self.testcase
     
     
-    def get_classes_from_df(self, df):
-        return df[PyEvALLFormat.VALUE].unique()    
+#    def get_classes_from_df(self, df):
+#        return df[PyEvALLFormat.VALUE].unique()    
     
     
     def get_classes_gold(self):
@@ -142,12 +136,9 @@ class Comparator(object):
 
            
 class ClassificationComparator(Comparator):    
-    def __init__(self, **params):               
+    def __init__(self):               
         logger.debug("Initializing object")
-        self.hierarchy = None       
-       
-        if PyEvALLUtils.PARAM_HIERARCHY in params:
-            self.hierarchy= params[PyEvALLUtils.PARAM_HIERARCHY]
+        self.hierarchy = PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_HIERARCHY]       
 
         self.proporties[Comparator.COMPARATOR_PROPERTY_CLASSIFICATION]=True
         self.preprocess_df_format_classification()
@@ -281,14 +272,16 @@ class RankingComparator(Comparator):
         self.preprocess_df_format_ranking()
         if self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]:
             self.pred_df_sorted= self.pred_df.sort_values(PyEvALLFormat.VALUE)
+            self.duplicate_values=None
 
 
     def preprocess_df_format_ranking(self):         
-        #Si el gold tiene diferentes tipos de datos en value es un error          
+        #If gold has different data types in value it is an error.          
         lst_g_type=self.gold_df[PyEvALLFormat.VALUE].apply(type).unique()
         if not (lst_g_type[0]==type(1)):
             self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]= False
             return 
+        
         
     
     def get_first_k_relevant_items_in_pred(self, param_k):
@@ -339,13 +332,17 @@ class RankingComparator(Comparator):
         return  self.gold_df.set_index(PyEvALLFormat.ID)[PyEvALLFormat.VALUE].to_dict()
         
 
+    def is_duplicate_values_true(self):
+        if self.duplicate_values==None:
+            self.duplicate_values= self.gold_df[PyEvALLFormat.VALUE].duplicated().any()
+        return self.duplicate_values
         
         
 class PyEvALLComparator(ClassificationComparator, RankingComparator):
-    def __init__(self, p_df, g_df, tc, **params):
+    def __init__(self, p_df, g_df, tc):
         logger.debug("Initializing object")
         Comparator.__init__(self,p_df, g_df, tc)
-        ClassificationComparator.__init__(self, **params)
+        ClassificationComparator.__init__(self)
         RankingComparator.__init__(self)
 
 

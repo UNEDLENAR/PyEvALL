@@ -27,12 +27,7 @@ import json
 from pyevall.utils.utils import PyEvALLUtils
 import pandas as pd
 from tabulate import tabulate
-import logging.config
-
-# Setting up the logger
-logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)
-logger = logging.getLogger(__name__)
-
+logger = PyEvALLUtils.get_logger(__name__)
 
 
 class PyEvALLReport(object):
@@ -46,6 +41,7 @@ class PyEvALLReport(object):
     #TAGs class
     OK ="OK" 
     FAIL = "FAIL"
+    WARNING = "WARNING"
     STOP = "STOP"
     CONTINUE= "CONTINUE"
     UNKNOWN="UNKNOWN"
@@ -68,27 +64,33 @@ class PyEvALLReport(object):
     TEST_CASES_TAG="test_cases"
     AVERAGE_TAG= "average"
     AVERAGE_PER_TC_TAG = "average_per_test_case"
+    PRECONDITIONS_TAG = "preconditions"
     
     #TAGS Metric errors and preconditions
     METRIC_UNKONW_METRIC_ERROR= "METRIC_UNKONW_METRIC_ERROR"
-    PRECONDITIONS_TAG = "preconditions"
+    METRIC_NOT_TEST_CASE_IN_COMMON_ERROR="METRIC_NOT_TEST_CASE_IN_COMMON_ERROR"
     METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR="METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR"
     METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION= "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION"
     METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT= "METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT"
+    METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC="METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC"
+    METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING="METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING"
         
     #TAGS Format parser errors
     FORMAT_FILE_NOT_EXIST_ERROR="FORMAT_FILE_NOT_EXIST_ERROR"
     FORMAT_EMPTY_FILE_ERROR="FORMAT_EMPTY_FILE_ERROR"
+    
 
     #TAGS Format parser json
     FORMAT_INCORRECT_JSON_ERROR="FORMAT_INCORRECT_JSON_ERROR"
     FORMAT_INCORRECT_SCHEMA_JSON_ERROR="FORMAT_INCORRECT_SCHEMA_JSON_ERROR"
     
-    #TAGS Format parser tsv
+    #TAGS Format parser tsv and csv
     FORMAT_NO_HEADERS_ROW_ERROR="FORMAT_NO_HEADERS_ROW_ERROR"
     FORMAT_NUMBER_COLUMNS_ROW_ERROR="FORMAT_NUMBER_COLUMNS_ROW_ERROR"
     FORMAT_EMPTY_VALUE_ROW_ERROR="FORMAT_EMPTY_VALUE_ROW_ERROR"
     FORMAT_IDS_REPEATED_ROW_ERROR="FORMAT_IDS_REPEATED_ROW_ERROR"
+    FORMAT_CSV_FORMAT_IDENTIFIED_WARNING="FORMAT_CSV_FORMAT_IDENTIFIED_WARNING"
+    FORMAT_TSV_FORMAT_IDENTIFIED_WARNING="FORMAT_TSV_FORMAT_IDENTIFIED_WARNING"
     
     #TAGS Format generic error
     FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR="FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR"
@@ -165,6 +167,18 @@ class PyEvALLReport(object):
         else:
             raise Exception("Imposible error") 
     
+    
+    def insert_file_warning(self, file_name, warning, stop_error):            
+        if file_name in self.report[self.FILES_TAG]:
+            if not warning in self.report[self.FILES_TAG][file_name][self.ERRORS_TAG]:
+                self.report[self.FILES_TAG][file_name][self.ERRORS_TAG][warning]=dict()
+                self.report[self.FILES_TAG][file_name][self.ERRORS_TAG][warning][self.DESCRIPTION_TAG]=self.EMBEDDED_OPTION
+                #self.report[self.FILES_TAG][file_name][self.ERRORS_TAG][error][self.EXCEPTION_TAG]=excep 
+                self.report[self.FILES_TAG][file_name][self.ERRORS_TAG][warning][self.STATUS_TAG]= self.STOP if stop_error==True else self.CONTINUE
+                self.report[self.FILES_TAG][file_name][self.STATUS_TAG]=self.WARNING          
+        else:
+            raise Exception("Imposible error")  
+
         
     ##########################################
     #                                        #
@@ -202,6 +216,21 @@ class PyEvALLReport(object):
         self.report[self.METRIC_TAG][metric.class_name][self.RESULTS_TAG][PyEvALLReport.AVERAGE_PER_TC_TAG]=aveg_tc         
     
   
+    def insert_error_metric(self, metric, error):
+        self.report[self.METRIC_TAG][metric.class_name]=dict()
+        self.report[self.METRIC_TAG][metric.class_name][self.NAME_TAG]=metric.name    
+        self.report[self.METRIC_TAG][metric.class_name][self.ACRONYM_TAG]=metric.acronym
+        self.report[self.METRIC_TAG][metric.class_name][self.DESCRIPTION_TAG]=self.COMING_SOON   
+        self.report[self.METRIC_TAG][metric.class_name][self.STATUS_TAG]=self.FAIL
+        if not self.ERRORS_TAG in self.report[self.METRIC_TAG][metric.class_name]:
+            self.report[self.METRIC_TAG][metric.class_name][self.ERRORS_TAG]=[]
+        
+        error_report=dict()
+        error_report[self.NAME_TAG]= error
+        error_report[self.DESCRIPTION_TAG]=self.EMBEDDED_OPTION
+        self.report[self.METRIC_TAG][metric.class_name][self.ERRORS_TAG].append(error_report)
+        
+    
     def insert_error_metric_unknown(self, metric, error):
         self.report[self.METRIC_TAG][metric]=dict()
         self.report[self.METRIC_TAG][metric][self.NAME_TAG]=metric    
@@ -215,6 +244,12 @@ class PyEvALLReport(object):
         error_report[self.NAME_TAG]= error
         error_report[self.DESCRIPTION_TAG]=self.EMBEDDED_OPTION
         self.report[self.METRIC_TAG][metric][self.ERRORS_TAG].append(error_report)
+        
+    def is_error_preconditions(self, preconditions):
+        for pred in preconditions:
+            precond=preconditions[pred]
+            if PyEvALLReport.FAIL==precond[PyEvALLReport.STATUS_TAG]:
+                return True        
     
     ##########################################
     #                                        #
@@ -551,7 +586,7 @@ class PyEvALLMetaReportDataFrame(PyEvALLDataframeReport):
                     self.df_average=df_report.df_average
                     
                     
-                if self.df_test_case_classes is not None:
+                if self.df_test_case is not None:
                     self.df_test_case = pd.concat([self.df_test_case,df_report.df_test_case], ignore_index=True)
                 else:
                     self.df_test_case=df_report.df_test_case

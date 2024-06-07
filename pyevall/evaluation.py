@@ -28,20 +28,21 @@ from pyevall.reports.reports import PyEvALLReport, PyEvALLDataframeReport,\
 from pyevall.utils.utils import PyEvALLUtils
 from pyevall.comparators.comparators import PyEvALLFormat
 from pyevall.reports.reports import PyEvALLEmbeddedReport
-import logging.config
-
-# Setting up the logger
-logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)
-logger = logging.getLogger(__name__)
 
 
+logger = PyEvALLUtils.get_logger(__name__)
 
-class PyEvALLEvaluation(object):    
+
+class PyEvALLEvaluation(object):
         
+    def __init__(self):
+        self.is_conf_loaded=False
         
-    def init_report(self):
-        self.pyevall_report= PyEvALLReport()
-        self.pyevall_report.init_report()     
+    def load_evaluation_conf(self, **params):
+        if not self.is_conf_loaded:
+            PyEvALLUtils.load_configuration(**params)  
+            logger = PyEvALLUtils.get_logger(__name__)  
+            self.is_conf_loaded=True  
 
 
     def evaluate_lst(self, lst_pred, goldstandard, lst_metrics, **params):
@@ -64,11 +65,14 @@ class PyEvALLEvaluation(object):
             >>> params = {'report': embedded}
             >>> evaluate(predictions, goldstandard, lst_metrics, **params)
         """
-        
+        #Set evaluation configuration of PyEvALL
+        self.load_evaluation_conf(**params)
+                
         logger.info("Evaluating the following metrics " + str(lst_metrics))  
         # Create a PyEvALLFormat object to handle parsing and processing
         meta_report = None
-        if PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:        
+        #if PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:
+        if PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:        
             meta_report = PyEvALLMetaReportDataFrame(None)
         else:
             meta_report = PyEvALLMetaReport()
@@ -100,44 +104,49 @@ class PyEvALLEvaluation(object):
             >>> params = {'report': embedded}
             >>> evaluate(predictions, goldstandard, lst_metrics, **params)
         """        
+        #Set evaluation configuration of PyEvALL
+        self.load_evaluation_conf(**params)
+                
         logger.info("Evaluating the following metrics " + str(lst_metrics))  
         # Create a PyEvALLFormat object to handle parsing and processing
-        self.init_report()
-        parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard, **params)  
+        self.pyevall_report= PyEvALLReport()
+        self.pyevall_report.init_report() 
+        parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard)  
               
         if parser.valid_execution: 
             # Get comparators for each test case if format is valid 
-            testcase_comp = parser.get_pyevall_comparators(**params)   
-            if len(testcase_comp)>0:   
-                # Iterate through each metric in the provided list      
-                for m in lst_metrics:
-                    logger.debug("Evaluating the following metric " + m)    
-                    # Create a metric instance using MetricFactory            
-                    metric = MetricFactory.get_instance_metric(m, **params)     
-                    
-                    if not metric==None:
-                        # Evaluate the metric using the created instance and test case comparators
-                        self.evaluate_metric(metric, testcase_comp)                
+            testcase_comp = parser.get_pyevall_comparators() 
+            # Iterate through each metric in the provided list      
+            for m in lst_metrics:
+                logger.debug("Evaluating the following metric " + m)    
+                # Create a metric instance using MetricFactory            
+                metric = MetricFactory.get_instance_metric(m)     
+                
+                if not metric==None:
+                    # Evaluate the metric using the created instance and test case comparators
+                    if len(testcase_comp)>0:   
+                        self.evaluate_metric(metric, testcase_comp)       
                     else:
-                        # Handle the case where the metric is unknown
-                        self.pyevall_report.insert_error_metric_unknown(m, PyEvALLReport.METRIC_UNKONW_METRIC_ERROR)
+                        self.pyevall_report.insert_error_metric(metric, PyEvALLReport.METRIC_NOT_TEST_CASE_IN_COMMON_ERROR)         
+                else:
+                    # Handle the case where the metric is unknown
+                    self.pyevall_report.insert_error_metric_unknown(m, PyEvALLReport.METRIC_UNKONW_METRIC_ERROR)
                         
         # Generate and return the evaluation report            
-        return self.generate_report(**params)        
+        return self.generate_report()        
               
  
-    def evaluate_metric(self, metric, lst_comparators, **params):
+    def evaluate_metric(self, metric, lst_comparators):
         """
         Evaluates a given metric on a set of comparators and updates the evaluation report.
     
         Args:
             metric (Metric): The metric object to be evaluated.
             lst_comparators (list): A list of comparators for each test case.
-            **params (dict): Optional parameters passed to the metric evaluation.
     
         Returns:
             None
-        """        
+        """                
         # Initialize the metric section in the evaluation report
         self.pyevall_report.init_metric(metric)
         sum_tc=0
@@ -149,13 +158,16 @@ class PyEvALLEvaluation(object):
             metric.evaluate(comp)         
             
             # Check if the metric has any preconditions fired                           
-            if not len(metric.preconditions)==0:
+            #if not len(metric.preconditions)==0:
+            if self.pyevall_report.is_error_preconditions(metric.preconditions):
                 # Add preconditions and skip average result calculation
                 self.pyevall_report.insert_preconditions_metric(metric)
                 self.pyevall_report.insert_result_aveg_tc_metric(metric, None)
                 return
             else:
                 # Otherwise, add the result for the current test case
+                if not len(metric.preconditions)==0:
+                    self.pyevall_report.insert_preconditions_metric(metric)
                 self.pyevall_report.insert_result_testcase_metric(metric, comp.get_testcase())
                 if not metric.result[PyEvALLReport.AVERAGE_TAG]==None:
                     sum_tc+=float(metric.result[PyEvALLReport.AVERAGE_TAG])
@@ -169,39 +181,34 @@ class PyEvALLEvaluation(object):
         if not valid_tc==0:
             aveg_tc=sum_tc/len(lst_comparators)
         self.pyevall_report.insert_result_aveg_tc_metric(metric, aveg_tc)  
-                       
+                    
+        
                 
-    def generate_report(self, **params):
+    def generate_report(self):
         """
         Generates an evaluation report in either embedded or full format based on the provided parameters.
-    
-        Args:
-            **params (dict, optional): Keyword arguments controlling the report format.
-                - `PyEvALLUtils.PARAM_REPORT`: If set to `PyEvALLUtils.PARAM_REPORT_EMBEDDED`, generates an embedded report.
-                - Other parameters may be used by specific report formats (not shown here).
-    
+       
         Returns:
             str: The generated evaluation report in the requested format.
         """
-        if PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED:     
+        if PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED:             
             # Generate embedded report           
             embedded = PyEvALLEmbeddedReport(self.pyevall_report )
             embedded.generate_pyevall_embedded_report()
             return embedded
 
-        elif PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:
+        elif PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME: 
             # Generate dataframe report           
             df_report = PyEvALLDataframeReport(self.pyevall_report)
             df_report.generate_pyevall_df_report()
             return df_report            
         
-        else:
+        elif PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_SIMPLE: 
             # Generate default full report
             return self.pyevall_report             
 
 
-    
-
+        
 
     
 
