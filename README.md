@@ -136,7 +136,7 @@ metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFa
 ```
 
 ## Input format 
-PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to note that it is not necessary that the files are in the same formats, the gold can be in json and the predictions in tsv. PyEvALL automatically detects the input format and converts it to json to check, by means of its schema, the validation of the input format and informs about the conversion by means of a warning.
+PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to note that it is not necessary that the files are in the same formats, the gold can be in json and the predictions in tsv. PyEvALL automatically detects the input format and converts it to json to check, by means of its schema, the validation of the input format and informs about the conversion by means of a warning. A detailed desciption of each input format for each evaluation context is done in section [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall).
 
 
 
