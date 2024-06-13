@@ -60,7 +60,7 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 |Precision                                 |Pr           |*MetricFactory.Precision*        |
 |Recall                                    |Re           |*MetricFactory.Recall*           |
 |F-Measure                                 |F1           |*MetricFactory.FMeasure*         |
-|Information Contrast model                |ICM          |*MetricFactory.ICM*              |
+|Information Contrast Model                |ICM          |*MetricFactory.ICM*              |
 |Normalized Information Contrast Model     |ICM-Norm     |*MetricFactory.ICMNorm*          |
 |Information Contrast Model Soft           |ICM-Soft     |*MetricFactory.ICMSoft*          |
 |Normalized Information Contrast Model Soft|ICM-Soft-Norm|*MetricFactory.ICMSoftNorm*      |
