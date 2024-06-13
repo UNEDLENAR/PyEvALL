@@ -39,17 +39,17 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 # Implemented Evaluation Contexts and Metrics
 PyEvALL 2.0 allows evaluation in the following contexts:
 
-- **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *Raw ICM*.
+- **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
 
 - **Multi-label classification**: evaluation context where each instance is assigned one or more classes from a set of target classes. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. In this context, evaluation can be performed with the metrics *Precision, Recall* and *F-measure*.
 
-- **Mono-label hierarchical classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *Raw ICM* are available.
+- **Mono-label hierarchical classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *ICM Norm* are available.
 
-- **Multi-label hierarchical classification**: Evaluation context where each instance is assigned one or more classes from a set of target classes. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *Raw ICM* can be used.
+- **Multi-label hierarchical classification**: Evaluation context where each instance is assigned one or more classes from a set of target classes. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *ICM Norm* can be used.
 
 - **Ranking**: In the ranking evaluation context, the metrics aim to quantify the extent to which a ranking produced by systems is compatible with the relevance values assigned in the gold standard. In this context, the following metrics are available: *Precision at K, R Precision, MRR, MAP, DCG*, *nDCG*, *ERR* and *RBP*.
 
-- **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *MAE*, *Cross Entropy, Soft ICM* and *Raw Soft ICM* are available.
+- **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *MAE*, *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
 
 
 |**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
@@ -60,10 +60,10 @@ PyEvALL 2.0 allows evaluation in the following contexts:
 |Precision                                 |Pr           |*MetricFactory.Precision*        |
 |Recall                                    |Re           |*MetricFactory.Recall*           |
 |F-Measure                                 |F1           |*MetricFactory.FMeasure*         |
-|Raw Information Contrast model            |Raw ICM      |*MetricFactory.RawICM*              |
-|Information Contrast Model   			   |ICM		     |*MetricFactory.ICM*          |
-|Raw Soft Information Contrast Model       |Raw Soft ICM |*MetricFactory.RawSoftICM*          |
-|Soft Information Contrast Model			|Soft ICM	 |*MetricFactory.SoftICM*      |
+|Information Contrast model                |ICM          |*MetricFactory.ICM*              |
+|Normalized Information Contrast Model     |ICM-Norm     |*MetricFactory.ICMNorm*          |
+|Information Contrast Model Soft           |ICM-Soft     |*MetricFactory.ICMSoft*          |
+|Normalized Information Contrast Model Soft|ICM-Soft-Norm|*MetricFactory.ICMSoftNorm*      |
 |Cross Entropy                             |CE           |*MetricFactory.CrossEntropy*     |
 |Mean Absolute Error                       |MAE          |*MetricFactory.MAE*     		|
 |Precision at k                            |P@k          |*MetricFactory.PrecisionAtK*     |

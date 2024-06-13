@@ -80,7 +80,7 @@ metric_conversion_2={ 'Acc': 'ACC',
                    'FMeasure':'fmeasure',
                    'SP':'SysPre',
                    'Kappa':'Kappa',
-                   'Raw ICM':'ICM'
+                   'ICM':'ICM'
                     }
 
 
@@ -88,7 +88,6 @@ metric_conversion_3={
                    'Pr_TRUE': 'Precision_TRUE', 
                    'Re_TRUE':'Recall_TRUE',
                    'F1_TRUE':'Fmeasure_TRUE'
-
                     }
 
 
@@ -151,7 +150,7 @@ def test_2_classification_metrics():
 
 def evaluate_pyevall_classification_2(pred, gold, **params):
     test = PyEvALLEvaluation()
-    m = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value, "SystemPrecision", "Kappa", MetricFactory.RawICM.value]
+    m = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value, "SystemPrecision", "Kappa", MetricFactory.ICM.value]
     params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME   
     return test.evaluate(pred, gold, m, **params)
 

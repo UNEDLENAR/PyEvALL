@@ -37,12 +37,12 @@ class MetricFactory(Enum):
     Precision = "Precision"
     Recall = "Recall"
     FMeasure = "FMeasure"    
-    RawICM = "RawICM"
     ICM = "ICM"
+    ICMNorm = "ICMNorm"
     
     #CLASSIFICATION LeWiDi
-    RawSoftICM="RawSoftICM"
-    SoftICM = "SoftICM"
+    ICMSoft="ICMSoft"
+    ICMSoftNorm = "ICMSoftNorm"
     CrossEntropy="CrossEntropy"
     MAE="MAE"
     

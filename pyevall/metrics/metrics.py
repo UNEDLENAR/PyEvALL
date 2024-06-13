@@ -354,9 +354,9 @@ class FMeasure(PyEvALLMetric):
         
 
 
-class RawICM(PyEvALLMetric):   
+class ICM(PyEvALLMetric):   
     def __init__(self):
-        super().__init__(MetricFactory.RawICM.value, "Raw Information Contrast model", "Raw ICM")
+        super().__init__(MetricFactory.ICM.value, "Information Contrast model", "ICM")
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -488,7 +488,7 @@ class RawICM(PyEvALLMetric):
     #                                                                    #
     ###################################################################### 
     def evaluate(self, comparator):   
-        logger.info("Executing Raw ICM evaluation method")
+        logger.info("Executing ICM evaluation method")
         if self.fire_preconditions(comparator):
             return
         
@@ -597,33 +597,33 @@ class RawICM(PyEvALLMetric):
                 
                 
                 
-class ICM(PyEvALLMetric):       
+class ICMNorm(PyEvALLMetric):       
     def __init__(self):
-        super().__init__(MetricFactory.ICM.value, "Information Contrast Model", "ICM")
+        super().__init__(MetricFactory.ICMNorm.value, "Normalized Information Contrast Model", "ICM-Norm")
        
     
     def evaluate(self, comparator):   
-        logger.info("Executing ICM evaluation method")
+        logger.info("Executing ICM Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
-        #Evaluate Raw ICM pred vs gold
-        icm = RawICM()
+        #Evaluate ICM pred vs gold
+        icm = ICM()
         icm.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_pred = icm.result[PyEvALLReport.AVERAGE_TAG] 
                    
-        #Evaluate Raw ICM gold vs gold       
+        #Evaluate ICM gold vs gold  
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
         comp_gold.hierarchy= comparator.hierarchy
-        icm = RawICM()
+        icm = ICM()
         icm.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_gold=icm.result[PyEvALLReport.AVERAGE_TAG]
         
-        #Calculate ICM and truncate to 0 if the value is less than 0.
+        #Calculate ICM Norm and truncate to 0 if the value is less than 0.
         icm_norm= (float(res_pred) - (res_gold*-1))/(res_gold-(res_gold*-1))
         if icm_norm<0:
             icm_norm=0
@@ -652,9 +652,9 @@ class ICM(PyEvALLMetric):
     ##                        CLASSIFICATION LEWEDI METRICS                   ##  
     ##                                                                        ##
     ############################################################################
-class RawSoftICM(PyEvALLMetric): 
+class ICMSoft(PyEvALLMetric): 
     def __init__(self):
-        super().__init__(MetricFactory.RawSoftICM.value, "Raw Soft Information Contrast Model", "Raw Soft ICM")       
+        super().__init__(MetricFactory.ICMSoft.value, "Information Contrast Model Soft", "ICM-Soft")     
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -791,7 +791,7 @@ class RawSoftICM(PyEvALLMetric):
     #                                                                    #
     ######################################################################    
     def evaluate(self, comparator):   
-        logger.info("Executing Raw Soft ICM evaluation method")
+        logger.info("Executing ICM Soft evaluation method")
         if self.fire_preconditions(comparator):
             return
                
@@ -918,18 +918,18 @@ class RawSoftICM(PyEvALLMetric):
 
 
 
-class SoftICM(PyEvALLMetric):       
+class ICMSoftNorm(PyEvALLMetric):       
     def __init__(self):
-        super().__init__(MetricFactory.SoftICM.value, "Soft Information Contrast Model", "Soft ICM")      
+        super().__init__(MetricFactory.ICMSoftNorm.value, "Normalized Information Contrast Model Soft", "ICM-Soft-Norm")      
 
    
     def evaluate(self, comparator):   
-        logger.info("Executing Soft ICM evaluation method")
+        logger.info("Executing ICM-Soft Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
         #Evaluate ICM pred vs gold
-        icm_soft = RawSoftICM()
+        icm_soft = ICMSoft()
         icm_soft.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
@@ -938,13 +938,13 @@ class SoftICM(PyEvALLMetric):
         #Evaluate ICM gold vs gold       
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
         comp_gold.hierarchy= comparator.hierarchy
-        icm_soft = RawSoftICM()
+        icm_soft = ICMSoft()
         icm_soft.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
             res_gold=icm_soft.result[PyEvALLReport.AVERAGE_TAG]
         
-        #Calculate Soft ICM and truncate to 0 if the value is less than 0.
+        #Calculate ICM Norm and truncate to 0 if the value is less than 0.
         icm_norm= (float(res_pred) - (res_gold*-1))/(res_gold-(res_gold*-1))
         if icm_norm<0:
             icm_norm=0
