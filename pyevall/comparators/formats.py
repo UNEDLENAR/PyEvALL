@@ -33,8 +33,6 @@ import json
 import jsonschema
 from jsonschema import validate
 
-logger = PyEvALLUtils.get_logger(__name__)
-
 
 class PyEvALLFormat(object):  
     DELIMITER_TSV = "\t"
@@ -44,7 +42,7 @@ class PyEvALLFormat(object):
     VALUE = "value" 
     
 
-    def __init__(self, pyevall_report, pred_file, gold_file): 
+    def __init__(self, pyevall_report, pred_file, gold_file, evaluation_id): 
         """
         Constructor for initializing an instance of the class.
         
@@ -61,7 +59,10 @@ class PyEvALLFormat(object):
             - If files or formats are invalid, sets valid_execution flag to False.
             - Logs debugging information during the initialization process.
             - Returns an initialized instance ready for evaluation.
-        """             
+        """    
+        
+        self.evaluation_id = evaluation_id         
+        self.logger = PyEvALLUtils.get_logger(__name__, evaluation_id)
         #atributtes
         self.valid_execution=True
         self.pyevall_report=pyevall_report
@@ -81,7 +82,7 @@ class PyEvALLFormat(object):
             #if file does not exist we can not evaluate
             if self.check_file_exist(self.gold_path, self.gold_file_name):
                 #Identify format, convert to json and parse it
-                logger.debug("Initializing PyEvALLFormat object")   
+                self.logger.debug("Initializing PyEvALLFormat object")   
                 update_path, path= self.check_valids_for_tsv_csv_formats(self.pred_path, self.pred_file_name)
                 if update_path:
                     self.pred_path=path
@@ -119,7 +120,7 @@ class PyEvALLFormat(object):
                 self.delimiter =self.DELIMITER_TSV
                 path = self.parse_tsv_csv_2_json(path_file, file_name)
                 self.pyevall_report.insert_file_warning(file_name, PyEvALLReport.FORMAT_TSV_FORMAT_IDENTIFIED_WARNING, False)
-                logger.debug("Warning %s in file %s in line %s", PyEvALLReport.FORMAT_TSV_FORMAT_IDENTIFIED_WARNING, file_name) 
+                self.logger.debug("Warning %s in file %s in line %s", PyEvALLReport.FORMAT_TSV_FORMAT_IDENTIFIED_WARNING, file_name) 
                 return True, path
         except Exception as e:
             pass
@@ -130,7 +131,7 @@ class PyEvALLFormat(object):
                 self.delimiter =self.DELIMITER_CSV
                 path = path = self.parse_tsv_csv_2_json(path_file, file_name)
                 self.pyevall_report.insert_file_warning(file_name, PyEvALLReport.FORMAT_CSV_FORMAT_IDENTIFIED_WARNING, False)
-                logger.debug("Warning %s in file %s in line %s", PyEvALLReport.FORMAT_CSV_FORMAT_IDENTIFIED_WARNING, file_name) 
+                self.logger.debug("Warning %s in file %s in line %s", PyEvALLReport.FORMAT_CSV_FORMAT_IDENTIFIED_WARNING, file_name) 
                 return True, path
         except Exception as e:
             pass          
@@ -164,11 +165,11 @@ class PyEvALLFormat(object):
                 return True
             else:
                 self.pyevall_report.insert_file_error(file_name, PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, None, True)
-                logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, file_name)
+                self.logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, file_name)
                 return False                
         else:
             self.pyevall_report.insert_file_error(file_name, PyEvALLReport.FORMAT_FILE_NOT_EXIST_ERROR, None, True)
-            logger.debug("Error %s in file %s: file not exist", PyEvALLReport.FORMAT_FILE_NOT_EXIST_ERROR, file_name)
+            self.logger.debug("Error %s in file %s: file not exist", PyEvALLReport.FORMAT_FILE_NOT_EXIST_ERROR, file_name)
             return False    
     
      
@@ -221,7 +222,7 @@ class PyEvALLFormat(object):
         for tc in self.gold_df:
             if tc in self.pred_df:
                 if self.check_consistency_json_data(tc, self.pred_df[tc], self.gold_df[tc], self.gold_file_name, self.pred_file_name):
-                    comp = comparators.PyEvALLComparator(self.pred_df[tc], self.gold_df[tc], tc)
+                    comp = comparators.PyEvALLComparator(self.pred_df[tc], self.gold_df[tc], tc, self.evaluation_id)
                     lst_comparators.append(comp)
         return lst_comparators         
         
@@ -253,7 +254,7 @@ class PyEvALLFormat(object):
                     self.pred_df[tc]= pd.DataFrame.from_dict(pred_dict[tc])  
             else:
                 self.pyevall_report.insert_file_error(self.pred_file_name, PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, None, True)
-                logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, self.pred_file_name)
+                self.logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_EMPTY_FILE_ERROR, self.pred_file_name)
                 self.valid_execution=False                 
         else:
             self.valid_execution=False                    
@@ -295,14 +296,14 @@ class PyEvALLFormat(object):
                 data = json.load(f) 
         except ValueError as e:
             self.pyevall_report.insert_file_error(file_name, PyEvALLReport.FORMAT_INCORRECT_JSON_ERROR, str(e), True)
-            logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_INCORRECT_JSON_ERROR, file_name, e)             
+            self.logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_INCORRECT_JSON_ERROR, file_name, e)             
             return False, data
         
         try:
             validate(instance=data, schema=PyEvALLUtils.FORMAT_JSON_SCHEMA)
         except jsonschema.exceptions.ValidationError as e:
             self.pyevall_report.insert_file_error(file_name, PyEvALLReport.FORMAT_INCORRECT_SCHEMA_JSON_ERROR, str(e), True)
-            logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_INCORRECT_SCHEMA_JSON_ERROR, file_name, e)             
+            self.logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_INCORRECT_SCHEMA_JSON_ERROR, file_name, e)             
             return False, data
         
         return True, data
@@ -340,7 +341,7 @@ class PyEvALLFormat(object):
                 clean_data[inst[PyEvALLFormat.TEST_CASE]].append(inst)
             else:
                 self.pyevall_report.insert_file_line_error(file_name, index, PyEvALLReport.FORMAT_IDS_REPEATED_ROW_ERROR, None, stop_error)
-                logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_IDS_REPEATED_ROW_ERROR, file_name, index)
+                self.logger.debug("Error %s in file %s in line %s", PyEvALLReport.FORMAT_IDS_REPEATED_ROW_ERROR, file_name, index)
                 no_errors=False     
         return no_errors, clean_data    
     
@@ -350,20 +351,20 @@ class PyEvALLFormat(object):
         lst_g_type=gold_df[PyEvALLFormat.VALUE].apply(type).unique()
         if len(lst_g_type)!=1:
             self.pyevall_report.insert_file_testcase_error(gold_file_name, tc, PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, None, True)
-            logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, gold_file_name)
+            self.logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, gold_file_name)
             return False 
                              
         #If predictions has different data types in value it is an error.                            
         lst_p_type=pred_df[PyEvALLFormat.VALUE].apply(type).unique()
         if len(lst_p_type)!=1:
             self.pyevall_report.insert_file_testcase_error(pred_file_name, tc, PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, None, True)
-            logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, pred_file_name)
+            self.logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENTE_TYPES_IN_VALUE_FIELD_ERROR, pred_file_name)
             return False
         
         #If they are different types in gold and pred is a mistake.
         if lst_g_type[0]!=lst_p_type[0]:
             self.pyevall_report.insert_file_testcase_error(pred_file_name, tc, PyEvALLReport.FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED, None, True)
-            logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED, pred_file_name)
+            self.logger.debug("Error %s in file %s: file empty", PyEvALLReport.FORMAT_DIFFERENT_TYPES_IN_VALUE_GOLD_AND_PRED, pred_file_name)
             return False
         
         return True

@@ -26,8 +26,6 @@ from enum import Enum
 from pyevall.utils.utils import PyEvALLUtils
 import importlib
 
-logger = PyEvALLUtils.get_logger(__name__)
-
     
 class MetricFactory(Enum):  
     #CLASSIFICATION
@@ -58,13 +56,14 @@ class MetricFactory(Enum):
       
     
     @classmethod   
-    def get_instance_metric(cls, metric):
+    def get_instance_metric(cls, metric, evaluation_id):
+        logger = PyEvALLUtils.get_logger(__name__, evaluation_id)
         logger.debug("Generating instance of metric " + str(metric))
         instance=None
         try:
             module_ = importlib.import_module(str(PyEvALLUtils.MODULE_NAME))
             try:
-                instance = getattr(module_, metric)()
+                instance = getattr(module_, metric)(evaluation_id)
             except AttributeError:
                 logger.debug("ERROR: The metric " + str(metric) + " does not exist.")
         except ImportError:

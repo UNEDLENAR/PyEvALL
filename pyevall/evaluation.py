@@ -28,23 +28,24 @@ from pyevall.reports.reports import PyEvALLReport, PyEvALLDataframeReport,\
 from pyevall.utils.utils import PyEvALLUtils
 from pyevall.comparators.comparators import PyEvALLFormat
 from pyevall.reports.reports import PyEvALLEmbeddedReport
-
-
-logger = PyEvALLUtils.get_logger(__name__)
+import uuid
 
 
 class PyEvALLEvaluation(object):
         
     def __init__(self):
-        self.is_conf_loaded=False
+        self.logger = None
+        self.evaluation_id=None
         
     def load_evaluation_conf(self, **params):
-        if not self.is_conf_loaded:
-            PyEvALLUtils.load_configuration(**params)  
-            logger = PyEvALLUtils.get_logger(__name__)  
-            self.is_conf_loaded=True  
+        self.evaluation_id= str(uuid.uuid4())
+        PyEvALLUtils.load_configuration(self.evaluation_id, **params)  
+        self.logger = PyEvALLUtils.get_logger(__name__, self.evaluation_id)  
 
-
+    def remove_active_evaluation(self):
+        PyEvALLUtils.remove_active_configuration(self.evaluation_id)  
+            
+    
     def evaluate_lst(self, lst_pred, goldstandard, lst_metrics, **params):
         """
         This function evaluates a set of metrics on a set of predictions and a gold standard.
@@ -68,23 +69,25 @@ class PyEvALLEvaluation(object):
         #Set evaluation configuration of PyEvALL
         self.load_evaluation_conf(**params)
                 
-        logger.info("Evaluating the following metrics " + str(lst_metrics))  
+        self.logger.info("Evaluating the following metrics " + str(lst_metrics))  
         # Create a PyEvALLFormat object to handle parsing and processing
         meta_report = None
         #if PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:
-        if PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:        
+        if PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:        
             meta_report = PyEvALLMetaReportDataFrame(None)
         else:
             meta_report = PyEvALLMetaReport()
 
         for num , pred in enumerate(lst_pred, start=1):
-            report = self.evaluate(pred, goldstandard, lst_metrics, **params)
+            report = self.evaluate(pred, goldstandard, lst_metrics, load_config=False, **params)
             meta_report.add_pyevall_report(report, num)
 
+        #remove the active configuration for concurrence execution
+        self.remove_active_evaluation()
         return meta_report
      
           
-    def evaluate(self, predictions, goldstandard, lst_metrics, **params):
+    def evaluate(self, predictions, goldstandard, lst_metrics, load_config=True, **params):
         """
         This function evaluates a set of metrics on a set of predictions and a gold standard.
 
@@ -92,6 +95,7 @@ class PyEvALLEvaluation(object):
             predictions (list): List of predicted values.
             goldstandard (list): List of actual (ground truth) values.
             lst_metrics (list): List of metric names to be evaluated.
+            load_config (boolean): indicate if should load a new configuration or not.
             **params: Dictionary of optional parameters that are passed to metric creation and evaluation.
 
         Returns:
@@ -105,22 +109,23 @@ class PyEvALLEvaluation(object):
             >>> evaluate(predictions, goldstandard, lst_metrics, **params)
         """        
         #Set evaluation configuration of PyEvALL
-        self.load_evaluation_conf(**params)
+        if load_config:
+            self.load_evaluation_conf(**params)
                 
-        logger.info("Evaluating the following metrics " + str(lst_metrics))  
+        self.logger.info("Evaluating the following metrics " + str(lst_metrics))  
         # Create a PyEvALLFormat object to handle parsing and processing
         self.pyevall_report= PyEvALLReport()
         self.pyevall_report.init_report() 
-        parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard)  
+        parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard, self.evaluation_id)  
               
         if parser.valid_execution: 
             # Get comparators for each test case if format is valid 
             testcase_comp = parser.get_pyevall_comparators() 
             # Iterate through each metric in the provided list      
             for m in lst_metrics:
-                logger.debug("Evaluating the following metric " + m)    
+                self.logger.debug("Evaluating the following metric " + m)    
                 # Create a metric instance using MetricFactory            
-                metric = MetricFactory.get_instance_metric(m)     
+                metric = MetricFactory.get_instance_metric(m, self.evaluation_id)     
                 
                 if not metric==None:
                     # Evaluate the metric using the created instance and test case comparators
@@ -132,8 +137,13 @@ class PyEvALLEvaluation(object):
                     # Handle the case where the metric is unknown
                     self.pyevall_report.insert_error_metric_unknown(m, PyEvALLReport.METRIC_UNKONW_METRIC_ERROR)
                         
-        # Generate and return the evaluation report            
-        return self.generate_report()        
+        # Generate and return the evaluation report    
+        report=self.generate_report()  
+        
+        #remove the active configuration for concurrence execution
+        if load_config:
+            self.remove_active_evaluation()        
+        return report      
               
  
     def evaluate_metric(self, metric, lst_comparators):
@@ -191,19 +201,19 @@ class PyEvALLEvaluation(object):
         Returns:
             str: The generated evaluation report in the requested format.
         """
-        if PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED:             
+        if PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED:             
             # Generate embedded report           
             embedded = PyEvALLEmbeddedReport(self.pyevall_report )
             embedded.generate_pyevall_embedded_report()
             return embedded
 
-        elif PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME: 
+        elif PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME: 
             # Generate dataframe report           
             df_report = PyEvALLDataframeReport(self.pyevall_report)
             df_report.generate_pyevall_df_report()
             return df_report            
         
-        elif PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_SIMPLE: 
+        elif PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_SIMPLE: 
             # Generate default full report
             return self.pyevall_report             
 

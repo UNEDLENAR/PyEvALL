@@ -26,6 +26,7 @@ import os
 import tempfile
 import uuid
 import logging.config
+from distutils.command.config import config
 
 class PyEvALLUtils(object):   
     dirname = os.path.dirname(__file__)
@@ -47,13 +48,13 @@ class PyEvALLUtils(object):
     PARAM_OPTION_LOG_LEVEL_DEBUG="debug"
     PARAM_OPTION_LOG_LEVEL_INFO="info"
     PARAM_OPTION_LOG_LEVEL_NONE="none"
-    
+    CONFIGURATION=dict()
     #Default evaluation configuration
-    CONFIGURATION={
-                PARAM_HIERARCHY:None,
-                PARAM_REPORT:PARAM_OPTION_REPORT_SIMPLE,
-                PARAM_LOG_LEVEL:PARAM_OPTION_LOG_LEVEL_INFO               
-        }    
+    #CONFIGURATION={
+    #            PARAM_HIERARCHY:None,
+    #            PARAM_REPORT:PARAM_OPTION_REPORT_SIMPLE,
+    #            PARAM_LOG_LEVEL:PARAM_OPTION_LOG_LEVEL_INFO               
+    #    }    
        
     #REPORTS
     keys_texts_reports = dict()
@@ -165,27 +166,48 @@ class PyEvALLUtils(object):
     }
     
     @classmethod
-    def load_configuration(cls, **params):
+    def load_configuration(cls, evaluation_id, **params):
+        conf = PyEvALLUtils.get_active_configuration(evaluation_id)      
+        
         if PyEvALLUtils.PARAM_HIERARCHY in params:
-            cls.CONFIGURATION[PyEvALLUtils.PARAM_HIERARCHY]=params[PyEvALLUtils.PARAM_HIERARCHY]        
+            conf[PyEvALLUtils.PARAM_HIERARCHY]=params[PyEvALLUtils.PARAM_HIERARCHY]        
         if PyEvALLUtils.PARAM_REPORT in params:
-            cls.CONFIGURATION[PyEvALLUtils.PARAM_REPORT]=params[PyEvALLUtils.PARAM_REPORT]                       
+            conf[PyEvALLUtils.PARAM_REPORT]=params[PyEvALLUtils.PARAM_REPORT]                       
         if PyEvALLUtils.PARAM_LOG_LEVEL in params:
-            cls.CONFIGURATION[PyEvALLUtils.PARAM_LOG_LEVEL]=params[PyEvALLUtils.PARAM_LOG_LEVEL]
+            conf[PyEvALLUtils.PARAM_LOG_LEVEL]=params[PyEvALLUtils.PARAM_LOG_LEVEL]
+         
             
+    @classmethod    
+    def get_active_configuration(cls, evaluation_id):
+        if not evaluation_id in PyEvALLUtils.CONFIGURATION:
+            conf={
+                        cls.PARAM_HIERARCHY:None,
+                        cls.PARAM_REPORT:cls.PARAM_OPTION_REPORT_SIMPLE,
+                        cls.PARAM_LOG_LEVEL:cls.PARAM_OPTION_LOG_LEVEL_INFO               
+                } 
+            PyEvALLUtils.CONFIGURATION[evaluation_id]= conf
+        return PyEvALLUtils.CONFIGURATION[evaluation_id]             
+
+
+    @classmethod
+    def remove_active_configuration(cls, evaluation_id):
+        if evaluation_id in cls.CONFIGURATION:
+            cls.CONFIGURATION.pop(evaluation_id)
+    
     
     
     @classmethod
-    def get_logger(cls, name):
+    def get_logger(cls, name, evaluation_id):
         logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)        
         logger= logging.getLogger(name) 
-        if cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_NONE:
+        conf = PyEvALLUtils.get_active_configuration(evaluation_id)  
+        if conf[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_NONE:
             logging.getLogger().removeHandler(logging.getLogger().handlers[0]) 
             hl= logging.NullHandler()
             logger.addHandler(hl)
-        elif cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_DEBUG:
+        elif conf[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_DEBUG:
             logger.setLevel(logging.DEBUG)
-        elif cls.CONFIGURATION[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_INFO:
+        elif conf[cls.PARAM_LOG_LEVEL]==cls.PARAM_OPTION_LOG_LEVEL_INFO:
             logger.setLevel(logging.INFO)
         return logger  
     

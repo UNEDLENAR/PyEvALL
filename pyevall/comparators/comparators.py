@@ -25,8 +25,7 @@
 from pyevall.comparators.formats import PyEvALLFormat
 from pyevall.utils.utils import PyEvALLUtils
 import numpy as np
-    
-logger = PyEvALLUtils.get_logger(__name__)       
+       
        
        
 class Comparator(object):
@@ -37,8 +36,10 @@ class Comparator(object):
     COMPARATOR_PROPERTY_RANKING="ranking"
 
 
-    def __init__(self, p_df, g_df, tc):
-        logger.debug("Initializing object")            
+    def __init__(self, p_df, g_df, tc, evaluation_id):
+        self.evaluation_id=evaluation_id
+        self.logger = PyEvALLUtils.get_logger(__name__, evaluation_id)    
+        self.logger.debug("Initializing object")            
         self.pred_df= p_df
         self.gold_df = g_df
         self.testcase=tc   
@@ -136,9 +137,9 @@ class Comparator(object):
 
            
 class ClassificationComparator(Comparator):    
-    def __init__(self):               
-        logger.debug("Initializing object")
-        self.hierarchy = PyEvALLUtils.CONFIGURATION[PyEvALLUtils.PARAM_HIERARCHY]       
+    def __init__(self):           
+        self.logger.debug("Initializing object")
+        self.hierarchy = PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_HIERARCHY]       
 
         self.proporties[Comparator.COMPARATOR_PROPERTY_CLASSIFICATION]=True
         self.preprocess_df_format_classification()
@@ -161,7 +162,7 @@ class ClassificationComparator(Comparator):
  
 
     def generate_conf_matrix(self):
-        logger.debug("Generating Confusion matrix")        
+        self.logger.debug("Generating Confusion matrix")        
         self.generate_index_classes_and_init_matrix()  
         self.generate_conf_matrix_row()
 
@@ -187,7 +188,7 @@ class ClassificationComparator(Comparator):
 
 
     def generate_pair_matrix(self, gold_id, gold_value, pred_df):
-        logger.debug("Adding pair id in confusion matrix: gold - (%s,%s) for testcase %s", gold_id, gold_value, self.testcase)
+        self.logger.debug("Adding pair id in confusion matrix: gold - (%s,%s) for testcase %s", gold_id, gold_value, self.testcase)
         row = pred_df[pred_df[PyEvALLFormat.ID] == gold_id]
         if self.proporties[Comparator.COMPARATOR_PROPERTY_CLASSIFICATION_MONOLABEL]:
             if not row.empty:
@@ -218,7 +219,7 @@ class ClassificationComparator(Comparator):
 
 
     def get_index_matrix_by_class(self, cl):   
-        logger.debug("Getting index of class %s in testcase %s", cl, self.testcase)
+        self.logger.debug("Getting index of class %s in testcase %s", cl, self.testcase)
         #Generate confusion matrix if it is empty
         if len(self.conf_matrix_monolabel)==0 and len(self.conf_matrix_multilabel)==0:
             self.generate_conf_matrix()                    
@@ -226,7 +227,7 @@ class ClassificationComparator(Comparator):
 
 
     def get_diagonal_conf_matrix(self):
-        logger.debug("Getting diagonal for testcase %s", self.testcase)
+        self.logger.debug("Getting diagonal for testcase %s", self.testcase)
         #Generate confusion matrix if it is empty
         if len(self.conf_matrix_monolabel)==0 and len(self.conf_matrix_multilabel)==0:
             self.generate_conf_matrix()    
@@ -234,7 +235,7 @@ class ClassificationComparator(Comparator):
     
     
     def get_true_positive_per_class(self, cl):
-        logger.debug("Getting true positive instances for class %s in testcase %s", cl, self.testcase)
+        self.logger.debug("Getting true positive instances for class %s in testcase %s", cl, self.testcase)
         #Generate confusion matrix if it is empty
         if len(self.conf_matrix_monolabel)==0 and len(self.conf_matrix_multilabel)==0:
             self.generate_conf_matrix()
@@ -248,7 +249,7 @@ class ClassificationComparator(Comparator):
             
 
     def get_pred_for_class(self,cl):
-        logger.debug("Getting predicted instances for class %s in testcase %s", cl, self.testcase)
+        self.logger.debug("Getting predicted instances for class %s in testcase %s", cl, self.testcase)
         #Generate confusion matrix if it is empty
         if len(self.conf_matrix_monolabel)==0 and len(self.conf_matrix_multilabel)==0:
             self.generate_conf_matrix()
@@ -267,7 +268,7 @@ class ClassificationComparator(Comparator):
       
 class RankingComparator(Comparator):
     def __init__(self, **params):
-        logger.debug("Initializing object")
+        self.logger.debug("Initializing object")
         self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]=True
         self.preprocess_df_format_ranking()
         if self.proporties[Comparator.COMPARATOR_PROPERTY_RANKING]:
@@ -339,9 +340,8 @@ class RankingComparator(Comparator):
         
         
 class PyEvALLComparator(ClassificationComparator, RankingComparator):
-    def __init__(self, p_df, g_df, tc):
-        logger.debug("Initializing object")
-        Comparator.__init__(self,p_df, g_df, tc)
+    def __init__(self, p_df, g_df, tc, evaluation_id):
+        Comparator.__init__(self,p_df, g_df, tc, evaluation_id)
         ClassificationComparator.__init__(self)
         RankingComparator.__init__(self)
 

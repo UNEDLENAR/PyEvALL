@@ -27,7 +27,7 @@ import json
 from pyevall.utils.utils import PyEvALLUtils
 import pandas as pd
 from tabulate import tabulate
-logger = PyEvALLUtils.get_logger(__name__)
+
 
 
 class PyEvALLReport(object):

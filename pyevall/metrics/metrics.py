@@ -33,12 +33,14 @@ import pandas as pd
 from statistics import NormalDist
 import math
 
-logger = PyEvALLUtils.get_logger(__name__)
+
 
 
 
 class PyEvALLMetric(object):    
-    def __init__(self, class_name, name, acronym):
+    def __init__(self, class_name, name, acronym, evaluation_id):
+        self.evaluation_id= evaluation_id
+        self.logger = PyEvALLUtils.get_logger(__name__, self.evaluation_id)
         self.class_name=class_name
         self.name= name
         self.acronym=acronym
@@ -101,11 +103,11 @@ class Accuracy(PyEvALLMetric):
                     
         @preconditions: None                
     """     
-    def __init__(self):        
-        super().__init__(MetricFactory.Accuracy.value, "Accuracy", "Acc")    
+    def __init__(self, evaluation_id):        
+        super().__init__(MetricFactory.Accuracy.value, "Accuracy", "Acc", evaluation_id)    
 
     def evaluate(self, comparator):  
-        logger.info("Executing accuracy evaluation method")      
+        self.logger.info("Executing accuracy evaluation method")      
         
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -116,7 +118,7 @@ class Accuracy(PyEvALLMetric):
         acc = sum_diagonal/instances_gold
 
         self.result[PyEvALLReport.AVERAGE_TAG]=acc
-        logger.debug("Accuracy for the testcase %s is: %s", comparator.get_testcase(), acc)
+        self.logger.debug("Accuracy for the testcase %s is: %s", comparator.get_testcase(), acc)
             
     def fire_preconditions(self, comparator):
         if not (comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION] and comparator.proporties[PyEvALLComparator.COMPARATOR_PROPERTY_CLASSIFICATION_MONOLABEL]): 
@@ -140,12 +142,12 @@ class SystemPrecision(PyEvALLMetric):
                     
         @preconditions: Predition and goldstandard files should contain different number of elements in all testcases               
     """     
-    def __init__(self):
-        super().__init__(MetricFactory.SystemPrecision.value, "System Precision", "SP")        
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.SystemPrecision.value, "System Precision", "SP", evaluation_id)        
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing System Precision evaluation method")
+        self.logger.info("Executing System Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -157,7 +159,7 @@ class SystemPrecision(PyEvALLMetric):
             sp = sum_diagonal/instances_pred
 
         self.result[PyEvALLReport.AVERAGE_TAG]=sp
-        logger.debug("System Precision for the testcase %s is: %s", comparator.get_testcase(), sp)        
+        self.logger.debug("System Precision for the testcase %s is: %s", comparator.get_testcase(), sp)        
            
                 
     def fire_preconditions(self, comparator):
@@ -172,12 +174,12 @@ class SystemPrecision(PyEvALLMetric):
         
                 
 class Kappa(PyEvALLMetric):         
-    def __init__(self):
-        super().__init__(MetricFactory.Kappa.value, "Cohen's Kappa", "Kappa")           
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.Kappa.value, "Cohen's Kappa", "Kappa", evaluation_id)           
         
         
     def evaluate(self, comparator):
-        logger.info("Executing kappa evaluation method")
+        self.logger.info("Executing kappa evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -218,12 +220,12 @@ class Kappa(PyEvALLMetric):
 
 
 class Precision(PyEvALLMetric):        
-    def __init__(self):
-        super().__init__(MetricFactory.Precision.value, "Precision", "Pr")           
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.Precision.value, "Precision", "Pr", evaluation_id)           
         
         
     def evaluate(self, comparator):
-        logger.info("Executing precision evaluation method")
+        self.logger.info("Executing precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -241,10 +243,10 @@ class Precision(PyEvALLMetric):
                 self.result[PyEvALLReport.CLASSES_TAG][c]=p
                 aveg_class += p
                 num_classes+= 1
-                logger.debug("Precision for class "+ c + " in testcase " + comparator.get_testcase() + " is: " + str(p))
+                self.logger.debug("Precision for class "+ c + " in testcase " + comparator.get_testcase() + " is: " + str(p))
             else:
                 self.result[PyEvALLReport.CLASSES_TAG][c]=None
-                logger.debug("Precision for class "+ c + " in testcase " + comparator.get_testcase() + " not exist ")                        
+                self.logger.debug("Precision for class "+ c + " in testcase " + comparator.get_testcase() + " not exist ")                        
                 
         aveg=None
         if not num_classes==0:
@@ -267,12 +269,12 @@ class Precision(PyEvALLMetric):
             
                     
 class Recall(PyEvALLMetric):          
-    def __init__(self):
-        super().__init__(MetricFactory.Recall.value, "Recall", "Re")          
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.Recall.value, "Recall", "Re", evaluation_id)          
         
         
     def evaluate(self, comparator):
-        logger.info("Executing recall evaluation method")
+        self.logger.info("Executing recall evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -286,7 +288,7 @@ class Recall(PyEvALLMetric):
             r= TP/instances_gold_class
             self.result[PyEvALLReport.CLASSES_TAG][c]=r
             aveg_class += r
-            logger.debug("Recall for class "+ c + " in testcase " + comparator.get_testcase() + " is: " + str(r))                      
+            self.logger.debug("Recall for class "+ c + " in testcase " + comparator.get_testcase() + " is: " + str(r))                      
                 
         aveg = aveg_class/len(classes)
         self.result[PyEvALLReport.AVERAGE_TAG]=aveg
@@ -306,13 +308,13 @@ class Recall(PyEvALLMetric):
                 
         
 class FMeasure(PyEvALLMetric):     
-    def __init__(self):
-        super().__init__(MetricFactory.FMeasure.value, "F-Measure", "F1")  
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.FMeasure.value, "F-Measure", "F1", evaluation_id)  
         self.alfa_param=0.5          
                 
                 
     def evaluate(self, comparator):
-        logger.info("Executing fmeasure evaluation method")
+        self.logger.info("Executing fmeasure evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return 
@@ -331,7 +333,7 @@ class FMeasure(PyEvALLMetric):
                     f1 = 1/((self.alfa_param/p) + ((1-self.alfa_param)/r));                        
                     self.result[PyEvALLReport.CLASSES_TAG][c]=f1
                     aveg_class += f1
-                    logger.debug("F1 for class "+ str(c) + " in testcase " + comparator.get_testcase() + " is: " + str(f1))
+                    self.logger.debug("F1 for class "+ str(c) + " in testcase " + comparator.get_testcase() + " is: " + str(f1))
                 else:
                     self.result[PyEvALLReport.CLASSES_TAG][c]=0
             else:
@@ -355,8 +357,8 @@ class FMeasure(PyEvALLMetric):
 
 
 class ICM(PyEvALLMetric):   
-    def __init__(self):
-        super().__init__(MetricFactory.ICM.value, "Information Contrast model", "ICM")
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.ICM.value, "Information Contrast model", "ICM", evaluation_id)
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -488,7 +490,7 @@ class ICM(PyEvALLMetric):
     #                                                                    #
     ###################################################################### 
     def evaluate(self, comparator):   
-        logger.info("Executing ICM evaluation method")
+        self.logger.info("Executing ICM evaluation method")
         if self.fire_preconditions(comparator):
             return
         
@@ -598,26 +600,26 @@ class ICM(PyEvALLMetric):
                 
                 
 class ICMNorm(PyEvALLMetric):       
-    def __init__(self):
-        super().__init__(MetricFactory.ICMNorm.value, "Normalized Information Contrast Model", "ICM-Norm")
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.ICMNorm.value, "Normalized Information Contrast Model", "ICM-Norm", evaluation_id)
        
     
     def evaluate(self, comparator):   
-        logger.info("Executing ICM Normalized evaluation method")
+        self.logger.info("Executing ICM Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
         #Evaluate ICM pred vs gold
-        icm = ICM()
+        icm = ICM(self.evaluation_id)
         icm.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_pred = icm.result[PyEvALLReport.AVERAGE_TAG] 
                    
         #Evaluate ICM gold vs gold  
-        comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
+        comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase(), self.evaluation_id)
         comp_gold.hierarchy= comparator.hierarchy
-        icm = ICM()
+        icm = ICM(self.evaluation_id)
         icm.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
@@ -653,8 +655,8 @@ class ICMNorm(PyEvALLMetric):
     ##                                                                        ##
     ############################################################################
 class ICMSoft(PyEvALLMetric): 
-    def __init__(self):
-        super().__init__(MetricFactory.ICMSoft.value, "Information Contrast Model Soft", "ICM-Soft")     
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.ICMSoft.value, "Information Contrast Model Soft", "ICM-Soft", evaluation_id)     
         #parameters icm
         self.alpha_1=2
         self.alpha_2=2
@@ -791,7 +793,7 @@ class ICMSoft(PyEvALLMetric):
     #                                                                    #
     ######################################################################    
     def evaluate(self, comparator):   
-        logger.info("Executing ICM Soft evaluation method")
+        self.logger.info("Executing ICM Soft evaluation method")
         if self.fire_preconditions(comparator):
             return
                
@@ -919,26 +921,26 @@ class ICMSoft(PyEvALLMetric):
 
 
 class ICMSoftNorm(PyEvALLMetric):       
-    def __init__(self):
-        super().__init__(MetricFactory.ICMSoftNorm.value, "Normalized Information Contrast Model Soft", "ICM-Soft-Norm")      
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.ICMSoftNorm.value, "Normalized Information Contrast Model Soft", "ICM-Soft-Norm", evaluation_id)      
 
    
     def evaluate(self, comparator):   
-        logger.info("Executing ICM-Soft Normalized evaluation method")
+        self.logger.info("Executing ICM-Soft Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
         #Evaluate ICM pred vs gold
-        icm_soft = ICMSoft()
+        icm_soft = ICMSoft(self.evaluation_id)
         icm_soft.evaluate(comparator)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
             res_pred = icm_soft.result[PyEvALLReport.AVERAGE_TAG]        
             
         #Evaluate ICM gold vs gold       
-        comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase())
+        comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase(), self.evaluation_id)
         comp_gold.hierarchy= comparator.hierarchy
-        icm_soft = ICMSoft()
+        icm_soft = ICMSoft(self.evaluation_id)
         icm_soft.evaluate(comp_gold)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
@@ -967,8 +969,8 @@ class CrossEntropy(PyEvALLMetric):
     SMOOTH_VALUE=0.001
     
     
-    def __init__(self):
-        super().__init__(MetricFactory.CrossEntropy.value, "Cross Entropy", "CE")
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.CrossEntropy.value, "Cross Entropy", "CE", evaluation_id)
        
        
     def smooth_and_normalize_data(self, gold_df, pred_df):           
@@ -1008,7 +1010,7 @@ class CrossEntropy(PyEvALLMetric):
       
     
     def evaluate(self, comparator):
-        logger.info("Executing Cross Entropy evaluation method")
+        self.logger.info("Executing Cross Entropy evaluation method")
         if self.fire_preconditions(comparator):
             return
         pred_df = comparator.pred_df.copy()
@@ -1051,8 +1053,8 @@ class CrossEntropy(PyEvALLMetric):
 
 
 class MAE(PyEvALLMetric):    
-    def __init__(self):
-        super().__init__(MetricFactory.MAE.value, "Mean Absolute Error", "MAE")  
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.MAE.value, "Mean Absolute Error", "MAE", evaluation_id)  
         self.lst_classes=[] 
 
 
@@ -1078,7 +1080,7 @@ class MAE(PyEvALLMetric):
 
     #We need to expand the dataframe
     def evaluate(self, comparator):   
-        logger.info("Executing MAE evaluation method")
+        self.logger.info("Executing MAE evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1138,13 +1140,13 @@ class MAE(PyEvALLMetric):
     ##                                                                        ##
     ############################################################################     
 class PrecisionAtK(PyEvALLMetric):     
-    def __init__(self):
-        super().__init__(MetricFactory.PrecisionAtK.value, "Precision at k", "P@k")    
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.PrecisionAtK.value, "Precision at k", "P@k", evaluation_id)    
         self.k_param=10     
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing Precision at K evaluation method")
+        self.logger.info("Executing Precision at K evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1155,7 +1157,7 @@ class PrecisionAtK(PyEvALLMetric):
             p_at_k = relevants/self.k_param
 
         self.result[PyEvALLReport.AVERAGE_TAG]=p_at_k
-        logger.debug("Precision at k for the testcase %s is: %s", comparator.get_testcase(), p_at_k)        
+        self.logger.debug("Precision at k for the testcase %s is: %s", comparator.get_testcase(), p_at_k)        
                 
                 
     def fire_preconditions(self, comparator):
@@ -1170,12 +1172,12 @@ class PrecisionAtK(PyEvALLMetric):
     
     
 class RPrecision(PyEvALLMetric):       
-    def __init__(self):
-        super().__init__(MetricFactory.RPrecision.value, "R Precision", "RPre")    
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.RPrecision.value, "R Precision", "RPre", evaluation_id)    
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing R Precision evaluation method")
+        self.logger.info("Executing R Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1187,7 +1189,7 @@ class RPrecision(PyEvALLMetric):
             r_p = relevants/param_k
 
         self.result[PyEvALLReport.AVERAGE_TAG]=r_p
-        logger.debug("R Precision for the testcase %s is: %s", comparator.get_testcase(), r_p)        
+        self.logger.debug("R Precision for the testcase %s is: %s", comparator.get_testcase(), r_p)        
                 
                 
     def fire_preconditions(self, comparator):
@@ -1202,11 +1204,11 @@ class RPrecision(PyEvALLMetric):
     
     
 class MRR(PyEvALLMetric):    
-    def __init__(self):
-        super().__init__(MetricFactory.MRR.value, "Mean Reciprocal Rank", "MRR")    
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.MRR.value, "Mean Reciprocal Rank", "MRR", evaluation_id)    
 
     def evaluate(self, comparator):   
-        logger.info("Executing Main Reciprocal Rank evaluation method")
+        self.logger.info("Executing Main Reciprocal Rank evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1221,7 +1223,7 @@ class MRR(PyEvALLMetric):
             mmr=None
 
         self.result[PyEvALLReport.AVERAGE_TAG]=mmr
-        logger.debug("MRR for the testcase %s is: %s", comparator.get_testcase(), mmr)        
+        self.logger.debug("MRR for the testcase %s is: %s", comparator.get_testcase(), mmr)        
                 
                 
     def fire_preconditions(self, comparator):
@@ -1236,13 +1238,13 @@ class MRR(PyEvALLMetric):
     
     
 class MAP(PyEvALLMetric):       
-    def __init__(self):
-        super().__init__(MetricFactory.MAP.value, "Mean Average Precision", "MAP") 
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.MAP.value, "Mean Average Precision", "MAP", evaluation_id) 
         self.r_param=1000   
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing MAP evaluation method")
+        self.logger.info("Executing MAP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1262,7 +1264,7 @@ class MAP(PyEvALLMetric):
             map = sumPrecision/relevants_in_gold            
 
         self.result[PyEvALLReport.AVERAGE_TAG]=map
-        logger.debug("MAP for the testcase %s is: %s", comparator.get_testcase(), map)        
+        self.logger.debug("MAP for the testcase %s is: %s", comparator.get_testcase(), map)        
               
                 
     def fire_preconditions(self, comparator):
@@ -1277,12 +1279,12 @@ class MAP(PyEvALLMetric):
     
     
 class DCG(PyEvALLMetric):     
-    def __init__(self):
-        super().__init__(MetricFactory.DCG.value, "Discounted Cumulative Gain", "DCG")   
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.DCG.value, "Discounted Cumulative Gain", "DCG", evaluation_id)   
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing DCG evaluation method")
+        self.logger.info("Executing DCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1306,7 +1308,7 @@ class DCG(PyEvALLMetric):
             dcg=None
             
         self.result[PyEvALLReport.AVERAGE_TAG]=dcg
-        logger.debug("DCG for the testcase %s is: %s", comparator.get_testcase(), dcg)        
+        self.logger.debug("DCG for the testcase %s is: %s", comparator.get_testcase(), dcg)        
               
                 
     def fire_preconditions(self, comparator):
@@ -1321,12 +1323,12 @@ class DCG(PyEvALLMetric):
     
     
 class nDCG(PyEvALLMetric):    
-    def __init__(self):
-        super().__init__(MetricFactory.nDCG.value, "Normalized Discounted Cumulative Gain", "nDCG")   
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.nDCG.value, "Normalized Discounted Cumulative Gain", "nDCG", evaluation_id)   
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing nDCG evaluation method")
+        self.logger.info("Executing nDCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1364,7 +1366,7 @@ class nDCG(PyEvALLMetric):
             ndcg=sum_dcg/sum_idcg            
 
         self.result[PyEvALLReport.AVERAGE_TAG]=ndcg
-        logger.debug("nDCG for the testcase %s is: %s", comparator.get_testcase(), ndcg)   
+        self.logger.debug("nDCG for the testcase %s is: %s", comparator.get_testcase(), ndcg)   
              
                 
     def fire_preconditions(self, comparator):
@@ -1378,12 +1380,12 @@ class nDCG(PyEvALLMetric):
     
     
 class ERR(PyEvALLMetric):    
-    def __init__(self):
-        super().__init__(MetricFactory.ERR.value, "Expected Reciprocal Rank", "ERR")   
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.ERR.value, "Expected Reciprocal Rank", "ERR", evaluation_id)   
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing ERR evaluation method")
+        self.logger.info("Executing ERR evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1424,7 +1426,7 @@ class ERR(PyEvALLMetric):
 
 
         self.result[PyEvALLReport.AVERAGE_TAG]=err
-        logger.debug("ERR for the testcase %s is: %s", comparator.get_testcase(), err)   
+        self.logger.debug("ERR for the testcase %s is: %s", comparator.get_testcase(), err)   
              
                 
     def fire_preconditions(self, comparator):
@@ -1438,13 +1440,13 @@ class ERR(PyEvALLMetric):
     
     
 class RBP(PyEvALLMetric):    
-    def __init__(self):
-        super().__init__(MetricFactory.RBP.value, "Rank Biased Precision", "RBP")   
+    def __init__(self, evaluation_id):
+        super().__init__(MetricFactory.RBP.value, "Rank Biased Precision", "RBP", evaluation_id)   
         self.p_param=0.8 
 
 
     def evaluate(self, comparator):   
-        logger.info("Executing RBP evaluation method")
+        self.logger.info("Executing RBP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1468,7 +1470,7 @@ class RBP(PyEvALLMetric):
                     
         rbp = (1-self.p_param)*rbpAux;   
         self.result[PyEvALLReport.AVERAGE_TAG]=rbp
-        logger.debug("RBP for the testcase %s is: %s", comparator.get_testcase(), rbp)   
+        self.logger.debug("RBP for the testcase %s is: %s", comparator.get_testcase(), rbp)   
              
                 
     def fire_preconditions(self, comparator):
