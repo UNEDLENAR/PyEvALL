@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: PyEvALL
-Version: 0.1.74
+Version: 0.1.76
 Summary: PyEvALL (The Python library to Evaluate ALL) is a evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWiDi (Learning with disagreement).
 Home-page: https://github.com/UNEDLENAR/PyEvALL/tree/main
 Author: JORGE CARRILLO-DE-ALBORNOZ
@@ -8,7 +8,7 @@ Author-email: jcalbornoz@lsi.uned.es
 Description-Content-Type: text/markdown
 Requires-Dist: jsbeautifier==1.14.9
 Requires-Dist: jsonschema==4.23.0
-Requires-Dist: numpy==2.2.4
+Requires-Dist: numpy==1.26.4
 Requires-Dist: pandas==2.2.3
 Requires-Dist: setuptools==69.5.1
 Requires-Dist: tabulate==0.9.0
