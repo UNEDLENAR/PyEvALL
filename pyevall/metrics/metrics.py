@@ -84,7 +84,7 @@ class PyEvALLMetric(object):
 
          
     @abstractmethod
-    def evaluate(self):
+    def evaluate(self, **params):
         raise NotImplementedError("Please Implement this method")
     
     ############################################################################
@@ -106,7 +106,7 @@ class Accuracy(PyEvALLMetric):
     def __init__(self, evaluation_id):        
         super().__init__(MetricFactory.Accuracy.value, "Accuracy", "Acc", evaluation_id)    
 
-    def evaluate(self, comparator):  
+    def evaluate(self, comparator, **params):  
         self.logger.info("Executing accuracy evaluation method")      
         
         #Check preconditions of the metric
@@ -146,7 +146,7 @@ class SystemPrecision(PyEvALLMetric):
         super().__init__(MetricFactory.SystemPrecision.value, "System Precision", "SP", evaluation_id)        
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing System Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -178,7 +178,7 @@ class Kappa(PyEvALLMetric):
         super().__init__(MetricFactory.Kappa.value, "Cohen's Kappa", "Kappa", evaluation_id)           
         
         
-    def evaluate(self, comparator):
+    def evaluate(self, comparator, **params):
         self.logger.info("Executing kappa evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -224,7 +224,7 @@ class Precision(PyEvALLMetric):
         super().__init__(MetricFactory.Precision.value, "Precision", "Pr", evaluation_id)           
         
         
-    def evaluate(self, comparator):
+    def evaluate(self, comparator, **params):
         self.logger.info("Executing precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -273,7 +273,7 @@ class Recall(PyEvALLMetric):
         super().__init__(MetricFactory.Recall.value, "Recall", "Re", evaluation_id)          
         
         
-    def evaluate(self, comparator):
+    def evaluate(self, comparator, **params):
         self.logger.info("Executing recall evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -313,12 +313,13 @@ class FMeasure(PyEvALLMetric):
         self.alfa_param=0.5          
                 
                 
-    def evaluate(self, comparator):
+    def evaluate(self, comparator, **params):
         self.logger.info("Executing fmeasure evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return 
 
+        self.alfa_param = params.get("alfa_param", self.alfa_param)
         classes = comparator.get_classes_gold()
         self.result[PyEvALLReport.CLASSES_TAG]=dict()
         aveg_class = 0
@@ -489,11 +490,16 @@ class ICM(PyEvALLMetric):
     #    Methods to process the metric ICM                               #
     #                                                                    #
     ###################################################################### 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing ICM evaluation method")
         if self.fire_preconditions(comparator):
             return
         
+
+        self.alpha_1 = params.get("alpha_1", self.alpha_1)
+        self.alpha_2 = params.get("alpha_2", self.alpha_2)
+        self.beta = params.get("beta", self.beta)
+         
         self.generate_prob(comparator) 
         
         result_icm = comparator.gold_df.apply(lambda row: self.calculate_icm_row(row,comparator), axis=1).tolist()
@@ -604,14 +610,14 @@ class ICMNorm(PyEvALLMetric):
         super().__init__(MetricFactory.ICMNorm.value, "Normalized Information Contrast Model", "ICM-Norm", evaluation_id)
        
     
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing ICM Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
         #Evaluate ICM pred vs gold
         icm = ICM(self.evaluation_id)
-        icm.evaluate(comparator)
+        icm.evaluate(comparator, **params)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_pred = icm.result[PyEvALLReport.AVERAGE_TAG] 
@@ -620,7 +626,7 @@ class ICMNorm(PyEvALLMetric):
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase(), self.evaluation_id)
         comp_gold.hierarchy= comparator.hierarchy
         icm = ICM(self.evaluation_id)
-        icm.evaluate(comp_gold)
+        icm.evaluate(comp_gold, **params)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm.result:
             res_gold=icm.result[PyEvALLReport.AVERAGE_TAG]
@@ -792,11 +798,14 @@ class ICMSoft(PyEvALLMetric):
     #            Methods to process the metric ICM soft                  #
     #                                                                    #
     ######################################################################    
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing ICM Soft evaluation method")
         if self.fire_preconditions(comparator):
             return
-               
+          
+        self.alpha_1 = params.get("alpha_1", self.alpha_1)
+        self.alpha_2 = params.get("alpha_2", self.alpha_2)
+        self.beta = params.get("beta", self.beta)               
         self.get_list_classes(comparator)
         self.calculate_probabilities(comparator)
         
@@ -925,14 +934,14 @@ class ICMSoftNorm(PyEvALLMetric):
         super().__init__(MetricFactory.ICMSoftNorm.value, "Normalized Information Contrast Model Soft", "ICM-Soft-Norm", evaluation_id)      
 
    
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing ICM-Soft Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
         #Evaluate ICM pred vs gold
         icm_soft = ICMSoft(self.evaluation_id)
-        icm_soft.evaluate(comparator)
+        icm_soft.evaluate(comparator, **params)
         res_pred= 0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
             res_pred = icm_soft.result[PyEvALLReport.AVERAGE_TAG]        
@@ -941,7 +950,7 @@ class ICMSoftNorm(PyEvALLMetric):
         comp_gold = PyEvALLComparator(comparator.gold_df, comparator.gold_df, comparator.get_testcase(), self.evaluation_id)
         comp_gold.hierarchy= comparator.hierarchy
         icm_soft = ICMSoft(self.evaluation_id)
-        icm_soft.evaluate(comp_gold)
+        icm_soft.evaluate(comp_gold, **params)
         res_gold=0
         if PyEvALLReport.AVERAGE_TAG in icm_soft.result:
             res_gold=icm_soft.result[PyEvALLReport.AVERAGE_TAG]
@@ -1009,7 +1018,7 @@ class CrossEntropy(PyEvALLMetric):
         return set                          
       
     
-    def evaluate(self, comparator):
+    def evaluate(self, comparator, **params):
         self.logger.info("Executing Cross Entropy evaluation method")
         if self.fire_preconditions(comparator):
             return
@@ -1079,7 +1088,7 @@ class MAE(PyEvALLMetric):
         return pd.Series(new_columns, index=[self.lst_classes])  
 
     #We need to expand the dataframe
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing MAE evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1145,12 +1154,13 @@ class PrecisionAtK(PyEvALLMetric):
         self.k_param=10     
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing Precision at K evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
-                 
+              
+        self.k_param = params.get("k_param", self.k_param)                 
         p_at_k=None
         relevants = comparator.get_first_k_relevant_items_in_pred(self.k_param)
         if self.k_param!=0:
@@ -1176,7 +1186,7 @@ class RPrecision(PyEvALLMetric):
         super().__init__(MetricFactory.RPrecision.value, "R Precision", "RPre", evaluation_id)    
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing R Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1207,7 +1217,7 @@ class MRR(PyEvALLMetric):
     def __init__(self, evaluation_id):
         super().__init__(MetricFactory.MRR.value, "Mean Reciprocal Rank", "MRR", evaluation_id)    
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing Main Reciprocal Rank evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1243,12 +1253,13 @@ class MAP(PyEvALLMetric):
         self.r_param=1000   
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing MAP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
         
+        self.r_param = params.get("r_param", self.r_param)         
         relevants_in_gold= comparator.get_all_relevants_items_in_gold()   
         lst_ids_pred_sorted = comparator.get_list_ids_ordered_pred() 
         threshold = min(self.r_param,len(lst_ids_pred_sorted))
@@ -1283,7 +1294,7 @@ class DCG(PyEvALLMetric):
         super().__init__(MetricFactory.DCG.value, "Discounted Cumulative Gain", "DCG", evaluation_id)   
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing DCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1327,7 +1338,7 @@ class nDCG(PyEvALLMetric):
         super().__init__(MetricFactory.nDCG.value, "Normalized Discounted Cumulative Gain", "nDCG", evaluation_id)   
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing nDCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1384,7 +1395,7 @@ class ERR(PyEvALLMetric):
         super().__init__(MetricFactory.ERR.value, "Expected Reciprocal Rank", "ERR", evaluation_id)   
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing ERR evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -1445,12 +1456,13 @@ class RBP(PyEvALLMetric):
         self.p_param=0.8 
 
 
-    def evaluate(self, comparator):   
+    def evaluate(self, comparator, **params):   
         self.logger.info("Executing RBP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
         
+        self.p_param = params.get("p_param", self.p_param)  
         #if there are no relevants in gold it makes no sense calculate the metric
         relevants_in_gold= comparator.get_all_relevants_items_in_gold()  
         if relevants_in_gold==None or relevants_in_gold==0:

@@ -130,7 +130,7 @@ class PyEvALLEvaluation(object):
                 if not metric==None:
                     # Evaluate the metric using the created instance and test case comparators
                     if len(testcase_comp)>0:   
-                        self.evaluate_metric(metric, testcase_comp)       
+                        self.evaluate_metric(metric, testcase_comp, **params)       
                     else:
                         self.pyevall_report.insert_error_metric(metric, PyEvALLReport.METRIC_NOT_TEST_CASE_IN_COMMON_ERROR)         
                 else:
@@ -146,7 +146,7 @@ class PyEvALLEvaluation(object):
         return report      
               
  
-    def evaluate_metric(self, metric, lst_comparators):
+    def evaluate_metric(self, metric, lst_comparators, **params):
         """
         Evaluates a given metric on a set of comparators and updates the evaluation report.
     
@@ -165,7 +165,7 @@ class PyEvALLEvaluation(object):
         # Iterate through each comparator
         for comp in lst_comparators:
             # Evaluate the metric using the current comparator                       
-            metric.evaluate(comp)         
+            metric.evaluate(comp, **params)         
             
             # Check if the metric has any preconditions fired                           
             #if not len(metric.preconditions)==0:

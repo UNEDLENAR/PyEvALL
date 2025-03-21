@@ -209,6 +209,7 @@ def test_1_ranking_metrics():
     file_name_sys= "SYS"
     file_name_gold= "GOLD"
     params={PyEvALLUtils.PARAM_LOG_LEVEL: PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE }
+    params["p_param"]=0.5
     for i in range(1,16):
         if i==4:
             continue
