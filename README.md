@@ -15,6 +15,7 @@ PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for informati
 - [Quickstart Guide](#quickstart-guide)
    * [Installing PyEvALL](#installing-pyevall)
    * [Evaluating a prediction file](#evaluating-a-prediction-file)
+   * [Configuring metric parameters](#Configuring-Parameters-for-the-evaluate-function)  
    * [Input format ](#input-format)
       + [PyEvALL report format parameter](#pyevall-report-format-parameter)
          - [PyEvALL embedded report](#pyevall-embedded-report)
@@ -135,7 +136,7 @@ It is important to notice that all metrics' names can be accessed via *MetricFac
 metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
 ```
 
-## Configuring Parameters for the `evaluate` Function  
+## Configuring Parameters for the evaluate Function  
 
 The `evaluate` function in the `PyEvALLEvaluation` class enables the evaluation of predictions against a gold standard using various metrics. This function accepts a `params` dictionary that allows specific configurations for each metric. Below, we explain how to structure this dictionary and list the available parameters for each metric.  
 
