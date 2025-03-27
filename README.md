@@ -135,6 +135,61 @@ It is important to notice that all metrics' names can be accessed via *MetricFac
 metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
 ```
 
+## Configuring Parameters for the `evaluate` Function  
+
+The `evaluate` function in the `PyEvALLEvaluation` class enables the evaluation of predictions against a gold standard using various metrics. This function accepts a `params` dictionary that allows specific configurations for each metric. Below, we explain how to structure this dictionary and list the available parameters for each metric.  
+
+### Structure of the `params` Dictionary  
+
+The `params` dictionary should follow this structure:  
+
+```python
+params = {
+    'MetricName1': {'parameter1': value1, 'parameter2': value2, ...},
+    'MetricName2': {'parameter1': value1, ...},
+    ...
+}
+```
+
+For example, to configure the `FMeasure` and `ICM` metrics:  
+
+```python
+params = {
+    'FMeasure': {'alfa_param': 1.5},
+    'ICM': {'alpha_1': 12}
+}
+```
+
+### Available Parameters for Each Metric  
+
+Here are the configurable parameters for some of the available metrics in PyEvALL:  
+
+- **FMeasure**:  
+  - `alfa_param`: Weight that determines the relative importance of precision and recall. 
+
+- **ICM**:  
+  - `alpha_1`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
+  - `alpha_2`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
+  - `beta`: Parameter that adjusts the contribution of certain factors in the metric calculation.   
+  
+- **ICM Soft**:  
+  - `alpha_1`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
+  - `alpha_2`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
+  - `beta`: Parameter that adjusts the contribution of certain factors in the metric calculation.   
+
+- **Precision at k**:  
+  - `k_param`: Position up to which precision is calculated.  
+
+- **MAP**:  
+  - `r_param`: Position up to which average precision is calculated.  
+  
+- **RBP**:  
+  - `p_param`: Set the relevance for the metric calculated.   
+
+
+This section provides a structured reference for configuring the `params` dictionary when using the `evaluate` function, ensuring that metrics are properly customized based on specific needs.
+
+
 ## Input format 
 PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to note that it is not necessary that the files are in the same formats, the gold can be in json and the predictions in tsv. PyEvALL automatically detects the input format and converts it to json to check, by means of its schema, the validation of the input format and informs about the conversion by means of a warning. A detailed desciption of each input format for each evaluation context is done in section [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall).
 

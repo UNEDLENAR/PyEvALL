@@ -118,11 +118,20 @@ class PyEvALLEvaluation(object):
         self.pyevall_report.init_report() 
         parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard, self.evaluation_id)  
               
+        metric_params = params.pop('metric_params', {})
+        # Safeguard for metric_params type
+        if not isinstance(metric_params, dict): 
+            # TODO: Add warning message if inside the conditional
+            metric_params = {}
+
         if parser.valid_execution: 
             # Get comparators for each test case if format is valid 
             testcase_comp = parser.get_pyevall_comparators() 
             # Iterate through each metric in the provided list      
             for m in lst_metrics:
+                m_params = params.copy()
+                m_params.update(metric_params.get(m, {}))
+                
                 self.logger.debug("Evaluating the following metric " + m)    
                 # Create a metric instance using MetricFactory            
                 metric = MetricFactory.get_instance_metric(m, self.evaluation_id)     
@@ -130,7 +139,7 @@ class PyEvALLEvaluation(object):
                 if not metric==None:
                     # Evaluate the metric using the created instance and test case comparators
                     if len(testcase_comp)>0:   
-                        self.evaluate_metric(metric, testcase_comp, **params)       
+                        self.evaluate_metric(metric, testcase_comp, **m_params)       
                     else:
                         self.pyevall_report.insert_error_metric(metric, PyEvALLReport.METRIC_NOT_TEST_CASE_IN_COMMON_ERROR)         
                 else:
@@ -143,7 +152,7 @@ class PyEvALLEvaluation(object):
         #remove the active configuration for concurrence execution
         if load_config:
             self.remove_active_evaluation()        
-        return report      
+        return report
               
  
     def evaluate_metric(self, metric, lst_comparators, **params):
