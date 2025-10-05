@@ -5,7 +5,7 @@
 </p>
 
 
-*Funding:  PyEvALL activities have been partially supported by grantPID2021-124361OB-C32 from the Spanish Ministry of Science and Innovation (funded by MCIN/AEI/10.13039/501100011033 and by ERDF, EU A way of making Europe); and by agreement C039/21-OT-AD2 between UNED and Red.es supported by European Funds (Plan de Recuperación, Transición y Resiliencia).* 
+*Funding:  PyEvALL activities have been partially supported by grant PID2021-124361OB-C32 from the Spanish Ministry of Science and Innovation (funded by MCIN/AEI/10.13039/501100011033 and by ERDF, EU A way of making Europe); and by agreement C039/21-OT-AD2 between UNED and Red.es supported by European Funds (Plan de Recuperación, Transición y Resiliencia).* 
 
 PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWiDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
 
