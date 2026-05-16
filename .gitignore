@@ -26,6 +26,7 @@ ENV/
 # IDE and editor configuration
 .vscode/
 .idea/
+.settings/
 .project
 .pydevproject
 
