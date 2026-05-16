@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "ClassEntropy": {
+      "name": "Class Entropy",
+      "acronym": "CE",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "OneCat",
+            "average": -0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    }
+  },
+  "files": {
+    "pred_OneCat.json": {
+      "name": "pred_OneCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_OneCat.json.",
+      "errors": {}
+    },
+    "gold_OneCat.json": {
+      "name": "gold_OneCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_OneCat.json.",
+      "errors": {}
+    }
+  }
+}

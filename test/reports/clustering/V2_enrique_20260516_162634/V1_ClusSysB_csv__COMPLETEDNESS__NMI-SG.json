@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "NMI-SG": {
+      "name": "Normalized Mutual Information SG",
+      "acronym": "NMI-SG",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "COMPLETEDNESS",
+            "average": 0.6131614912268843
+          }
+        ],
+        "average_per_test_case": 0.6131614912268843
+      }
+    }
+  },
+  "files": {
+    "pred_COMPLETEDNESS.json": {
+      "name": "pred_COMPLETEDNESS.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_COMPLETEDNESS.json.",
+      "errors": {}
+    },
+    "gold_COMPLETEDNESS.json": {
+      "name": "gold_COMPLETEDNESS.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_COMPLETEDNESS.json.",
+      "errors": {}
+    }
+  }
+}

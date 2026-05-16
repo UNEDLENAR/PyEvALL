@@ -1,0 +1,139 @@
+
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric ClassUt: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric ClassUt: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric ClassUt: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric FiltUt_A_2_-0.5: Test case does not appear in the system output file
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric FiltUt_A_2_-0.5: Test case does not appear in the system output file
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric FiltUt_A_2_-0.5: The true class does not appear in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Sens_A: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Spe_A: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Spe_A: Empty negative class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Spe_A: Empty negative class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Sens_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Sens_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Sens_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Sens_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Spe_B: Empty negative class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Spe_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Spe_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Spe_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Spe_B: Empty positive class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric MAAC: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric MAAC: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric MAAC: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingItem, for  metric Kappa: Non labeled items in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Kappa: One class in both the gold standard and system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Kappa: One class in both the gold standard and system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric Kappa: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric Kappa: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Kappa: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric CEM_Nom: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric CEM_Nom: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric CEM_Nom: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric SysPre: Non labeled items in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric SysPre: Non labeled items in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric Precision_A: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric Precision_A: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Precision_A: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MinCat, for  metric Precision_A: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Precision_A: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Precision_A: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Recall_A: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Fmeasure_A: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric Precision_B: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingItem, for  metric Precision_B: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase SomeItemMissing, for  metric Precision_B: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric Precision_B: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase SomeMissingCat, for  metric Precision_B: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Precision_B: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MajCat, for  metric Precision_B: Empty positive class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Recall_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Recall_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Recall_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Recall_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Fmeasure_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Fmeasure_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Fmeasure_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Fmeasure_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric Pri-Rel_A: Empty  testcase in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingItem, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric Pri-Rel_A: Empty  testcase in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Pri-Rel_A: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MajCat, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MinCat, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Pri-Rel_A: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Pri-Sen_A: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Pri-Sen_A: Empty  class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Pri-Sen_A: Empty  class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric FPriRelSen_A: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric FPriRelSen_A: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric FPriRelSen_A: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric FPriRelSen_A: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric FPriRelSen_A: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric Pri-Rel_B: Empty  testcase in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingItem, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase SomeItemMissing, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric Pri-Rel_B: Empty  testcase in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase SomeMissingCat, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Pri-Rel_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Pri-Rel_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MajCat, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MinCat, for  metric Pri-Rel_B: Empty  class in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Pri-Rel_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Pri-Rel_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric Pri-Sen_B: Empty  class in the goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric Pri-Sen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric Pri-Sen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric Pri-Sen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric Pri-Sen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric FPriRelSen_B: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric FPriRelSen_B: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric FPriRelSen_B: Unkown Pri-Sensitivity
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric FPriRelSen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric FPriRelSen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric FPriRelSen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase Hierarchy2, for  metric FPriRelSen_B: Empty positive class
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingTest, for  metric EB-F: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingCat, for  metric EB-F: Empty testcase  in the system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric ICM_0.1:  Information Redundancy Parameter  out of range due to class B with frequency 2.0 within 2 items
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric ICM_0.1:  Information Redundancy Parameter  out of range due to class A with frequency 2.0 within 2 items
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric ICM_0.1:  Information Redundancy Parameter  out of range due to class A with frequency 2.0 within 2 items
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric EBLeacockChodorows: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric EBLeacockChodorows: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric EBLeacockChodorows: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric EBWuPalmer: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric EBWuPalmer: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric EBWuPalmer: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric EBResnik: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric EBResnik: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric EBResnik: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric EBJiangConrath: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric EBJiangConrath: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric EBJiangConrath: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MissingGoldCat, for  metric EBLin: Only one  class in  the gold standard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneCat, for  metric EBLin: Only one  class in  the gold standard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase OneMissmatchCat, for  metric EBLin: Only one  class in  the gold standard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassGold, for  metric EBLin: Multivalued items in goldstandard
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase MulticlassSys, for  metric EBLin: Multivalued items in system output
+WARNING:Unkown score for System SysFileTestClassification.csv, in testcase HierarchyI, for  metric EBLin: Multivalued items in system output
+ 	 	 	ACC	ClassUt	FiltUt_A_2_-0.5	Sens_A	Spe_A	Sens_B	Spe_B	MAAC	Kappa	CEM_Nom	ICM	SysPre	Precision_A	Recall_A	Fmeasure_A	Precision_B	Recall_B	Fmeasure_B	Pri-Rel_A	Pri-Sen_A	FPriRelSen_A	Pri-Rel_B	Pri-Sen_B	FPriRelSen_B	EB-JACC	EB-F	EB-HAMM	EBFProp_0.55_1.5	ICM_0.1	EBLeacockChodorows	EBWuPalmer	EBResnik	EBJiangConrath	EBLin	
+SysFileTestClassification.csv	MissingTest		0.0	0.0	UNK	0.0	1.0	0.0	1.0	UNK	UNK	UNK	-1.0	UNK	UNK	0.0	0	UNK	0.0	0	UNK	UNK	UNK	UNK	UNK	UNK	0.0	UNK	0.5	0.353	-1.0	0.0	0.0	0.0	-1.0	0.0
+SysFileTestClassification.csv	MissingItem		0.0	0.0	-1.0	0.0	1.0	0.0	1.0	0	0.0	0	-1.0	0.0	0.0	0.0	0	UNK	0.0	0	UNK	0.0	0	UNK	0.0	0	0.0	0.0	0.5	0.353	-1.0	0.0	0.0	0.0	-1.0	0.0
+SysFileTestClassification.csv	SomeItemMissing		0.5	0.5	4.0	1.0	1.0	0.0	1.0	0.5	0.333	4.0	0.0	1.0	1.0	1.0	1.0	UNK	0.0	0	1.0	1.0	1.0	UNK	0.0	0	0.5	0.5	0.25	0.677	0.0	1.161	0.5	0.5	-0.5	0.5
+SysFileTestClassification.csv	MissingCat		0.0	0.0	UNK	0.0	1.0	0.0	1.0	UNK	UNK	UNK	-1.0	UNK	UNK	0.0	0	UNK	0.0	0	UNK	UNK	UNK	UNK	UNK	UNK	0.0	UNK	0.5	0.353	-1.0	0.0	0.0	0.0	-1.0	0.0
+SysFileTestClassification.csv	SomeMissingCat		0.5	0.5	4.0	1.0	1.0	0.0	1.0	0.5	0.333	4.0	0.0	1.0	1.0	1.0	1.0	UNK	0.0	0	1.0	1.0	1.0	UNK	0.0	0	0.5	0.5	0.25	0.677	0.0	1.161	0.5	0.5	-0.5	0.5
+SysFileTestClassification.csv	MissingGoldCat		1.0	1.0	UNK	UNK	UNK	1.0	UNK	1.0	UNK	2.0	0.0	0.5	0.0	UNK	UNK	1.0	1.0	1.0	UNK	UNK	UNK	UNK	UNK	UNK	1.0	1.0	0.0	1.0	UNK	2.322	1.0	0.0	0.0	UNK
+SysFileTestClassification.csv	Extratems		1.0	1.0	2.0	1.0	1.0	1.0	1.0	1.0	1.0	8.0	1.0	0.667	0.5	1.0	0.667	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	0.0	1.0	1.0	2.322	1.0	1.0	0.0	1.0
+SysFileTestClassification.csv	OneCat		1.0	1.0	4.0	1.0	UNK	UNK	UNK	1.0	UNK	2.0	0.0	1.0	1.0	1.0	1.0	UNK	UNK	UNK	UNK	UNK	UNK	UNK	UNK	UNK	1.0	1.0	0.0	1.0	UNK	2.322	1.0	0.0	0.0	UNK
+SysFileTestClassification.csv	OneMissmatchCat		0.0	0.0	0.0	0.0	UNK	UNK	UNK	0	0.0	0.0	-1.0	0.0	UNK	0.0	0	0.0	UNK	UNK	UNK	UNK	UNK	UNK	UNK	UNK	0.0	0.0	2.0	0.5	UNK	0.0	0.0	0.0	0.0	UNK
+SysFileTestClassification.csv	MissmatchSingleCat		0.0	0.0	-1.0	0.0	0.667	0.0	0.667	0	-0.333	2.712	-4.0	0.0	0.0	0.0	0	0.0	0.0	0	0.0	0.0	0	0.0	0.0	0	0.0	0.0	0.5	0.2	-3.7	0.737	0.0	0.0	-4.0	0.0
+SysFileTestClassification.csv	MajCat		0.75	0.75	5.0	1.0	0.0	0.0	1.0	0.5	0.0	4.923	-0.292	0.75	0.75	1.0	0.857	UNK	0.0	0	UNK	0.0	0	UNK	0.0	0	0.75	0.75	0.25	0.803	-0.217	1.926	0.75	0.311	-0.604	0.75
+SysFileTestClassification.csv	MinCat		0.25	0.25	0.0	0.0	1.0	1.0	0.0	0.5	0.0	3.578	-1.311	0.25	UNK	0.0	0	0.25	1.0	0.625	UNK	0.0	0	UNK	0.0	0	0.25	0.25	0.75	0.409	-1.086	1.133	0.25	0.5	-1.811	0.25
+SysFileTestClassification.csv	MulticlassGold		0.667	1.0	4.0	1.0	1.0	0.5	1.0	UNK	UNK	UNK	0.39	0.667	1.0	1.0	1.0	1.0	0.5	0.556	1.0	1.0	1.0	0.5	0.5	0.5	0.833	0.889	0.167	0.913	0.423	UNK	UNK	UNK	UNK	UNK
+SysFileTestClassification.csv	MulticlassSys		0.667	1.0	4.0	1.0	1.0	1.0	0.5	UNK	UNK	UNK	0.39	0.667	1.0	1.0	1.0	0.5	1.0	0.833	1.0	1.0	1.0	0.5	0.5	0.5	0.833	0.889	0.167	0.909	0.423	UNK	UNK	UNK	UNK	UNK
+SysFileTestClassification.csv	HierarchyI		0.0	0.25	0.0	0.0	1.0	UNK	UNK	UNK	UNK	UNK	-2.481	0.0	UNK	0.0	0	0.0	UNK	UNK	UNK	0.0	0	UNK	UNK	UNK	0.208	0.292	0.438	0.321	-2.406	UNK	UNK	UNK	UNK	UNK
+SysFileTestClassification.csv	Hierarchy2		0.75	0.75	0.0	0.0	1.0	UNK	UNK	0.75	0.692	9.678	0.104	0.75	UNK	0.0	0	0.0	UNK	UNK	UNK	0.0	0	UNK	UNK	UNK	0.75	0.75	0.125	0.593	0.179	1.741	0.75	1.104	-0.5	0.75

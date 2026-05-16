@@ -19,7 +19,10 @@ FORMAT_INCORRECT_SCHEMA_JSON_ERROR=The file contains an incorrect json format ac
 FORMAT_NO_HEADERS_ROW_ERROR=The file does not contains headers.
 FORMAT_NUMBER_COLUMNS_ROW_ERROR=The number of columns is incorrect. 
 FORMAT_EMPTY_VALUE_ROW_ERROR=The attribute VALUE is empty.
+FORMAT_EMPTY_VALUE_ROW_WARNING=The attribute VALUE is empty. The instance is ignored for evaluation.
 FORMAT_IDS_REPEATED_ROW_ERROR=The file contains repeated ids of items.
+FORMAT_CLUSTER_EMPTY_TAG_IN_VALUE_ROW_ERROR=The attribute VALUE contains an empty cluster name. Please check it.
+FORMAT_CLUSTER_DUPLICATED_TAG_IN_VALUE_ROW_ERROR=The attribute VALUE contains duplicated cluster names for the same item.
 FORMAT_TSV_FORMAT_IDENTIFIED_WARNING=PyEvALL has identified a tsv format and has converted it to json.
 FORMAT_CSV_FORMAT_IDENTIFIED_WARNING=PyEvALL has identified a csv format and has converted it to json.
 #Format generic error
@@ -42,6 +45,20 @@ METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION= The selected metric
 METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT= The selected context of evaluation for this metric is not implemented.
 METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC=The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.
 METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING=There are duplicated values in the attribute value. Evaluation cannot be accurate.
+METRIC_PRECONDITION_EMPTY_PREDICTIONS_ERROR=The selected metric cannot be evaluated because the system output has no valid labeled items.
+METRIC_PRECONDITION_NO_ITEMS_REPEATED_FOR_THE_SAME_CLUSTER=The selected metric cannot be evaluated because gold contains repeated items in different clusters. Predictions with this issue are reported as warning.
+METRIC_PRECONDITION_CLUSTERING_PREDICTION_MISSING_GOLD_ITEMS=The selected metric cannot be evaluated because the system output is missing items that appear in the gold standard.
+METRIC_PRECONDITION_CLUSTERING_PREDICTION_ITEMS_WITHOUT_CLUSTER=The selected metric cannot be evaluated because the system output contains items without a valid cluster assignment.
+METRIC_PRECONDITION_CLUSTERING_NO_POSITIVE_PAIRS=The selected metric cannot be evaluated because there are no positive clustering pairs in gold or predictions.
+METRIC_PARAMS_NOT_DICT_WARNING=The metric_params parameter is not a dictionary. Metric-specific parameters are ignored.
+METRIC_PARAMS_FOR_METRIC_NOT_DICT_WARNING=The metric-specific parameters are not a dictionary. They are ignored for this metric.
+METRIC_PARAM_ALFA_NOT_VALID_WARNING=The alfa_param metric parameter is invalid. The default value is used.
+METRIC_PARAM_ALPHA_1_NOT_VALID_WARNING=The alpha_1 metric parameter is invalid. The default value is used.
+METRIC_PARAM_ALPHA_2_NOT_VALID_WARNING=The alpha_2 metric parameter is invalid. The default value is used.
+METRIC_PARAM_BETA_NOT_VALID_WARNING=The beta metric parameter is invalid. The default value is used.
+METRIC_PARAM_K_NOT_VALID_WARNING=The k_param metric parameter is invalid. The default value is used.
+METRIC_PARAM_R_NOT_VALID_WARNING=The r_param metric parameter is invalid. The default value is used.
+METRIC_PARAM_P_NOT_VALID_WARNING=The p_param metric parameter is invalid. The default value is used.
 #
 #
 #DATAFRAME

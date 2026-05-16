@@ -1,12 +1,12 @@
 # ============================================================================== 
 #
-# Copyright (c) 2022 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
+# Copyright (c) 2026 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
 #
 # This work has been financed by the European Union (NextGenerationEU funds) through the 
-# ``Plan de Recuperación, Transformación y Resiliencia'', by the Ministry of Economic Affairs and Digital Transformation and by the UNED University. 
+# "Plan de Recuperacion, Transformacion y Resiliencia", by the Ministry of Economic Affairs and Digital Transformation and by the UNED University.
 #
-# The work has been developed within the project "ESPACIO DE OBSERVACIÓN DE INTELIGENCIA ARTIFICIAL (IA) EN ESPAÑOL”, in the framework of the 
-# Convenio C039/21-OT between the public entity RED.ES, M.P. and the UNIVERSIDAD NACIONAL DE EDUCACIÓN A DISTANCIA (UNED). 
+# The work has been developed within the project "ESPACIO DE OBSERVACION DE INTELIGENCIA ARTIFICIAL (IA) EN ESPANOL", in the framework of the
+# Convenio C039/21-OT between the public entity RED.ES, M.P. and the UNIVERSIDAD NACIONAL DE EDUCACION A DISTANCIA (UNED).
 #
 # @author Jorge Carrillo-de-Albornoz <jcalbornoz@lsi.uned.es> 
 # 
@@ -28,7 +28,11 @@ import uuid
 import logging.config
 from distutils.command.config import config
 
-class PyEvALLUtils(object):   
+class PyEvALLUtils(object):
+    """
+    Centralizes PyEvALL configuration, schemas, report texts, logging, and temporary paths.
+    """
+
     dirname = os.path.dirname(__file__)
     LOG_FILENAME = os.path.join(dirname, 'file.conf' )   
     PYEVALL_KEYS_TEXTS_REPORTS=os.path.join(dirname, 'pyevall_keys_texts_reports.rep' )
@@ -59,53 +63,63 @@ class PyEvALLUtils(object):
     #REPORTS
     keys_texts_reports = dict()
 
-    FORMAT_JSON_SCHEMA= {
+    FORMAT_JSON_SCHEMA = {
         "type": "array",
         "items": {
             "type": "object",
             "properties": {
                 "test_case": {"type": "string"},
-                "id":{"type": "string"},
+                "id": {"type": "string"},
                 "value": {
                     "anyOf": [
                         {"type": "string"},
-                        {"type": "array", "items": {"type": "string"},"minItems": 1},
+                        {"type": "array", "items": {"type": "string"}},
                         {"type": "integer"},
                         {
                             "type": "object",
                             "patternProperties": {
-                            "^.*$": {"type": "number"},    }
+                                "^.*$": {"type": "number"},
+                            },
                         },
                     ]
-                },              
+                },
             },
             "required": ["test_case", "id", "value"],
-            "additionalProperties": False
-        },      
-        
-    }  
-      
-    EvALLREPORT_JSON_SCHEM={    
+            "additionalProperties": False,
+        },
+    }
+
+    EvALLREPORT_JSON_SCHEM = {
         "type": "object",
-        "properties":{
-            "metrics":{
+        "properties": {
+            "metrics": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"}, 
-                    "acronym": {"type": "string"}, 
-                    "description": {"type": "string"}, 
-                    "status":{"type": "string"}, 
+                    "name": {"type": "string"},
+                    "acronym": {"type": "string"},
+                    "description": {"type": "string"},
+                    "status": {"type": "string"},
                     "errors": {
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "properties":{
+                            "properties": {
                                 "name": {"type": "string"},
                                 "description": {"type": "string"},
                             },
                         },
                     },
-                    "results":{
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"type": "string"},
+                                "description": {"type": "string"},
+                            },
+                        },
+                    },
+                    "results": {
                         "type": "object",
                         "properties": {
                             "test_cases": {
@@ -114,32 +128,31 @@ class PyEvALLUtils(object):
                                     "type": "object",
                                     "properties": {
                                         "name": {"type": "string"},
-                                        "average":{"type": "number"},
+                                        "average": {"type": "number"},
                                         "classes": {
                                             "type": "array",
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
                                                     "name": {"type": "string"},
-                                                    "value": {"type": "number"},                                                 
-                                            
+                                                    "value": {"type": "number"},
                                                 },
                                             },
                                         },
-                                    },                              
+                                    },
                                 },
                             },
-                            "average_per_test_case": {"type": "number"}, 
+                            "average_per_test_case": {"type": "number"},
                         },
-                    },                    
-                    "preconditions":{
+                    },
+                    "preconditions": {
                         "type": "object",
-                        "properties": { 
-                            "name": {"type": "string"}, 
-                            "description": {"type": "string"}, 
+                        "properties": {
+                            "name": {"type": "string"},
+                            "description": {"type": "string"},
                             "status": {"type": "string"},
-                            "test_cases":{"type": "array", "items": {"type": "string"}},
-                        },                        
+                            "test_cases": {"type": "array", "items": {"type": "string"}},
+                        },
                     },
                 },
             },
@@ -154,19 +167,20 @@ class PyEvALLUtils(object):
                         "type": "object",
                         "properties": {
                             "lines": {"type": "string"},
-                            "description": {"type": "string"}, 
-                            "exception": {"type": "string"}, 
-                            "test_case": {"type": "string"},   
-                            "status":{"type": "string"},                                            
-                        },                                    
+                            "description": {"type": "string"},
+                            "exception": {"type": "string"},
+                            "test_case": {"type": "string"},
+                            "status": {"type": "string"},
+                        },
                     },
-                }, 
-            }, 
-        },             
+                },
+            },
+        },
     }
     
     @classmethod
     def load_configuration(cls, evaluation_id, **params):
+        # Merge user parameters into the active configuration for one evaluation.
         conf = PyEvALLUtils.get_active_configuration(evaluation_id)      
         
         if PyEvALLUtils.PARAM_HIERARCHY in params:
@@ -179,6 +193,7 @@ class PyEvALLUtils(object):
             
     @classmethod    
     def get_active_configuration(cls, evaluation_id):
+        # Create and return the default configuration for an evaluation if needed.
         if not evaluation_id in PyEvALLUtils.CONFIGURATION:
             conf={
                         cls.PARAM_HIERARCHY:None,
@@ -191,6 +206,7 @@ class PyEvALLUtils(object):
 
     @classmethod
     def remove_active_configuration(cls, evaluation_id):
+        # Remove the configuration stored for a completed evaluation.
         if evaluation_id in cls.CONFIGURATION:
             cls.CONFIGURATION.pop(evaluation_id)
     
@@ -198,6 +214,7 @@ class PyEvALLUtils(object):
     
     @classmethod
     def get_logger(cls, name, evaluation_id):
+        # Configure and return a logger according to the active evaluation settings.
         logging.config.fileConfig(PyEvALLUtils.LOG_FILENAME, disable_existing_loggers=False)        
         logger= logging.getLogger(name) 
         conf = PyEvALLUtils.get_active_configuration(evaluation_id)  
@@ -214,6 +231,7 @@ class PyEvALLUtils(object):
     
     @classmethod
     def load_pair_texts(cls):
+        # Load report text templates from the key/value resource file.
         with open(PyEvALLUtils.PYEVALL_KEYS_TEXTS_REPORTS) as f:
             for line in f.readlines():
                 if line.startswith("#"):
@@ -227,6 +245,7 @@ class PyEvALLUtils(object):
     
     @classmethod
     def get_text_from_key(cls, key):
+        # Lazily load and return the report text associated with a key.
         if len(cls.keys_texts_reports)==0:
             cls.load_pair_texts()
             print("cargado " + str(len(cls.keys_texts_reports)))
@@ -235,6 +254,7 @@ class PyEvALLUtils(object):
     
     @classmethod
     def get_tmp_dir_execution(cls):
+        # Create and return the temporary directory for this process execution.
         if not os.path.isdir(PyEvALLUtils.TEMP_FOLDER_EXECUTION):
             os.mkdir(PyEvALLUtils.TEMP_FOLDER_EXECUTION)
         return PyEvALLUtils.TEMP_FOLDER_EXECUTION

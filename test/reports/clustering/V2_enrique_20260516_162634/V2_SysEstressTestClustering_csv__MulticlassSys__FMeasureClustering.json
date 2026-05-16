@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "FMeasureClustering": {
+      "name": "F Measure",
+      "acronym": "F(P, R)",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MulticlassSys",
+            "average": 0.8888888888888888
+          }
+        ],
+        "average_per_test_case": 0.8888888888888888
+      }
+    }
+  },
+  "files": {
+    "pred_MulticlassSys.json": {
+      "name": "pred_MulticlassSys.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MulticlassSys.json.",
+      "errors": {}
+    },
+    "gold_MulticlassSys.json": {
+      "name": "gold_MulticlassSys.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MulticlassSys.json.",
+      "errors": {}
+    }
+  }
+}

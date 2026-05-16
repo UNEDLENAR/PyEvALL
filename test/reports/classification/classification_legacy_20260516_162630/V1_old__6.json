@@ -1,0 +1,150 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "average": 0.7142857142857143
+          }
+        ],
+        "average_per_test_case": 0.7142857142857143
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "classes": {
+              "TRUE": 1.0,
+              "B": 1.0,
+              "C": 0.0
+            },
+            "average": 0.6666666666666666
+          }
+        ],
+        "average_per_test_case": 0.6666666666666666
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "classes": {
+              "TRUE": 1.0,
+              "B": 0.6666666666666666,
+              "C": 0.0
+            },
+            "average": 0.5555555555555555
+          }
+        ],
+        "average_per_test_case": 0.5555555555555555
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "classes": {
+              "TRUE": 1.0,
+              "B": 0.8,
+              "C": 0
+            },
+            "average": 0.6
+          }
+        ],
+        "average_per_test_case": 0.6
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "average": 0.8333333333333334
+          }
+        ],
+        "average_per_test_case": 0.8333333333333334
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "average": 0.5882352941176471
+          }
+        ],
+        "average_per_test_case": 0.5882352941176471
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "6",
+            "average": 0.2974592518983125
+          }
+        ],
+        "average_per_test_case": 0.2974592518983125
+      }
+    }
+  },
+  "files": {
+    "SYS6.txt": {
+      "name": "SYS6.txt",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: SYS6.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: SYS6.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "GOLD6.txt": {
+      "name": "GOLD6.txt",
+      "status": "WARNING",
+      "gold": true,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: GOLD6.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: GOLD6.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    }
+  }
+}

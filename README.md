@@ -1,641 +1,665 @@
 <p>
     <img src="img/Logo_PyEvALL.png#gh-light-mode-only" height="auto" width="300"/>
     <img src="img/Logo_PyEvALL_dark.png#gh-dark-mode-only" height="auto" width="300"/>
-    <img src="img/funding.jpg" height="auto" width="300"/>	
 </p>
 
+# PyEvALL
 
-*Funding:  PyEvALL activities have been partially supported by grant PID2021-124361OB-C32 from the Spanish Ministry of Science and Innovation (funded by MCIN/AEI/10.13039/501100011033 and by ERDF, EU A way of making Europe); and by agreement C039/21-OT-AD2 between UNED and Red.es supported by European Funds (Plan de Recuperación, Transición y Resiliencia).* 
+PyEvALL, the Python library to Evaluate ALL, is a Python evaluation tool for information systems. It brings together multiple evaluation contexts in a single framework, including mono-label classification, multi-label classification, hierarchical classification, ranking, LeWiDi (Learning with Disagreement), and clustering.
 
-PyEvALL (The Python library to Evaluate ALL) is an evaluation tool for information systems that allows assessing a wide range of metrics covering various evaluation contexts, including classification, ranking, or LeWiDi (Learning with disagreement). PyEvALL is designed based on the following concepts: (i) **persistence**, users can save evaluations and retrieve past evaluations; (ii) **replicability**, all evaluations are conducted using the same methodology, making them strictly comparable; (iii) **effectiveness**, all metrics are unified under measurement theory and have been doubly implemented and compared; (iv) **generalization**, achieved through the use of a standardized input format enabling users to evaluate all evaluation contexts.
+PyEvALL is designed not only to compute metric scores, but also to make evaluations more reliable. It integrates 30+ metrics, validates input files, detects repeated ids, empty or non-evaluable values, invalid hierarchies, unsupported contexts, and metric precondition failures, and reports these issues explicitly instead of silently producing misleading results.
 
-<!---
-************************		INDEX		************************
--->
+The library can be used directly from Python code or as part of the EvALL evaluation ecosystem through the EvALL platform: <https://evall.uned.es/>.
 
-- [Implemented Evaluation Contexts and Metrics](#implemented-evaluation-contexts-and-metrics)
-- [Quickstart Guide](#quickstart-guide)
-   * [Installing PyEvALL](#installing-pyevall)
-   * [Evaluating a prediction file](#evaluating-a-prediction-file)
-   * [Configuring metric parameters](#Configuring-Parameters-for-the-evaluate-function)  
-   * [Input format ](#input-format)
-      + [PyEvALL report format parameter](#pyevall-report-format-parameter)
-         - [PyEvALL embedded report](#pyevall-embedded-report)
-         - [PyEvALL dataframe report](#pyevall-dataframe-report)
-      + [Hierarchy parameter](#hierarchy-parameter)
-      + [Log Level parameter](#log-level-parameter)
-   * [Evaluating a list of prediction files](#evaluating-a-list-of-prediction-files)
-- [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall)
-   * [Mono-label Classification Format](#mono-label-classification-format)
-   * [Multi-label Classification Format](#multi-label-classification-format)
-   * [LeWiDi Classification Format](#lewidi-classification-format)
-   * [Ranking Format](#ranking-format)
+Main features:
 
+- Unified evaluation across several task contexts.
+- Common JSON input format, with TSV and CSV wrappers converted internally to the same structure.
+- Built-in validation of formats, test cases, duplicated ids, empty values, hierarchies, and metric preconditions.
+- Simple, embedded, and dataframe reports for programmatic and human inspection.
+- Compatibility with the EvALL evaluation platform.
 
+PyEvALL is designed around four principles:
 
+- **Persistence**: evaluations can be stored and inspected later.
+- **Replicability**: evaluations follow a common methodology, so results are comparable.
+- **Effectiveness**: metrics are implemented under a unified evaluation framework.
+- **Generalization**: a standard input schema is used across evaluation contexts.
 
+The canonical PyEvALL input format is JSON. TSV and CSV are also supported as wrappers and are internally converted to the same JSON record structure before validation and evaluation.
 
-<!---
-************************		SECTION 1		************************
--->
+## Contents
 
-# Implemented Evaluation Contexts and Metrics
-PyEvALL 2.0 allows evaluation in the following contexts:
+- [Evaluation Contexts and Metrics](#evaluation-contexts-and-metrics)
+- [Quickstart](#quickstart)
+- [Input Formats](#input-formats)
+- [Evaluation Semantics and Edge Cases](#evaluation-semantics-and-edge-cases)
+- [Reports](#reports)
+- [Metric Parameters](#metric-parameters)
+- [Testing and Validation](#testing-and-validation)
 
-- **Mono-label classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. The available metrics for this context are: *Accuracy, System Precision, Kappa, Precision, Recall, F-Measure, ICM* and *ICM Norm*.
+## Evaluation Contexts and Metrics
 
-- **Multi-label classification**: evaluation context where each instance is assigned one or more classes from a set of target classes. Additionally, the classes have no order or hierarchy among them, and all have the same relevance. In this context, evaluation can be performed with the metrics *Precision, Recall* and *F-measure*.
+PyEvALL supports several evaluation contexts. A metric is evaluated only when its input format and evaluation context satisfy the metric preconditions. If a metric is not valid for a context, PyEvALL reports a metric precondition failure instead of returning a misleading value.
 
-- **Mono-label hierarchical classification**: evaluation context where each instance is assigned one target class, and only one. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *ICM Norm* are available.
+### Contexts
 
-- **Multi-label hierarchical classification**: Evaluation context where each instance is assigned one or more classes from a set of target classes. Additionally, the classes have a hierarchical relationship, so that errors between classes at the same hierarchical level represent less failure than errors between classes at different hierarchical levels. In this context, the metrics *ICM* and *ICM Norm* can be used.
+- **Mono-label classification**: each instance has one target class.
+- **Multi-label classification**: each instance has one or more target classes.
+- **Hierarchical classification**: classes are related by a hierarchy. Hierarchical information is used only by metrics that explicitly support it.
+- **LeWiDi classification**: each instance has a probability distribution over classes.
+- **Ranking**: each prediction assigns a rank/order and the gold standard assigns relevance.
+- **Clustering**: each item is assigned to one or more clusters/classes depending on the metric family.
 
-- **Ranking**: In the ranking evaluation context, the metrics aim to quantify the extent to which a ranking produced by systems is compatible with the relevance values assigned in the gold standard. In this context, the following metrics are available: *Precision at K, R Precision, MRR, MAP, DCG*, *nDCG*, *ERR* and *RBP*.
+### Metrics
 
-- **LeWiDi**: Evaluation context where each instance has a probability distribution for all possible classes. To evaluate in disagreement contexts, the metrics *MAE*, *Cross Entropy, ICM Soft* and *ICM Soft Norm* are available.
+| Metric | Acronym | MetricFactory name | Main context |
+|---|---:|---|---|
+| Accuracy | Acc | `MetricFactory.Accuracy` | Mono-label classification |
+| System Precision | SP | `MetricFactory.SystemPrecision` | Mono-label classification |
+| Cohen's Kappa | Kappa | `MetricFactory.Kappa` | Mono-label classification |
+| Precision | Pr | `MetricFactory.Precision` | Mono-label and multi-label classification |
+| Recall | Re | `MetricFactory.Recall` | Mono-label and multi-label classification |
+| F-Measure | F1 | `MetricFactory.FMeasure` | Mono-label and multi-label classification |
+| Information Contrast Model | ICM | `MetricFactory.ICM` | Classification, including hierarchical contexts |
+| Normalized Information Contrast Model | ICM-Norm | `MetricFactory.ICMNorm` | Classification, including hierarchical contexts |
+| Information Contrast Model Soft | ICM-Soft | `MetricFactory.ICMSoft` | LeWiDi, including hierarchical contexts |
+| Normalized Information Contrast Model Soft | ICM-Soft-Norm | `MetricFactory.ICMSoftNorm` | LeWiDi, including hierarchical contexts |
+| Cross Entropy | CE | `MetricFactory.CrossEntropy` | LeWiDi |
+| Mean Absolute Error | MAE | `MetricFactory.MAE` | LeWiDi |
+| Precision at k | P@k | `MetricFactory.PrecisionAtK` | Ranking |
+| R Precision | RPre | `MetricFactory.RPrecision` | Ranking |
+| Mean Reciprocal Rank | MRR | `MetricFactory.MRR` | Ranking |
+| Mean Average Precision | MAP | `MetricFactory.MAP` | Ranking |
+| Discounted Cumulative Gain | DCG | `MetricFactory.DCG` | Ranking |
+| Normalized Discounted Cumulative Gain | nDCG | `MetricFactory.nDCG` | Ranking |
+| Expected Reciprocal Rank | ERR | `MetricFactory.ERR` | Ranking |
+| Rank Biased Precision | RBP | `MetricFactory.RBP` | Ranking |
+| Purity | Pur | `MetricFactory.Purity` | Clustering |
+| Inverse Purity | InPur | `MetricFactory.InversePurity` | Clustering |
+| F-Measure Purity/Inverse Purity | F(P,I) | `MetricFactory.FMeasurePurityInversePurity` | Clustering |
+| Cluster F-Measure | F(P,R) | `MetricFactory.FMeasureClustering` | Clustering |
+| Rand Statistics | RandS | `MetricFactory.RandStatistics` | Clustering |
+| Jaccard | JACC | `MetricFactory.Jaccard` | Clustering |
+| Fowlkes and Mallows | Folk | `MetricFactory.FolkesAndMallows` | Clustering |
+| Normalized Mutual Information SG | NMI-SG | `MetricFactory.NMISG` | Clustering |
+| Reliability BCubed | R | `MetricFactory.ReliabilityBCubed` | Clustering |
+| Sensitivity BCubed | S | `MetricFactory.SensitivityBCubed` | Clustering |
+| Entropy | E | `MetricFactory.Entropy` | Clustering |
+| Class Entropy | CE | `MetricFactory.ClassEntropy` | Clustering |
+| Variation of Information | VI | `MetricFactory.VariationOfInformation` | Clustering |
 
+### Context and metric notes
 
-|**Metrics**                                   |**Acronym**     |**MetricFactory Name**             |
-|------------------------------------------|-------------|-------------------------------|
-|Accuracy                                  |Acc          |*MetricFactory.Accuracy*         |
-|System Precision                          |SP           |*MetricFactory.SystemPrecision*  |
-|Cohen's Kappa                             |Kappa        |*MetricFactory.Kappa*            |
-|Precision                                 |Pr           |*MetricFactory.Precision*        |
-|Recall                                    |Re           |*MetricFactory.Recall*           |
-|F-Measure                                 |F1           |*MetricFactory.FMeasure*         |
-|Information Contrast Model                |ICM          |*MetricFactory.ICM*              |
-|Normalized Information Contrast Model     |ICM-Norm     |*MetricFactory.ICMNorm*          |
-|Information Contrast Model Soft           |ICM-Soft     |*MetricFactory.ICMSoft*          |
-|Normalized Information Contrast Model Soft|ICM-Soft-Norm|*MetricFactory.ICMSoftNorm*      |
-|Cross Entropy                             |CE           |*MetricFactory.CrossEntropy*     |
-|Mean Absolute Error                       |MAE          |*MetricFactory.MAE*     		|
-|Precision at k                            |P@k          |*MetricFactory.PrecisionAtK*     |
-|R Precision                               |RPre        |*MetricFactory.RPrecision*       |
-|Main Reciprocal Rank                      |MRR          |*MetricFactory.MRR*              |
-|Mean Average Precision                    |MAP          |*MetricFactory.MAP*              |
-|Discounted Cumulative Gain                |DCG          |*MetricFactory.DCG*              |
-|Normalized Discounted Cumulative Gain     |nDCG         |*MetricFactory.nDCG*             |
-|Expected Reciprocal Rank                  |ERR          |*MetricFactory.ERR*              |
-|Rank Biased Precision                     |RBP          |*MetricFactory.RBP*              |
+- `Accuracy`, `SystemPrecision`, and `Kappa` are mono-label classification metrics. They are not evaluated for multi-label classification.
+- `Precision`, `Recall`, and `FMeasure` support mono-label and multi-label classification.
+- Hierarchical classification is evaluated through hierarchy-aware metrics: `ICM`, `ICMNorm`, `ICMSoft`, and `ICMSoftNorm`. If a hierarchy is provided to a metric that does not use it, the hierarchy is ignored and a warning may be reported.
+- `ICM` for multi-label classification without hierarchy is not currently implemented.
+- Ranking metrics require numeric integer values. Predictions use ranking/order values; gold uses relevance values.
+- LeWiDi metrics require dictionary values where class labels map to numeric probabilities or weights.
+- Clustering metrics use list-based values to represent cluster memberships.
 
+## Quickstart
 
+### Installing PyEvALL
 
-<!---
-************************		SECTION 2		************************
--->
+PyEvALL can be installed from source or from PyPI:
 
-# Quickstart Guide
-PyEvALL is available via code, by downloading the source or installing the pip package, or via web interface (available soon, July 2024).
-
-## Installing PyEvALL
-PyEvALL can be installed via source code, downloading the content of this repository, or installing the [PyEvALL](https://pypi.org/project/PyEvALL/#description)
-
-```python  
+```bash
 pip install PyEvALL
-
 ```
 
-## Evaluating a prediction file
-The main method to use PyEvALL is the *evaluate()* method included in the class **PyEvALLEvaluation** and whose header is:
+### Evaluating a prediction file
 
-```python  
-'''
-predictions: file in one of the supported formats with the system predictions.
-            The default format is JSON.
+The main entry point is `PyEvALLEvaluation.evaluate()`:
 
-goldstandard: file in one of the supported formats with the ground truth labels.
-              The default format is JSON.
-
-metrics: list with the metrics to evaluate.
-
-params: dictionary with different parameters that can be configured for each evaluation.
-'''
+```python
 def evaluate(self, predictions, goldstandard, lst_metrics, **params):
-
+    """
+    predictions: file with system predictions.
+    goldstandard: file with ground truth labels.
+    lst_metrics: list of metric names.
+    params: optional configuration parameters.
+    """
 ```
-As seen in the code above, the function requires three mandatory parameters and one optional. The mandatory parameters represent the file with the predictions, the file with the gold standard, and the list of metrics to evaluate, respectively. On the other hand, the optional parameter "params" allows configuring different aspects of the evaluation.
 
-An example code of how to evaluate a prediction file is:
+Example:
 
 ```python
 from pyevall.evaluation import PyEvALLEvaluation
+from pyevall.metrics.metricfactory import MetricFactory
 from pyevall.utils.utils import PyEvALLUtils
+
 predictions = "test/resources/metric/test/classification/predictions/SYS5.txt"
 gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
-test = PyEvALLEvaluation()
-metrics=[MetricFactory.Accuracy.value, MetricFactory.Precision.value]
 
-params= dict()
-report = test.evaluate(predictions, gold, metrics, **params)
+metrics = [
+    MetricFactory.Accuracy.value,
+    MetricFactory.Precision.value,
+]
+
+params = {
+    PyEvALLUtils.PARAM_LOG_LEVEL: PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE,
+}
+
+report = PyEvALLEvaluation().evaluate(predictions, gold, metrics, **params)
 report.print_report()
-
-
 ```
 
-It is important to notice that all metrics' names can be accessed via *MetricFactory* class:
+Metric names should normally be accessed through `MetricFactory`:
 
 ```python
-metrics = [MetricFactory.Accuracy.value, MetricFactory.Precision.value, MetricFactory.Recall.value, MetricFactory.FMeasure.value]
+metrics = [
+    MetricFactory.Accuracy.value,
+    MetricFactory.Precision.value,
+    MetricFactory.Recall.value,
+    MetricFactory.FMeasure.value,
+]
 ```
 
-## Configuring Parameters for the evaluate Function  
+### Evaluating a list of prediction files
 
-The `evaluate` function in the `PyEvALLEvaluation` class enables the evaluation of predictions against a gold standard using various metrics. This function accepts a `params` dictionary that allows specific configurations for each metric. Below, we explain how to structure this dictionary and list the available parameters for each metric.  
-
-### Structure of the `params` Dictionary  
-
-The `params` dictionary should follow this structure:  
-
-```python
-params = {
-    'MetricName1': {'parameter1': value1, 'parameter2': value2, ...},
-    'MetricName2': {'parameter1': value1, ...},
-    ...
-}
-```
-
-For example, to configure the `FMeasure` and `ICM` metrics:  
-
-```python
-params = {
-    'FMeasure': {'alfa_param': 1.5},
-    'ICM': {'alpha_1': 12}
-}
-```
-
-### Available Parameters for Each Metric  
-
-Here are the configurable parameters for some of the available metrics in PyEvALL:  
-
-- **FMeasure**:  
-  - `alfa_param`: Weight that determines the relative importance of precision and recall. 
-
-- **ICM**:  
-  - `alpha_1`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
-  - `alpha_2`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
-  - `beta`: Parameter that adjusts the contribution of certain factors in the metric calculation.   
-  
-- **ICM Soft**:  
-  - `alpha_1`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
-  - `alpha_2`: Parameter that adjusts the contribution of certain factors in the metric calculation. 
-  - `beta`: Parameter that adjusts the contribution of certain factors in the metric calculation.   
-
-- **Precision at k**:  
-  - `k_param`: Position up to which precision is calculated.  
-
-- **MAP**:  
-  - `r_param`: Position up to which average precision is calculated.  
-  
-- **RBP**:  
-  - `p_param`: Set the relevance for the metric calculated.   
-
-
-This section provides a structured reference for configuring the `params` dictionary when using the `evaluate` function, ensuring that metrics are properly customized based on specific needs.
-
-
-## Input format 
-PyEvALL currently supports 3 different formats: JSON, TSV, and CSV, with JSON being the default and primary format. It is important to note that it is not necessary that the files are in the same formats, the gold can be in json and the predictions in tsv. PyEvALL automatically detects the input format and converts it to json to check, by means of its schema, the validation of the input format and informs about the conversion by means of a warning. A detailed desciption of each input format for each evaluation context is done in section [What is the input format in PyEvALL?](#what-is-the-input-format-in-pyevall).
-
-
-
-### PyEvALL report format parameter
-PyEvALL evaluation reports are generated in JSON format by concatenating different Python dictionaries containing information generated during the evaluation process. This composition of different dictionaries generates a generic JSON used by PyEvALL for its entire internal evaluation process. PyEvALL is designed around the pair *prediction file, gold standard file*, and likewise, the reports focus on this pair.
-
-```python
-{
-  "metrics": {
-    "PrecisionAtK": {
-      "name": "Precision at k",
-      "acronym": "P@k",
-      "description": "Coming soon!",
-      "status": "OK",
-      "results": {
-        "test_cases": [{
-          "name": "GOLD1",
-          "average": 0.2
-        }],
-        "average_per_test_case": 0.2
-      }
-    },
-    "Precision": {
-      "name": "Precision",
-      "acronym": "Pr",
-      "description": "Coming soon!",
-      "status": "FAIL",
-      "results": {
-        "test_cases": [],
-        "average_per_test_case": null
-      },
-      "preconditions": {
-        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
-          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
-          "description": "Use parameter: report=\"embedded\"!",
-          "status": "FAIL",
-          "test_cases": ["GOLD1"]
-        }
-      }
-    }
-  },
-  "files": {
-    "SYS1.txt": {
-      "name": "SYS1.txt",
-      "status": "OK",
-      "gold": false,
-      "description": "Use parameter: report=\"embedded\"!",
-      "errors": {}
-    },
-    "GOLD1.txt": {
-      "name": "GOLD1.txt",
-      "status": "OK",
-      "gold": true,
-      "description": "Use parameter: report=\"embedded\"!",
-      "errors": {}
-    }
-  }
-}
-```
-In the "metrics" element, the main attributes of the metric are found, which can be useful for generating reports of other types, such as the name or acronym, as well as the results of the metric itself. Additionally, this element includes any potential errors in the analysis of the preconditions of each metric, if any. For example, as seen in the Figure, the metric *precision* has not met its input format precondition for the provided file pair, so it has not been executed, and this is reported to the user.
-
-On the other hand, the "files" element collects any potential errors detected in the files analyzed during the evaluation, i.e., the prediction file and the gold standard file. Each element also includes a description of each error or analysis, allowing for the generation of more explanatory and comprehensive reports. Specifically, to obtain textual explanations of the errors and the analysis of the evaluation process with embedded explanations, the parameter *report=embedded* is used.
-
-The proposed format can be interpreted by various analyzers, providing users with enriched reports tailored to their needs, such as the report with embedded explanations.
-
-
-
-#### PyEvALL embedded report
-The embedded explanations report of PyEvALL is a JSON report with embedded textual information describing the errors and analysis processes carried out during the evaluation. It provides clear and precise details about the errors detected in the input files. The parameter included should be the following:
-
-```python
-params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED  
-```
-
-An example of the embedded explanations report format can be seen in next figure. As shown in the image, this report is almost identical to the previous one except that the description field includes explanations to describe the process. Referring to the previous example, the precision metric generates an error because the input format is not appropriate for this evaluation context, as explained in the message. Likewise, it is indicated that the files have been processed correctly.
-
-```python
-{
-  "metrics": {
-    "PrecisionAtK": {
-      "name": "Precision at k",
-      "acronym": "P@k",
-      "description": "Coming soon!",
-      "status": "OK",
-      "results": {
-        "test_cases": [{
-          "name": "GOLD1",
-          "average": 0.2
-        }],
-        "average_per_test_case": 0.2
-      }
-    },
-    "Precision": {
-      "name": "Precision",
-      "acronym": "Pr",
-      "description": "Coming soon!\\nThe evaluation FAIL.",
-      "status": "FAIL",
-      "results": {
-        "test_cases": [],
-        "average_per_test_case": null
-      },
-      "preconditions": {
-        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
-          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
-          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Precision.\\nTest case(s) name: GOLD1.",
-          "status": "FAIL",
-          "test_cases": ["GOLD1"]
-        }
-      }
-    }
-  },
-  "files": {
-    "SYS1.txt": {
-      "name": "SYS1.txt",
-      "status": "OK",
-      "gold": false,
-      "description": "The file is correctly parser without errors or warnings.\\nFile name: SYS1.txt.",
-      "errors": {}
-    },
-    "GOLD1.txt": {
-      "name": "GOLD1.txt",
-      "status": "OK",
-      "gold": true,
-      "description": "The file is correctly parser without errors or warnings.\\nFile name: GOLD1.txt.",
-      "errors": {}
-    }
-  }
-}
-```
-
-
-
-#### PyEvALL dataframe report
-Finally, geared towards a detailed analysis across various metrics, PyEvALL includes the DataFrame report. This report, as its name suggests, consists of multiple Pandas Python library dataframes. Specifically, the report contains 3 dataframes: one with the averages per test case, another with the results disaggregated by test case, and finally another one with the results disaggregated by class, in case any metric operates at the class level. This report can be obtained through code for subsequent analysis, or printed in tabular format for better visualization.
-
-```python
-    params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME  
-```
-
-
-In this case, the report shown in the image is generated using PyEvALL's method, which enables evaluation given a list of prediction files across a set of metrics. As depicted in the image, these types of reports are often highly useful for in-depth analysis of various models across different metrics, a common practice in the scientific community.
-
-
-```csv
-
-This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check errors if any metric has the value "-" or is an empty value or table.
-
-Table with average results over test cases
-+----+----------+----------+------+----------+
-|    | files    |      Acc |   Pr |       Re |
-|----+----------+----------+------+----------|
-|  0 | SYS5.txt | 0.857143 |    1 | 0.666667 |
-+----+----------+----------+------+----------+
-
-Table at the test case level
-+----+------------+----------+------+----------+
-|    | files      |      Acc |   Pr |       Re |
-|----+------------+----------+------+----------|
-|  0 | SYS5.txt_5 | 0.857143 |    1 | 0.666667 |
-+----+------------+----------+------+----------+
-
-Table at the class level
-+----+------------+-----------+--------+--------+-----------+--------+--------+
-|    | files      |   Pr_TRUE |   Pr_B | Pr_C   |   Re_TRUE |   Re_B |   Re_C |
-|----+------------+-----------+--------+--------+-----------+--------+--------|
-|  0 | SYS5.txt_5 |         1 |      1 | -      |         1 |      1 |      0 |
-+----+------------+-----------+--------+--------+-----------+--------+--------+
-
-```
-
-
-
-Moreover, this format enables the generation of reports in other useful formats such as **Markdown** or **tsv**.
-
-```python
-
-report = test.evaluate(predictions, gold, metrics, **params)
-report.print_report_to_markdown()
-
-```
-
-```python
-
-report = test.evaluate(predictions, gold, metrics, **params)
-report.print_report_tsv()
-
-```
-
-### Hierarchy parameter
-PyEvALL allows evaluating with certain metrics that can address hierarchical evaluation contexts, where the set of options available for each item is structured in a hierarchical form. To indicate this hierarchy to the system, this parameter has been introduced, representing the hierarchy through a Python dictionary. To indicate PyEvALL the hierarchical structure of the problem, it is necessary to specify it in the params parameter as follows:
-
-```python
-
-    DIPROMATS_TASK3={"True":{
-        "1 appeal to commonality":["1 appeal to commonality - ad populum", "1 appeal to commonality - flag waving"],
-        "2 discrediting the opponent":["2 discrediting the opponent - absurdity appeal","2 discrediting the opponent - demonization", "2 discrediting the opponent - doubt", "2 discrediting the opponent - fear appeals (destructive)", "2 discrediting the opponent - name calling", "2 discrediting the opponent - propaganda slinging", "2 discrediting the opponent - scapegoating", "2 discrediting the opponent - undiplomatic assertiveness/whataboutism"],
-        "3 loaded language":[], 
-        "4 appeal to authority":["4 appeal to authority - appeal to false authority", "4 appeal to authority - bandwagoning"]}, 
-        "False":[]}
-
-    params[PyEvALLUtils.PARAM_HIERARCHY]= DIPROMATS_TASK3
-
-```
-
-As shown in the code snippet, the hierarchy is a Python dictionary where each level is formed by a new dictionary, and the leaves are formed by arrays. Note that if the parameter is not specified, metrics that require it cannot be evaluated, or they will be evaluated in a non-hierarchical manner.
-
-
-### Log Level parameter
-The log level can be configured via parameter. PyEvALL defaults to the INFO level and can be changed as shown:
-
-```python
-
-	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE
-
-```
-
-The different configuration options for the log level are:
-
-```python
-
-	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_DEBUG
-	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_INFO
-	params [PyEvALLUtils.PARAM_LOG_LEVEL]= PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE	
-
-```
-
-
-## Evaluating a list of prediction files
-PyEvALL also provides a method by which a list of prediction files can be evaluated, allowing multiple systems to be evaluated at once. In this mode, PyEvALL generates a meta-report that includes the reports of each *prediction file, gold standard* file pair. The execution of this method would be as follows:
+`evaluate_lst()` evaluates several prediction files against the same gold standard:
 
 ```python
 from pyevall.evaluation import PyEvALLEvaluation
+from pyevall.metrics.metricfactory import MetricFactory
 from pyevall.utils.utils import PyEvALLUtils
-predictions_1 = "test/resources/metric/test/classification/predictions/SYS3.txt"
-predictions_2 = "test/resources/metric/test/classification/predictions/SYS4.txt"
-predictions_3 = "test/resources/metric/test/classification/predictions/SYS5.txt"
+
+predictions = [
+    "test/resources/metric/test/classification/predictions/SYS3.txt",
+    "test/resources/metric/test/classification/predictions/SYS4.txt",
+    "test/resources/metric/test/classification/predictions/SYS5.txt",
+]
 gold = "test/resources/metric/test/classification/gold/GOLD5.txt"
-lst_pred= [predictions_1, predictions_2, predictions_3]
-test = PyEvALLEvaluation()
-metrics=[MetricFactory.Accuracy.value, MetricFactory.Precision.value]
 
-params= dict()
-params[PyEvALLUtils.PARAM_FORMAT]= PyEvALLUtils.PARAM_OPTION_FORMAT_TSV
-params[PyEvALLUtils.PARAM_REPORT]= PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME 
-report = test.evaluate_lst(lst_pred, gold, metrics, **params)
+metrics = [
+    MetricFactory.Accuracy.value,
+    MetricFactory.Precision.value,
+]
+
+params = {
+    PyEvALLUtils.PARAM_REPORT: PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME,
+}
+
+report = PyEvALLEvaluation().evaluate_lst(predictions, gold, metrics, **params)
 report.print_report()
-
-
 ```
 
-And outputs the following report:
+## Input Formats
+
+PyEvALL supports JSON, TSV, and CSV.
+
+- **JSON** is the canonical format.
+- **TSV/CSV** are convenience wrappers. They are automatically detected and converted internally to JSON records.
+- Gold and prediction files may use different supported formats.
+- After TSV/CSV conversion, the same validation rules are applied as for JSON.
+
+### General JSON schema
+
+Every input file is a JSON array of records. Each record contains:
+
+- `test_case`: string identifying the evaluation case, query, task, or run.
+- `id`: string identifying the item.
+- `value`: the assigned label, score, distribution, rank, relevance, or cluster membership depending on the context.
+
+Allowed `value` types:
+
+- string: mono-label classification.
+- array of strings: multi-label classification or clustering membership.
+- integer: ranking position or relevance.
+- object with numeric values: LeWiDi distributions.
+
+Example schema shape:
 
 ```python
-This is a table PyEvALL report, so no warnings or errors are shown. Please, check the embedded report to check errors if any metric has the value "-" or is an empty value or table.
-
-Table with average results over test cases
-+----+----------+------------+------+------------+
-|    | files    |        Acc |   Pr |         Re |
-|----+----------+------------+------+------------|
-|  0 | SYS3.txt | nan        |  nan | nan        |
-|  1 | SYS4.txt | nan        |  nan | nan        |
-|  2 | SYS5.txt |   0.857143 |    1 |   0.666667 |
-+----+----------+------------+------+------------+
-
-Table at the test case level
-+----+------------+----------+------+----------+
-|    | files      |      Acc |   Pr |       Re |
-|----+------------+----------+------+----------|
-|  0 | SYS5.txt_5 | 0.857143 |    1 | 0.666667 |
-+----+------------+----------+------+----------+
-
-Table at the class level
-+----+------------+-----------+--------+--------+-----------+--------+--------+
-|    | files      |   Pr_TRUE |   Pr_B | Pr_C   |   Re_TRUE |   Re_B |   Re_C |
-|----+------------+-----------+--------+--------+-----------+--------+--------|
-|  0 | SYS5.txt_5 |         1 |      1 | -      |         1 |      1 |      0 |
-+----+------------+-----------+--------+--------+-----------+--------+--------+
-
-
-
-```
-
-
-
-
-<!---
-************************		SECTION 3		************************
--->
-
-
-# What is the input format in PyEvALL?
-The default format for EvALL is JSON due to its great versatility and ease of controlling potential errors according to the format. For this purpose, a schema has been created in which the allowed attributes are defined, as well as their types, declaring for each of them whether they are required or not.
-
-```python
-    FORMAT_JSON_SCHEMA= {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "test_case": {"type": "string"},
-                "id": {"type": "string"},
-                "value": {
-                    "anyOf": [
-                        {"type": "string"},
-                        {"type": "array", "items": {"type": "string"}},
-                        {"type": "integer"},
-                        {
-                            "type": "object",
-                            "patternProperties": {
-                            "^.*$": {"type": "number"},    }
-                        },
-                    ]
-                },              
+FORMAT_JSON_SCHEMA = {
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "test_case": {"type": "string"},
+            "id": {"type": "string"},
+            "value": {
+                "anyOf": [
+                    {"type": "string"},
+                    {"type": "array", "items": {"type": "string"}},
+                    {"type": "integer"},
+                    {
+                        "type": "object",
+                        "patternProperties": {
+                            "^.*$": {"type": "number"}
+                        }
+                    },
+                ]
             },
-            "required": ["test_case", "id", "value"],
-            "additionalProperties": False
         },
+        "required": ["test_case", "id", "value"],
+        "additionalProperties": False,
+    },
+}
+```
+
+### TSV and CSV wrappers
+
+TSV and CSV files must contain three columns equivalent to the JSON fields:
+
+```text
+test_case	id	value
+```
+
+or, without headers:
+
+```text
+EXAMPLE	I1	A
+EXAMPLE	I2	B
+```
+
+PyEvALL detects the format, converts it to JSON records, and reports a warning indicating that a TSV or CSV wrapper was identified.
+
+Important: TSV/CSV in PyEvALL do not define a separate evaluation semantics. Once converted, records follow the same rules as JSON. In particular, repeated `(test_case, id)` pairs are handled by the same repeated-ID validation described below.
+
+### Mono-label classification
+
+Use a string value for each instance:
+
+```json
+[
+  {
+    "test_case": "EXIST2023",
+    "id": "I1",
+    "value": "A"
+  },
+  {
+    "test_case": "EXIST2023",
+    "id": "I2",
+    "value": "B"
+  }
+]
+```
+
+### Multi-label classification
+
+Use an array of strings for each instance:
+
+```json
+[
+  {
+    "test_case": "EXIST2023",
+    "id": "I1",
+    "value": ["A"]
+  },
+  {
+    "test_case": "EXIST2023",
+    "id": "I2",
+    "value": ["A", "B", "C"]
+  }
+]
+```
+
+If a dataset comes from another tool where multi-label assignments are represented as repeated rows with the same `id`, it must be converted to PyEvALL multi-label JSON by grouping labels in the `value` array. PyEvALL itself treats repeated IDs as a format issue; repeated rows are not interpreted as multi-label assignments.
+
+### LeWiDi classification
+
+Use an object mapping classes to numeric values:
+
+```json
+[
+  {
+    "test_case": "TASK",
+    "id": "I1",
+    "value": {
+      "B": 0.6,
+      "C": 0.4
     }
-```
-
-Specifically, each attribute represents:
-- **test_case**: in string format, a specific experiment or use case, which could be, for example, different runs of a classification algorithm or different queries in a ranking context.
-- **id**: accepts both string or int format, but it has to be the same for both the predictions and gold standard files. It is the unique identifier of the instance in the dataset.
-- **value**: this field represents the value assigned to each item, and its type will vary depending on the applied evaluation context. For example, for mono-label classification, the element will be composed of a string, while for multi-label classification, the element will be composed of a vector of strings.
-
-This format can be easily obtained form a dataframe by using the option *gold_df.to_json(orient="records")*, like in the following example:
-
-```python
-gold_df = pd.DataFrame({'test_case': ['EXIST2023','EXIST2023','EXIST2023','EXIST2023'], 
-                        'id': ['101','102','103','104'],
-                        'value': ["0","1","0","1"]})
-with open(output_file_json, 'w', encoding='utf-8') as output_file: 
-            output_file.write(gold_df.to_json(orient="records"))                   
-```
-
-This format can be adapted for different evaluation contexts. Below are examples of the format based on the context:
-
-## Mono-label Classification Format
-
-This format is the typical format for mono-label classification tasks where each item has a single associated class. In this format, the label can be any string of characters. An example for this format is:
-
-```python
-[
-	{  
-            "test_case":"EXIST2023",
-  	    	 "id":"I1",
-            "value":"A"  
-          },
-          {  
-            "test_case":"EXIST2023",
-	    	 "id":"I2",
-            "value":"B"
-          },
-          {  
-            "test_case":"EXIST2023",
-	    	 "id":"I3",
-            "value":"C"
-          }  
+  },
+  {
+    "test_case": "TASK",
+    "id": "I2",
+    "value": {
+      "B": 0.5,
+      "C": 0.5
+    }
+  }
 ]
 ```
 
-In the example above, it can be seen that the array consists of three elements belonging to the same test_case, 'EXIST2023', with three different identifiers (I1, I2, and I3), and three different target classes ('A', 'B', and 'C').
+### Ranking
 
+Use integer values. In prediction files the integer represents the ranking/order assigned by the system. In gold files the integer represents relevance.
 
-## Multi-label Classification Format
-
-In the multi-label classification format, each item can be classified with one or several target classes. For this reason, the PyEvALL format for this type is composed of the same elements as in the previous case, with the difference that the "value" attribute is now an array of elements. These elements, in turn, must be strings. An example for this format can be found in the following code snippet:
-
-```python
+```json
 [
-	  {  
-	    "test_case":"EXIST2023",
-	    "id":"I1",
-	    "value":["A"]  
-	  },
-	  {  
-	    "test_case":"EXIST2023",
-	    "id":"I2",
-	    "value":["A", "B", "C", "D"] 
-	  },
-	  {  
-	    "test_case":"EXIST2023",
-	    "id":"I3",
-	    "value":["C", "E"]
-	  }
-]	
-```
-
-
-As seen in the example, the file consists of an array of JSON objects with three elements with the same fields as in the previous case, but with the difference that, in this case, the "value" attribute is composed of an array with the target classes of each item.
-
-## LeWiDi Classification Format
-
-The disagreement classification format allows assigning a probability distribution to each class for every element in the dataset. Instead of selecting a single absolute category for each item, the label distribution by annotator is assigned to each element. In this format, as shown in the example below, PyEvALL uses the same structure, except that, in this case, the "value" attribute is represented with a dictionary where each element represents a target class and its value represents the probability of assignment. Note that in the case of mono-label disagreement classification, the sum for each element must be 1, while for multi-label classification, it is not necessary.
-
-```python
-[
-	  {  
-	    "test_case":"1",
-	    "id":"I1",
-	    "value":{
-	            "B": 0.6, 
-		    "C": 0.4 			
-	        } 
-	  },
-	  {  
-	    "test_case":"1",
-	    "id":"I2",
-	    "value":{
-	            "B": 0.5,
-	    	    "C": 0.5           
-	        } 
-	  },  
-	  {  
-	    "test_case":"1",
-	    "id":"I3",
-	    "value":{
-	            "B": 0.9, 
-	            "C": 0.1            
-	        } 
-	  }
+  {
+    "test_case": "Q1",
+    "id": "A",
+    "value": 1
+  },
+  {
+    "test_case": "Q1",
+    "id": "B",
+    "value": 2
+  }
 ]
 ```
 
-## Ranking Format
+### Clustering
 
-In the ranking evaluation context, each item is assigned a value indicating its position in the ranking for predictions, and the relevance value for the gold standard. As shown in the example below, the format is exactly the same as in the previous cases, but in this case, the value of the "value" attribute consists of numbers representing, in each case, the item's ranking or relevance.
+Use an array of strings for cluster memberships:
 
-```python
+```json
 [
-	  {  
-	    "test_case":"GOLD1",
-	    "id":"A",
-	    "value":1  
-	  },
-	  {  
-	    "test_case":"GOLD1",
-	    "id":"B",
-	    "value":2
-	  }  
+  {
+    "test_case": "CLUS",
+    "id": "I1",
+    "value": ["C1"]
+  },
+  {
+    "test_case": "CLUS",
+    "id": "I2",
+    "value": ["C1", "C2"]
+  }
 ]
 ```
 
-As seen in the example, this shows the predictions of a ranking system indicating that the item with identifier "A" is assigned the position 1 in the ranking, while the item with identifier "B" is assigned the position 2 in the ranking.
+Some clustering metrics require non-overlapping cluster assignments, while extended BCubed metrics can work with overlapping assignments. When a metric cannot be evaluated for the provided clustering structure, PyEvALL reports the corresponding precondition failure.
+
+### Hierarchies
+
+Hierarchy information is passed as a parameter, not as part of the input records:
+
+```python
+hierarchy = {
+    "P": ["S1", "S2"]
+}
+
+params[PyEvALLUtils.PARAM_HIERARCHY] = hierarchy
+```
+
+For deeper hierarchies, dictionaries can be nested:
+
+```python
+hierarchy = {
+    "Root": {
+        "A": ["A1", "A2"],
+        "B": ["B1", "B2"]
+    }
+}
+```
+
+Only hierarchy-aware metrics use this parameter. Other metrics are evaluated without hierarchical semantics.
+
+## Evaluation Semantics and Edge Cases
+
+This section documents the decisions that determine which instances and values are actually evaluated.
+
+### Repeated IDs
+
+PyEvALL expects at most one record for each `(test_case, id)` pair.
+
+- In prediction files, repeated IDs are reported and the repeated row is ignored. Evaluation continues with the first occurrence.
+- In gold standard files, repeated IDs are a blocking format error for that file/test case.
+- TSV and CSV wrappers follow the same rule because they are converted to the same JSON record structure before validation.
+
+Repeated IDs are not used to represent multi-label assignments in PyEvALL. Multi-label data must use an array in `value`.
+
+### Empty and non-evaluable values
+
+Values such as `""`, `[]`, or `{}` do not represent evaluable assignments.
+
+PyEvALL handles these values as follows:
+
+- A warning is reported: `FORMAT_EMPTY_VALUE_ROW_WARNING`.
+- The instance is ignored for evaluation.
+- If the empty value appears in gold, the prediction with the same `test_case` and `id` is also removed from the evaluation universe, because there is no valid reference label.
+- If the empty value appears in predictions, that prediction is ignored.
+
+Example:
+
+```json
+[
+  {"test_case": "T1", "id": "I1", "value": ""},
+  {"test_case": "T1", "id": "I2", "value": "B"}
+]
+```
+
+The first row is reported as a warning and excluded from evaluation.
+
+This behavior is intentional: empty values are detected early, reported, and excluded so that metrics are not computed over invalid assignments.
+
+`null` is not a valid `value` according to the PyEvALL JSON schema and is reported as a schema error rather than as an empty-value warning.
+
+### Missing items and missing classes
+
+PyEvALL distinguishes several cases:
+
+- **Missing item**: an item exists in gold but not in predictions, or vice versa.
+- **Empty item value**: the item exists but its `value` is empty or non-evaluable.
+- **Missing class in gold**: a class appears in predictions but not in gold.
+- **Missing class in predictions**: a class appears in gold but not in predictions.
+
+These cases may affect metrics differently. For example, a class-level precision value is reported only for classes in the evaluation context exposed by the comparator. If a class appears only in predictions and not in gold, it may not have a class-level result for some classification metrics.
+
+### Undefined metric values
+
+Some metrics are mathematically undefined in specific situations. PyEvALL reports these cases as `None` in the result or as metric precondition failures, depending on the situation.
+
+Examples:
+
+- Ranking metrics such as `RPrecision`, `MRR`, `MAP`, `nDCG`, `ERR`, and `RBP` may be undefined when the gold standard has no relevant items.
+- `Kappa` is not evaluated when the system output has no valid labeled items after empty values are filtered.
+- Metrics requiring a context not implemented by PyEvALL return a precondition failure rather than a numeric value.
+
+### Multi-label support
+
+PyEvALL supports multi-label classification for `Precision`, `Recall`, and `FMeasure`.
+
+Metrics such as `Accuracy`, `SystemPrecision`, and `Kappa` are mono-label metrics and are not evaluated for multi-label inputs.
+
+### Hierarchical support
+
+Providing a hierarchy does not make every metric hierarchical. Only hierarchy-aware metrics use it.
+
+Currently, hierarchical evaluation is supported through `ICM` and `ICMNorm` for hard classification labels, and through `ICMSoft` and `ICMSoftNorm` for LeWiDi soft labels. Metrics that do not use hierarchy either ignore it with a warning or fail their context preconditions when the input context is not valid for them.
+
+### Ranking relevance edge cases
+
+When a ranking gold standard has no relevant item, metrics that need at least one relevant item are undefined and return `None`. `PrecisionAtK` may still return a numeric value, because it can be interpreted as the proportion of relevant documents found in the top-k positions.
+
+## Reports
+
+PyEvALL reports are structured around the pair `(prediction file, gold standard file)`.
+
+The report contains:
+
+- `metrics`: metric status, results, errors, warnings, and preconditions.
+- `files`: file-level parsing and validation status.
+
+Metric statuses include:
+
+- `OK`: the metric was evaluated.
+- `WARNING`: the metric was evaluated but a warning was reported.
+- `FAIL`: the metric could not be evaluated.
+
+File statuses follow the same idea. Some file warnings, such as TSV/CSV wrapper detection or empty value filtering, do not necessarily prevent evaluation.
+
+### Embedded report
+
+Use embedded reports to include textual explanations:
+
+```python
+params[PyEvALLUtils.PARAM_REPORT] = PyEvALLUtils.PARAM_OPTION_REPORT_EMBEDDED
+```
+
+### DataFrame report
+
+Use dataframe reports for tabular analysis:
+
+```python
+params[PyEvALLUtils.PARAM_REPORT] = PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME
+```
+
+DataFrame reports include:
+
+- average results over test cases
+- results at test case level
+- class-level results when applicable
+
+The embedded report should be inspected whenever a dataframe value is empty, `None`, or `-`.
+
+### Other report outputs
+
+Reports can also be printed as Markdown or TSV:
+
+```python
+report = PyEvALLEvaluation().evaluate(predictions, gold, metrics, **params)
+report.print_report_to_markdown()
+report.print_report_tsv()
+```
+
+## Metric Parameters
+
+Some metrics accept parameters through the `params` dictionary.
+
+The structure is:
+
+```python
+params = {
+    "MetricName": {
+        "parameter_name": value
+    }
+}
+```
+
+Example:
+
+```python
+params = {
+    MetricFactory.FMeasure.value: {"alfa_param": 0.5},
+    MetricFactory.ICM.value: {"alpha_1": 2, "alpha_2": 2, "beta": 1},
+}
+```
+
+Available parameters include:
+
+- **FMeasure**
+  - `alfa_param`: weight controlling the balance between precision and recall. Default: `0.5`.
+- **ICM**
+  - `alpha_1`: contribution of the prediction information content.
+  - `alpha_2`: contribution of the gold information content.
+  - `beta`: contribution of the union information content.
+- **ICMSoft**
+  - `alpha_1`
+  - `alpha_2`
+  - `beta`
+- **PrecisionAtK**
+  - `k_param`: position up to which precision is calculated.
+- **MAP**
+  - `r_param`: position up to which average precision is calculated.
+- **RBP**
+  - `p_param`: persistence parameter.
+
+## Logging
+
+The log level can be configured through parameters:
+
+```python
+params[PyEvALLUtils.PARAM_LOG_LEVEL] = PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE
+```
+
+Available options:
+
+```python
+PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_DEBUG
+PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_INFO
+PyEvALLUtils.PARAM_OPTION_LOG_LEVEL_NONE
+```
+
+## Testing and Validation
+
+PyEvALL includes automated tests for formats and metric comparisons.
+
+### Format tests
+
+Format tests are located in:
+
+```text
+test/test_formats.py
+```
+
+They cover:
+
+- missing files
+- empty files
+- invalid JSON
+- invalid schema
+- duplicated IDs
+- TSV/CSV wrapper detection
+- type consistency
+- empty values and ignored instances
+- ranking format errors
+- LeWiDi format errors
+- clustering format errors
+- metric preconditions caused by invalid contexts
+
+Running the format suite generates:
+
+```text
+test/reports/test_format_report.html
+```
+
+Run:
+
+```bash
+python -m pytest test/test_formats.py -q
+```
+
+### Metric comparison tests
+
+Metric comparison tests compare PyEvALL results with reference outputs from an external legacy evaluation tool used for validation. That external format is not the PyEvALL input format.
+
+The current comparison suites generate HTML reports:
+
+```text
+test/reports/test_classification_metrics_report.html
+test/reports/test_ranking_metrics_report.html
+test/reports/test_clustering_metrics_report.html
+```
+
+Run:
+
+```bash
+python -m pytest test/test_classification_metrics.py -q
+python -m pytest test/test_ranking_metrics.py -q
+python -m pytest test/test_clustering_metrics.py -q
+```
+
+Run all tests:
+
+```bash
+python -m pytest -q
+```
+
+### Test markers
+
+Some format tests can be run by marker:
+
+```bash
+python -m pytest -m json_format -q
+python -m pytest -m wrappers -q
+python -m pytest -m consistency -q
+python -m pytest -m clustering -q
+```
+
+### Notes on generated HTML reports
+
+The generated HTML reports are intended for development and validation. They help identify:
+
+- matches between PyEvALL and reference outputs
+- expected differences
+- unsupported contexts
+- parser warnings
+- precondition failures
+- metric values that are intentionally undefined
+
+In restricted environments, writing reports under `test/reports` may require permissions to write to the repository workspace.

@@ -1,0 +1,150 @@
+{
+  "metrics": {
+    "PrecisionAtK": {
+      "name": "Precision at k",
+      "acronym": "P@k",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 0.2
+          }
+        ],
+        "average_per_test_case": 0.2
+      }
+    },
+    "RPrecision": {
+      "name": "R Precision",
+      "acronym": "RPre",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "MRR": {
+      "name": "Mean Reciprocal Rank",
+      "acronym": "MRR",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "MAP": {
+      "name": "Mean Average Precision",
+      "acronym": "MAP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "DCG": {
+      "name": "Discounted Cumulative Gain",
+      "acronym": "DCG",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 3.6309297535714578
+          }
+        ],
+        "average_per_test_case": 3.6309297535714578
+      }
+    },
+    "nDCG": {
+      "name": "Normalized Discounted Cumulative Gain",
+      "acronym": "nDCG",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "ERR": {
+      "name": "Expected Reciprocal Rank",
+      "acronym": "ERR",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 0.78125
+          }
+        ],
+        "average_per_test_case": 0.78125
+      }
+    },
+    "RBP": {
+      "name": "Rank Biased Precision",
+      "acronym": "RBP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD9",
+            "average": 1.25
+          }
+        ],
+        "average_per_test_case": 1.25
+      }
+    }
+  },
+  "files": {
+    "SYS9.txt": {
+      "name": "SYS9.txt",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: SYS9.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: SYS9.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "GOLD9.txt": {
+      "name": "GOLD9.txt",
+      "status": "WARNING",
+      "gold": true,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: GOLD9.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: GOLD9.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    }
+  }
+}

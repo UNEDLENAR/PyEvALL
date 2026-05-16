@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "SensitivityBCubed": {
+      "name": "Sensitivity",
+      "acronym": "S",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "SomeMissingCat",
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    }
+  },
+  "files": {
+    "pred_SomeMissingCat.json": {
+      "name": "pred_SomeMissingCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_SomeMissingCat.json.",
+      "errors": {}
+    },
+    "gold_SomeMissingCat.json": {
+      "name": "gold_SomeMissingCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_SomeMissingCat.json.",
+      "errors": {}
+    }
+  }
+}

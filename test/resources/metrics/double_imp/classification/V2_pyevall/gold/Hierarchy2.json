@@ -1,0 +1,22 @@
+[
+  {
+    "test_case": "Hierarchy2",
+    "id": "I1",
+    "value": "P"
+  },
+  {
+    "test_case": "Hierarchy2",
+    "id": "I2",
+    "value": "S1"
+  },
+  {
+    "test_case": "Hierarchy2",
+    "id": "I3",
+    "value": "S2"
+  },
+  {
+    "test_case": "Hierarchy2",
+    "id": "I4",
+    "value": "A"
+  }
+]

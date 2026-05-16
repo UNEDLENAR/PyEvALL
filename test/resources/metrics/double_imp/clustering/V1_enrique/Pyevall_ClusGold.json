@@ -1,0 +1,493 @@
+[
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B1",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B2",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B5",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B6",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "B7",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "G1",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "G2",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "G3",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "G4",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "G5",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "R1",
+    "value": [
+      "R1"
+    ]
+  },
+  {
+    "test_case": "COMPLETEDNESS",
+    "id": "R2",
+    "value": [
+      "R2"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "B1",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "B2",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "B3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "B4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "B5",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G1",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G2",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G3",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G4",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G5",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G6",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "G7",
+    "value": [
+      "G"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "R1",
+    "value": [
+      "R1"
+    ]
+  },
+  {
+    "test_case": "HOMOGENEITY",
+    "id": "R2",
+    "value": [
+      "R2"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T1",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T2",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T3",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T4",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T5",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "OVERLAPPING",
+    "id": "T6",
+    "value": [
+      "L2",
+      "L3"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T1",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T2",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T3",
+    "value": [
+      "L3"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T4",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T5",
+    "value": [
+      "L5"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T6",
+    "value": [
+      "L6"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T7",
+    "value": [
+      "L6"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T8",
+    "value": [
+      "L6"
+    ]
+  },
+  {
+    "test_case": "RAG_BAG",
+    "id": "T9",
+    "value": [
+      "L6"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T1",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T10",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T11",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T12",
+    "value": [
+      "L5"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T13",
+    "value": [
+      "L5"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T2",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T3",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T4",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T5",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T6",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T7",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T8",
+    "value": [
+      "L3"
+    ]
+  },
+  {
+    "test_case": "SIZE_VS_QUANTITY",
+    "id": "T9",
+    "value": [
+      "L3"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T1",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T10",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T11",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T12",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T13",
+    "value": [
+      "L5"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T14",
+    "value": [
+      "L5"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T2",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T3",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T4",
+    "value": [
+      "L1"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T5",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T6",
+    "value": [
+      "L2"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T7",
+    "value": [
+      "L3"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T8",
+    "value": [
+      "L4"
+    ]
+  },
+  {
+    "test_case": "SWAPPING",
+    "id": "T9",
+    "value": [
+      "L4"
+    ]
+  }
+]

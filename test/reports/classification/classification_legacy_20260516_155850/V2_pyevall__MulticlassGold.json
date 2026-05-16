@@ -1,0 +1,157 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Accuracy.\\nTest case(s) name: MulticlassGold.",
+          "status": "FAIL",
+          "test_cases": [
+            "MulticlassGold"
+          ]
+        }
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MulticlassGold",
+            "classes": {
+              "A": 1.0,
+              "B": 1.0
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MulticlassGold",
+            "classes": {
+              "A": 1.0,
+              "B": 0.5
+            },
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MulticlassGold",
+            "classes": {
+              "A": 1.0,
+              "B": 0.6666666666666666
+            },
+            "average": 0.8333333333333333
+          }
+        ],
+        "average_per_test_case": 0.8333333333333333
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: System Precision.\\nTest case(s) name: MulticlassGold.",
+          "status": "FAIL",
+          "test_cases": [
+            "MulticlassGold"
+          ]
+        }
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Cohen's Kappa.\\nTest case(s) name: MulticlassGold.",
+          "status": "FAIL",
+          "test_cases": [
+            "MulticlassGold"
+          ]
+        }
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT": {
+          "name": "METRIC_PRECONDITION_NOT_IMPLEMENTED_EVALUATION_CONTEXT",
+          "description": " The selected context of evaluation for this metric is not implemented.\\nThe metric name is: Information Contrast model.\\nTest case(s) name: MulticlassGold.",
+          "status": "FAIL",
+          "test_cases": [
+            "MulticlassGold"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "MulticlassGold.json": {
+      "name": "MulticlassGold.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MulticlassGold.json.",
+      "errors": {}
+    },
+    "MulticlassGold.json_duplicate_0": {
+      "name": "MulticlassGold.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MulticlassGold.json.",
+      "errors": {}
+    }
+  }
+}

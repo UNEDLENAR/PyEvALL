@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "FMeasurePurityInversePurity": {
+      "name": "F Measure",
+      "acronym": "F(P, I)",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "t11",
+            "average": 0.8320000000000001
+          }
+        ],
+        "average_per_test_case": 0.8320000000000001
+      }
+    }
+  },
+  "files": {
+    "pred_t11.json": {
+      "name": "pred_t11.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_t11.json.",
+      "errors": {}
+    },
+    "gold_t11.json": {
+      "name": "gold_t11.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_t11.json.",
+      "errors": {}
+    }
+  }
+}

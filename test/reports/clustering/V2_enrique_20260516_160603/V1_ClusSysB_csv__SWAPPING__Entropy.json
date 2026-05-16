@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "Entropy": {
+      "name": "Entropy",
+      "acronym": "E",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "SWAPPING",
+            "average": 0.8289631679143113
+          }
+        ],
+        "average_per_test_case": 0.8289631679143113
+      }
+    }
+  },
+  "files": {
+    "pred_SWAPPING.json": {
+      "name": "pred_SWAPPING.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_SWAPPING.json.",
+      "errors": {}
+    },
+    "gold_SWAPPING.json": {
+      "name": "gold_SWAPPING.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_SWAPPING.json.",
+      "errors": {}
+    }
+  }
+}

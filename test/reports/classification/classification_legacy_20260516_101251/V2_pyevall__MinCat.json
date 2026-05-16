@@ -1,0 +1,137 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "average": 0.25
+          }
+        ],
+        "average_per_test_case": 0.25
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "classes": {
+              "A": null,
+              "B": 0.25
+            },
+            "average": 0.25
+          }
+        ],
+        "average_per_test_case": 0.25
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "classes": {
+              "A": 0.0,
+              "B": 1.0
+            },
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "classes": {
+              "A": 0,
+              "B": 0.4
+            },
+            "average": 0.2
+          }
+        ],
+        "average_per_test_case": 0.2
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "average": 0.25
+          }
+        ],
+        "average_per_test_case": 0.25
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "average": -1.311278124459133
+          }
+        ],
+        "average_per_test_case": -1.311278124459133
+      }
+    }
+  },
+  "files": {
+    "MinCat.json": {
+      "name": "MinCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MinCat.json.",
+      "errors": {}
+    },
+    "MinCat.json_duplicate_0": {
+      "name": "MinCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MinCat.json.",
+      "errors": {}
+    }
+  }
+}

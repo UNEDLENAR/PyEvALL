@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "Jaccard": {
+      "name": "Jaccard",
+      "acronym": "JACC",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_CLUSTERING_PREDICTION_MISSING_GOLD_ITEMS": {
+          "name": "METRIC_PRECONDITION_CLUSTERING_PREDICTION_MISSING_GOLD_ITEMS",
+          "description": "The selected metric cannot be evaluated because the system output is missing items that appear in the gold standard.\\nThe metric name is: Jaccard.\\nTest case(s) name: SomeMissingCat.",
+          "status": "FAIL",
+          "test_cases": [
+            "SomeMissingCat"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "pred_SomeMissingCat.json": {
+      "name": "pred_SomeMissingCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_SomeMissingCat.json.",
+      "errors": {}
+    },
+    "gold_SomeMissingCat.json": {
+      "name": "gold_SomeMissingCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_SomeMissingCat.json.",
+      "errors": {}
+    }
+  }
+}

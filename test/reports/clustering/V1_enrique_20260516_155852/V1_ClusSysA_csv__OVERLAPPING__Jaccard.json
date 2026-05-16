@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "Jaccard": {
+      "name": "Jaccard",
+      "acronym": "JACC",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NO_ITEMS_REPEATED_FOR_THE_SAME_CLUSTER": {
+          "name": "METRIC_PRECONDITION_NO_ITEMS_REPEATED_FOR_THE_SAME_CLUSTER",
+          "description": "The selected metric cannot be evaluated because gold contains repeated items in different clusters. Predictions with this issue are reported as warning.\\nThe metric name is: Jaccard.\\nTest case(s) name: OVERLAPPING.",
+          "status": "FAIL",
+          "test_cases": [
+            "OVERLAPPING"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "pred_OVERLAPPING.json": {
+      "name": "pred_OVERLAPPING.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_OVERLAPPING.json.",
+      "errors": {}
+    },
+    "gold_OVERLAPPING.json": {
+      "name": "gold_OVERLAPPING.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_OVERLAPPING.json.",
+      "errors": {}
+    }
+  }
+}

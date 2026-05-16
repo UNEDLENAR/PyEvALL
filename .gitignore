@@ -1,0 +1,37 @@
+# Local configuration and private test data
+config/
+test_old/
+docs/
+
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# IDE and editor configuration
+.vscode/
+.idea/
+.project
+.pydevproject
+
+# OS, Office, and temporary files
+.DS_Store
+Thumbs.db
+*.tmp
+~$*
+~WRL*.tmp

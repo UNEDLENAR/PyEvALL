@@ -1,0 +1,137 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "classes": {
+              "A": 0.5,
+              "B": 1.0
+            },
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "classes": {
+              "A": 1.0,
+              "B": 1.0
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "classes": {
+              "A": 0.6666666666666666,
+              "B": 1.0
+            },
+            "average": 0.8333333333333333
+          }
+        ],
+        "average_per_test_case": 0.8333333333333333
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "average": 0.6666666666666666
+          }
+        ],
+        "average_per_test_case": 0.6666666666666666
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Extratems",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    }
+  },
+  "files": {
+    "Extratems.json": {
+      "name": "Extratems.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: Extratems.json.",
+      "errors": {}
+    },
+    "Extratems.json_duplicate_0": {
+      "name": "Extratems.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: Extratems.json.",
+      "errors": {}
+    }
+  }
+}

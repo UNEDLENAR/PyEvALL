@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "Purity": {
+      "name": "Purity",
+      "acronym": "Pur",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissmatchSingleCat",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    }
+  },
+  "files": {
+    "pred_MissmatchSingleCat.json": {
+      "name": "pred_MissmatchSingleCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MissmatchSingleCat.json.",
+      "errors": {}
+    },
+    "gold_MissmatchSingleCat.json": {
+      "name": "gold_MissmatchSingleCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MissmatchSingleCat.json.",
+      "errors": {}
+    }
+  }
+}

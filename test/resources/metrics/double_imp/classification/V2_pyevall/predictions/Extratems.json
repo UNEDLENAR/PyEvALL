@@ -1,0 +1,32 @@
+[
+  {
+    "test_case": "Extratems",
+    "id": "I1",
+    "value": "A"
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I2",
+    "value": "A"
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I3",
+    "value": "B"
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I4",
+    "value": "B"
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I5",
+    "value": "A"
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I6",
+    "value": "A"
+  }
+]

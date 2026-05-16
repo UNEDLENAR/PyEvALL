@@ -1,0 +1,154 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "classes": {
+              "A": null,
+              "B": null
+            },
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "classes": {
+              "A": 0.0,
+              "B": 0.0
+            },
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "classes": {
+              "A": 0,
+              "B": 0
+            },
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_EMPTY_PREDICTIONS_ERROR": {
+          "name": "METRIC_PRECONDITION_EMPTY_PREDICTIONS_ERROR",
+          "description": "The selected metric cannot be evaluated because the system output has no valid labeled items.\\nThe metric name is: Cohen's Kappa.\\nTest case(s) name: MissingCat.",
+          "status": "FAIL",
+          "test_cases": [
+            "MissingCat"
+          ]
+        }
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingCat",
+            "average": -1.0
+          }
+        ],
+        "average_per_test_case": -1.0
+      }
+    }
+  },
+  "files": {
+    "MissingCat.json": {
+      "name": "MissingCat.json",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: MissingCat.json.",
+      "errors": {
+        "FORMAT_EMPTY_VALUE_ROW_WARNING": {
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "description": "The attribute VALUE is empty. The instance is ignored for evaluation.\\nFile name: MissingCat.json.\\nLine(s): 1,2,3,4.\\nThe evaluation CONTINUE.",
+          "exception": null,
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "MissingCat.json_duplicate_0": {
+      "name": "MissingCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MissingCat.json.",
+      "errors": {}
+    }
+  }
+}

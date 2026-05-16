@@ -1,0 +1,12 @@
+[
+  {
+    "test_case": "EV_MONO",
+    "id": "I1",
+    "value": ""
+  },
+  {
+    "test_case": "EV_MONO",
+    "id": "I2",
+    "value": "A"
+  }
+]

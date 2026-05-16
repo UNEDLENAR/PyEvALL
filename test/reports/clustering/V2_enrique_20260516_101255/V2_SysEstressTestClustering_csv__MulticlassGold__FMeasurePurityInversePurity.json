@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "FMeasurePurityInversePurity": {
+      "name": "F Measure",
+      "acronym": "F(P, I)",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MulticlassGold",
+            "average": 0.8571428571428572
+          }
+        ],
+        "average_per_test_case": 0.8571428571428572
+      }
+    }
+  },
+  "files": {
+    "pred_MulticlassGold.json": {
+      "name": "pred_MulticlassGold.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MulticlassGold.json.",
+      "errors": {}
+    },
+    "gold_MulticlassGold.json": {
+      "name": "gold_MulticlassGold.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MulticlassGold.json.",
+      "errors": {}
+    }
+  }
+}

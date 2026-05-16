@@ -1,6 +1,6 @@
 # ============================================================================== 
 #
-# Copyright (c) 2022 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
+# Copyright (c) 2026 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
 #
 # This work has been financed by the European Union (NextGenerationEU funds) through the 
 # ``Plan de Recuperación, Transformación y Resiliencia'', by the Ministry of Economic Affairs and Digital Transformation and by the UNED University. 
@@ -72,7 +72,6 @@ class PyEvALLEvaluation(object):
         self.logger.info("Evaluating the following metrics " + str(lst_metrics))  
         # Create a PyEvALLFormat object to handle parsing and processing
         meta_report = None
-        #if PyEvALLUtils.PARAM_REPORT in params and params[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:
         if PyEvALLUtils.get_active_configuration(self.evaluation_id)[PyEvALLUtils.PARAM_REPORT]==PyEvALLUtils.PARAM_OPTION_REPORT_DATAFRAME:        
             meta_report = PyEvALLMetaReportDataFrame(None)
         else:
@@ -119,9 +118,10 @@ class PyEvALLEvaluation(object):
         parser = PyEvALLFormat(self.pyevall_report, predictions, goldstandard, self.evaluation_id)  
               
         metric_params = params.pop('metric_params', {})
-        # Safeguard for metric_params type
+        invalid_metric_params = False
         if not isinstance(metric_params, dict): 
-            # TODO: Add warning message if inside the conditional
+            self.logger.warning("Ignoring metric_params because it is not a dictionary")
+            invalid_metric_params = True
             metric_params = {}
 
         if parser.valid_execution: 
@@ -130,18 +130,29 @@ class PyEvALLEvaluation(object):
             # Iterate through each metric in the provided list      
             for m in lst_metrics:
                 m_params = params.copy()
-                m_params.update(metric_params.get(m, {}))
                 
                 self.logger.debug("Evaluating the following metric " + m)    
                 # Create a metric instance using MetricFactory            
                 metric = MetricFactory.get_instance_metric(m, self.evaluation_id)     
                 
                 if not metric==None:
+                    metric_warnings = []
+                    if invalid_metric_params:
+                        metric_warnings.append(PyEvALLReport.METRIC_PARAMS_NOT_DICT_WARNING)
+                    else:
+                        specific_metric_params = metric_params.get(m, {})
+                        if not isinstance(specific_metric_params, dict):
+                            self.logger.warning("Ignoring metric_params for metric " + m + " because it is not a dictionary")
+                            metric_warnings.append(PyEvALLReport.METRIC_PARAMS_FOR_METRIC_NOT_DICT_WARNING)
+                            specific_metric_params = {}
+                        m_params.update(specific_metric_params)
                     # Evaluate the metric using the created instance and test case comparators
                     if len(testcase_comp)>0:   
                         self.evaluate_metric(metric, testcase_comp, **m_params)       
                     else:
                         self.pyevall_report.insert_error_metric(metric, PyEvALLReport.METRIC_NOT_TEST_CASE_IN_COMMON_ERROR)         
+                    for warning in metric_warnings:
+                        self.pyevall_report.insert_warning_metric(metric, warning)
                 else:
                     # Handle the case where the metric is unknown
                     self.pyevall_report.insert_error_metric_unknown(m, PyEvALLReport.METRIC_UNKONW_METRIC_ERROR)
@@ -177,17 +188,20 @@ class PyEvALLEvaluation(object):
             metric.evaluate(comp, **params)         
             
             # Check if the metric has any preconditions fired                           
-            #if not len(metric.preconditions)==0:
             if self.pyevall_report.is_error_preconditions(metric.preconditions):
                 # Add preconditions and skip average result calculation
                 self.pyevall_report.insert_preconditions_metric(metric)
                 self.pyevall_report.insert_result_aveg_tc_metric(metric, None)
+                for warning in metric.warnings:
+                    self.pyevall_report.insert_warning_metric(metric, warning)
                 return
             else:
                 # Otherwise, add the result for the current test case
                 if not len(metric.preconditions)==0:
                     self.pyevall_report.insert_preconditions_metric(metric)
                 self.pyevall_report.insert_result_testcase_metric(metric, comp.get_testcase())
+                for warning in metric.warnings:
+                    self.pyevall_report.insert_warning_metric(metric, warning)
                 if not metric.result[PyEvALLReport.AVERAGE_TAG]==None:
                     sum_tc+=float(metric.result[PyEvALLReport.AVERAGE_TAG])
                     valid_tc+=1

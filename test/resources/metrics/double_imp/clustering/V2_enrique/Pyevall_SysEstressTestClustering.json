@@ -1,0 +1,290 @@
+[
+  {
+    "test_case": "Extratems",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I5",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "Extratems",
+    "id": "I6",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MajCat",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MajCat",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MajCat",
+    "id": "I3",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MajCat",
+    "id": "I4",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MinCat",
+    "id": "I1",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MinCat",
+    "id": "I2",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MinCat",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MinCat",
+    "id": "I4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MissingGoldCat",
+    "id": "I1",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MissingGoldCat",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MissingGoldCat",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MissingGoldCat",
+    "id": "I4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MissingItem",
+    "id": "I5",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MissmatchSingleCat",
+    "id": "I1",
+    "value": [
+      "D"
+    ]
+  },
+  {
+    "test_case": "MissmatchSingleCat",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MissmatchSingleCat",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MissmatchSingleCat",
+    "id": "I4",
+    "value": [
+      "C"
+    ]
+  },
+  {
+    "test_case": "MulticlassGold",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MulticlassGold",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MulticlassGold",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "MulticlassSys",
+    "id": "I1",
+    "value": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "test_case": "MulticlassSys",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MulticlassSys",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "NonExtratems",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "NonExtratems",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "NonExtratems",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "NonExtratems",
+    "id": "I4",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "OneCat",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "OneCat",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "OneMissmatchCat",
+    "id": "I1",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "OneMissmatchCat",
+    "id": "I2",
+    "value": [
+      "B"
+    ]
+  },
+  {
+    "test_case": "SomeItemMissing",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "SomeItemMissing",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "SomeMissingCat",
+    "id": "I1",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "SomeMissingCat",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  }
+]

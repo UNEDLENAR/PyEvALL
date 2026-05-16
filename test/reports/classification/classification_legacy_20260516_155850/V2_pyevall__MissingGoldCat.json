@@ -1,0 +1,149 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "classes": {
+              "B": 1.0
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "classes": {
+              "B": 1.0
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "classes": {
+              "B": 1.0
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR": {
+          "name": "METRIC_PRECONDITION_1_CLASS_GOLDANDPRED_AND_SAME_INSTANCES_ERROR",
+          "description": "The selected metric cannot be evaluated because the gold and the predictions have only one class with the same number of items.\\nThe metric name is: Cohen's Kappa.\\nTest case(s) name: MissingGoldCat.",
+          "status": "FAIL",
+          "test_cases": [
+            "MissingGoldCat"
+          ]
+        }
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingGoldCat",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    }
+  },
+  "files": {
+    "MissingGoldCat.json": {
+      "name": "MissingGoldCat.json",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: MissingGoldCat.json.",
+      "errors": {
+        "FORMAT_EMPTY_VALUE_ROW_WARNING": {
+          "lines": [
+            1,
+            2
+          ],
+          "description": "The attribute VALUE is empty. The instance is ignored for evaluation.\\nFile name: MissingGoldCat.json.\\nLine(s): 1,2.\\nThe evaluation CONTINUE.",
+          "exception": null,
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "MissingGoldCat.json_duplicate_0": {
+      "name": "MissingGoldCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MissingGoldCat.json.",
+      "errors": {}
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "metrics": {
+    "PrecisionAtK": {
+      "name": "Precision at k",
+      "acronym": "P@k",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 0.1
+          }
+        ],
+        "average_per_test_case": 0.1
+      }
+    },
+    "RPrecision": {
+      "name": "R Precision",
+      "acronym": "RPre",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    },
+    "MRR": {
+      "name": "Mean Reciprocal Rank",
+      "acronym": "MRR",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    },
+    "MAP": {
+      "name": "Mean Average Precision",
+      "acronym": "MAP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    },
+    "DCG": {
+      "name": "Discounted Cumulative Gain",
+      "acronym": "DCG",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 3.0
+          }
+        ],
+        "average_per_test_case": 3.0
+      }
+    },
+    "nDCG": {
+      "name": "Normalized Discounted Cumulative Gain",
+      "acronym": "nDCG",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 0.8262346571285599
+          }
+        ],
+        "average_per_test_case": 0.8262346571285599
+      }
+    },
+    "ERR": {
+      "name": "Expected Reciprocal Rank",
+      "acronym": "ERR",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "RBP": {
+      "name": "Rank Biased Precision",
+      "acronym": "RBP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD7",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    }
+  },
+  "files": {
+    "SYS7.txt": {
+      "name": "SYS7.txt",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: SYS7.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: SYS7.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "GOLD7.txt": {
+      "name": "GOLD7.txt",
+      "status": "WARNING",
+      "gold": true,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: GOLD7.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: GOLD7.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    }
+  }
+}

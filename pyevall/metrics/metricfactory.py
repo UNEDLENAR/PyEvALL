@@ -1,12 +1,12 @@
 # ============================================================================== 
 #
-# Copyright (c) 2022 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
+# Copyright (c) 2026 - Permission is granted for use and modification of this file for research, non-commercial purposes. 
 #
-# This work has been financed by the European Union (NextGenerationEU funds) through the 
-# ``Plan de Recuperación, Transformación y Resiliencia'', by the Ministry of Economic Affairs and Digital Transformation and by the UNED University. 
+# This work has been financed by the European Union (NextGenerationEU funds) through the
+# "Plan de Recuperacion, Transformacion y Resiliencia", by the Ministry of Economic Affairs and Digital Transformation and by the UNED University.
 #
-# The work has been developed within the project "ESPACIO DE OBSERVACIÓN DE INTELIGENCIA ARTIFICIAL (IA) EN ESPAÑOL”, in the framework of the 
-# Convenio C039/21-OT between the public entity RED.ES, M.P. and the UNIVERSIDAD NACIONAL DE EDUCACIÓN A DISTANCIA (UNED). 
+# The work has been developed within the project "ESPACIO DE OBSERVACION DE INTELIGENCIA ARTIFICIAL (IA) EN ESPANOL", in the framework of the
+# Convenio C039/21-OT between the public entity RED.ES, M.P. and the UNIVERSIDAD NACIONAL DE EDUCACION A DISTANCIA (UNED).
 #
 # @author Jorge Carrillo-de-Albornoz <jcalbornoz@lsi.uned.es> 
 # 
@@ -28,6 +28,13 @@ import importlib
 
     
 class MetricFactory(Enum):  
+    """
+    Registry of public metric names used by the evaluation API.
+
+    The enum values are the strings accepted by `PyEvALLEvaluation`. It also
+    centralizes metric instantiation so callers do not depend on concrete
+    metric classes.
+    """
     #CLASSIFICATION
     Accuracy = "Accuracy" 
     SystemPrecision = "SystemPrecision"
@@ -53,17 +60,33 @@ class MetricFactory(Enum):
     nDCG= "nDCG"
     ERR= "ERR"
     RBP = "RBP"
+    
+    Purity = "Purity"
+    InversePurity = "InversePurity"
+    FMeasurePurityInversePurity = "FMeasurePurityInversePurity"
+    FMeasureClustering = "FMeasureClustering"
+    RandStatistics = "RandStatistics"
+    Jaccard = "Jaccard"
+    FolkesAndMallows = "FolkesAndMallows"
+    NMISG = "NMI-SG"
+    ReliabilityBCubed = "ReliabilityBCubed"
+    SensitivityBCubed = "SensitivityBCubed"
+    Entropy = "Entropy"
+    ClassEntropy = "ClassEntropy"
+    VariationOfInformation = "VariationOfInformation"
       
     
     @classmethod   
     def get_instance_metric(cls, metric, evaluation_id):
+        # Build the metric class dynamically from the public metric name.
         logger = PyEvALLUtils.get_logger(__name__, evaluation_id)
         logger.debug("Generating instance of metric " + str(metric))
         instance=None
+        metric_name = "NMISG" if metric == MetricFactory.NMISG.value else metric
         try:
             module_ = importlib.import_module(str(PyEvALLUtils.MODULE_NAME))
             try:
-                instance = getattr(module_, metric)(evaluation_id)
+                instance = getattr(module_, metric_name)(evaluation_id)
             except AttributeError:
                 logger.debug("ERROR: The metric " + str(metric) + " does not exist.")
         except ImportError:
@@ -73,6 +96,7 @@ class MetricFactory(Enum):
     
     @classmethod 
     def get_lst_all_metrics(cls):
+        # Return all registered metrics in the public reporting order.
         lst_metrics=[]        
         #CLASSIFICATION
         lst_metrics.append(MetricFactory.Accuracy)
@@ -99,6 +123,20 @@ class MetricFactory(Enum):
         lst_metrics.append(MetricFactory.nDCG) 
         lst_metrics.append(MetricFactory.ERR) 
         lst_metrics.append(MetricFactory.RBP) 
+        
+        lst_metrics.append(MetricFactory.Purity)
+        lst_metrics.append(MetricFactory.InversePurity)
+        lst_metrics.append(MetricFactory.FMeasurePurityInversePurity)
+        lst_metrics.append(MetricFactory.FMeasureClustering)
+        lst_metrics.append(MetricFactory.RandStatistics)
+        lst_metrics.append(MetricFactory.Jaccard)
+        lst_metrics.append(MetricFactory.FolkesAndMallows)
+        lst_metrics.append(MetricFactory.NMISG)
+        lst_metrics.append(MetricFactory.ReliabilityBCubed)
+        lst_metrics.append(MetricFactory.SensitivityBCubed)
+        lst_metrics.append(MetricFactory.Entropy)
+        lst_metrics.append(MetricFactory.ClassEntropy)
+        lst_metrics.append(MetricFactory.VariationOfInformation)
         return lst_metrics
 
         

@@ -1,0 +1,3 @@
+test_case	id	value
+EXIST2023	I1	"[""A"", ""B""]"
+EXIST2023	I2	"[""C""]"

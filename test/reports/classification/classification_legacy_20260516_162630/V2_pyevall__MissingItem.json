@@ -1,0 +1,137 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "classes": {
+              "A": 0.0,
+              "B": null
+            },
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "classes": {
+              "A": 0.0,
+              "B": 0.0
+            },
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "classes": {
+              "A": 0,
+              "B": 0
+            },
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MissingItem",
+            "average": -1.0
+          }
+        ],
+        "average_per_test_case": -1.0
+      }
+    }
+  },
+  "files": {
+    "MissingItem.json": {
+      "name": "MissingItem.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MissingItem.json.",
+      "errors": {}
+    },
+    "MissingItem.json_duplicate_0": {
+      "name": "MissingItem.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MissingItem.json.",
+      "errors": {}
+    }
+  }
+}

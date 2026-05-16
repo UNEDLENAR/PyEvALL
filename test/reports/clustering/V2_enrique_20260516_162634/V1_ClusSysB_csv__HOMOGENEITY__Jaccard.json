@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "Jaccard": {
+      "name": "Jaccard",
+      "acronym": "JACC",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "HOMOGENEITY",
+            "average": 0.38636363636363635
+          }
+        ],
+        "average_per_test_case": 0.38636363636363635
+      }
+    }
+  },
+  "files": {
+    "pred_HOMOGENEITY.json": {
+      "name": "pred_HOMOGENEITY.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_HOMOGENEITY.json.",
+      "errors": {}
+    },
+    "gold_HOMOGENEITY.json": {
+      "name": "gold_HOMOGENEITY.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_HOMOGENEITY.json.",
+      "errors": {}
+    }
+  }
+}

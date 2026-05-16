@@ -1,0 +1,85 @@
+
+
+
+MissingItem	I5	A
+
+
+
+SomeItemMissing	I1	A
+SomeItemMissing	I2	A
+
+
+
+MissingCat	I1
+MissingCat	I2
+MissingCat	I3
+MissingCat	I4
+
+
+
+SomeMissingCat	I1	A
+SomeMissingCat	I2	A
+SomeMissingCat	I3
+SomeMissingCat	I4
+
+
+MissingGoldCat	I1	B
+MissingGoldCat	I2	A
+MissingGoldCat	I3	B
+MissingGoldCat	I4	B
+
+
+NonExtratems	I1	A
+NonExtratems	I2	A
+NonExtratems	I3	B
+NonExtratems	I4	B
+
+
+Extratems	I1	A
+Extratems	I2	A
+Extratems	I3	B
+Extratems	I4	B
+Extratems	I5	A
+Extratems	I6	A
+
+
+OneCat	I1	A
+OneCat	I2	A
+
+
+OneMissmatchCat	I1	B
+OneMissmatchCat	I2	B
+
+MissmatchSingleCat	I1	D
+MissmatchSingleCat	I2	A
+MissmatchSingleCat	I3	B
+MissmatchSingleCat	I4	C
+
+
+MajCat	I1	A
+MajCat	I2	A
+MajCat	I3	A
+MajCat	I4	A
+
+MinCat	I1	B
+MinCat	I2	B
+MinCat	I3	B
+MinCat	I4	B
+
+
+MulticlassGold	I1	A
+MulticlassGold	I2	A
+MulticlassGold	I3	B
+
+MulticlassSys	I1	A
+MulticlassSys	I1	B
+MulticlassSys	I2	A
+MulticlassSys	I3	B
+
+
+
+
+
+
+
+

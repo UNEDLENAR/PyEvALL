@@ -1,0 +1,188 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Accuracy.\\nTest case(s) name: HierarchyI.",
+          "status": "FAIL",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "HierarchyI",
+            "classes": {
+              "P": 1.0,
+              "S1": null,
+              "S2": 0.0,
+              "A": null
+            },
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Precision.\\nTest case(s) name: HierarchyI.",
+          "status": "WARNING",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "HierarchyI",
+            "classes": {
+              "P": 1.0,
+              "S1": 0.0,
+              "S2": 0.0,
+              "A": 0.0
+            },
+            "average": 0.25
+          }
+        ],
+        "average_per_test_case": 0.25
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Recall.\\nTest case(s) name: HierarchyI.",
+          "status": "WARNING",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "HierarchyI",
+            "classes": {
+              "P": 1.0,
+              "S1": 0,
+              "S2": 0,
+              "A": 0
+            },
+            "average": 0.25
+          }
+        ],
+        "average_per_test_case": 0.25
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: F-Measure.\\nTest case(s) name: HierarchyI.",
+          "status": "WARNING",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: System Precision.\\nTest case(s) name: HierarchyI.",
+          "status": "FAIL",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION": {
+          "name": "METRIC_PRECONDITION_NOT_VALID_FORMAT_FOR_CONTEXT_EVALUATION",
+          "description": " The selected metric cannot be evaluated as the formats of the gold and predictions are not valid for this evaluation context.\\nThe metric name is: Cohen's Kappa.\\nTest case(s) name: HierarchyI.",
+          "status": "FAIL",
+          "test_cases": [
+            "HierarchyI"
+          ]
+        }
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "HierarchyI",
+            "average": -2.481203125901445
+          }
+        ],
+        "average_per_test_case": -2.481203125901445
+      }
+    }
+  },
+  "files": {
+    "HierarchyI.json": {
+      "name": "HierarchyI.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: HierarchyI.json.",
+      "errors": {}
+    },
+    "HierarchyI.json_duplicate_0": {
+      "name": "HierarchyI.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: HierarchyI.json.",
+      "errors": {}
+    }
+  }
+}

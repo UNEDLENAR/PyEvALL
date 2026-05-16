@@ -1,0 +1,203 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Accuracy.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "classes": {
+              "P": 1.0,
+              "S1": 1.0,
+              "S2": 1.0,
+              "A": null
+            },
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Precision.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "classes": {
+              "P": 1.0,
+              "S1": 1.0,
+              "S2": 1.0,
+              "A": 0.0
+            },
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Recall.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "classes": {
+              "P": 1.0,
+              "S1": 1.0,
+              "S2": 1.0,
+              "A": 0
+            },
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: F-Measure.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: System Precision.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "average": 0.6923076923076923
+          }
+        ],
+        "average_per_test_case": 0.6923076923076923
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC": {
+          "name": "METRIC_PRECONDITION_HIERARCHY_NOT_VALID_FOR_METRIC",
+          "description": "The hierarchy is provided for the evaluation but this metric does not allow to use it. Hierarchy is ignored.\\nThe metric name is: Cohen's Kappa.\\nTest case(s) name: Hierarchy2.",
+          "status": "WARNING",
+          "test_cases": [
+            "Hierarchy2"
+          ]
+        }
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "Hierarchy2",
+            "average": 0.10375937481971098
+          }
+        ],
+        "average_per_test_case": 0.10375937481971098
+      }
+    }
+  },
+  "files": {
+    "Hierarchy2.json": {
+      "name": "Hierarchy2.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: Hierarchy2.json.",
+      "errors": {}
+    },
+    "Hierarchy2.json_duplicate_0": {
+      "name": "Hierarchy2.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: Hierarchy2.json.",
+      "errors": {}
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "InversePurity": {
+      "name": "Inverse Purity",
+      "acronym": "InPur",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "OVERLAPPING",
+            "average": 0.7142857142857142
+          }
+        ],
+        "average_per_test_case": 0.7142857142857142
+      }
+    }
+  },
+  "files": {
+    "pred_OVERLAPPING.json": {
+      "name": "pred_OVERLAPPING.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_OVERLAPPING.json.",
+      "errors": {}
+    },
+    "gold_OVERLAPPING.json": {
+      "name": "gold_OVERLAPPING.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_OVERLAPPING.json.",
+      "errors": {}
+    }
+  }
+}

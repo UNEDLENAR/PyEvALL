@@ -1,0 +1,137 @@
+{
+  "metrics": {
+    "Accuracy": {
+      "name": "Accuracy",
+      "acronym": "Acc",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "Precision": {
+      "name": "Precision",
+      "acronym": "Pr",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "classes": {
+              "A": 0.75,
+              "B": null
+            },
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "Recall": {
+      "name": "Recall",
+      "acronym": "Re",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "classes": {
+              "A": 1.0,
+              "B": 0.0
+            },
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    },
+    "FMeasure": {
+      "name": "F-Measure",
+      "acronym": "F1",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "classes": {
+              "A": 0.8571428571428572,
+              "B": 0
+            },
+            "average": 0.4285714285714286
+          }
+        ],
+        "average_per_test_case": 0.4285714285714286
+      }
+    },
+    "SystemPrecision": {
+      "name": "System Precision",
+      "acronym": "SP",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "average": 0.75
+          }
+        ],
+        "average_per_test_case": 0.75
+      }
+    },
+    "Kappa": {
+      "name": "Cohen's Kappa",
+      "acronym": "Kappa",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      }
+    },
+    "ICM": {
+      "name": "Information Contrast model",
+      "acronym": "ICM",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "average": -0.29248125036057804
+          }
+        ],
+        "average_per_test_case": -0.29248125036057804
+      }
+    }
+  },
+  "files": {
+    "MajCat.json": {
+      "name": "MajCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MajCat.json.",
+      "errors": {}
+    },
+    "MajCat.json_duplicate_0": {
+      "name": "MajCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MajCat.json.",
+      "errors": {}
+    }
+  }
+}

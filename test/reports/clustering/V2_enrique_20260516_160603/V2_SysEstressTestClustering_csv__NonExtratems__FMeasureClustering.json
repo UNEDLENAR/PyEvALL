@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "FMeasureClustering": {
+      "name": "F Measure",
+      "acronym": "F(P, R)",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "NonExtratems",
+            "average": 1.0
+          }
+        ],
+        "average_per_test_case": 1.0
+      }
+    }
+  },
+  "files": {
+    "pred_NonExtratems.json": {
+      "name": "pred_NonExtratems.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_NonExtratems.json.",
+      "errors": {}
+    },
+    "gold_NonExtratems.json": {
+      "name": "gold_NonExtratems.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_NonExtratems.json.",
+      "errors": {}
+    }
+  }
+}

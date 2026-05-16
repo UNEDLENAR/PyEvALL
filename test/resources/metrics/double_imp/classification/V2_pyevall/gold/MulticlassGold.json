@@ -1,0 +1,24 @@
+[
+  {
+    "test_case": "MulticlassGold",
+    "id": "I1",
+    "value": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "test_case": "MulticlassGold",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MulticlassGold",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  }
+]

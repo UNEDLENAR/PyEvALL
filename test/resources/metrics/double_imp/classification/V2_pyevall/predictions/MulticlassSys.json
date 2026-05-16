@@ -1,0 +1,24 @@
+[
+  {
+    "test_case": "MulticlassSys",
+    "id": "I1",
+    "value": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "test_case": "MulticlassSys",
+    "id": "I2",
+    "value": [
+      "A"
+    ]
+  },
+  {
+    "test_case": "MulticlassSys",
+    "id": "I3",
+    "value": [
+      "B"
+    ]
+  }
+]

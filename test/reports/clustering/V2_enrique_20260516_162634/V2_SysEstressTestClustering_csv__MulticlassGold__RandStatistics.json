@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "RandStatistics": {
+      "name": "Rand Statistics",
+      "acronym": "RandS",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_NO_ITEMS_REPEATED_FOR_THE_SAME_CLUSTER": {
+          "name": "METRIC_PRECONDITION_NO_ITEMS_REPEATED_FOR_THE_SAME_CLUSTER",
+          "description": "The selected metric cannot be evaluated because gold contains repeated items in different clusters. Predictions with this issue are reported as warning.\\nThe metric name is: Rand Statistics.\\nTest case(s) name: MulticlassGold.",
+          "status": "FAIL",
+          "test_cases": [
+            "MulticlassGold"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "pred_MulticlassGold.json": {
+      "name": "pred_MulticlassGold.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MulticlassGold.json.",
+      "errors": {}
+    },
+    "gold_MulticlassGold.json": {
+      "name": "gold_MulticlassGold.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MulticlassGold.json.",
+      "errors": {}
+    }
+  }
+}

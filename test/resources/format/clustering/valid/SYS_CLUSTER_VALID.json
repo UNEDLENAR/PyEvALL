@@ -1,0 +1,17 @@
+[
+  {
+    "test_case":"EXIST2023",
+    "id":"I1",
+    "value":["A"]
+  },
+  {
+    "test_case":"EXIST2023",
+    "id":"I2",
+    "value":["A", "B"]
+  },
+  {
+    "test_case":"EXIST2023",
+    "id":"I3",
+    "value":["C", "E"]
+  }
+]

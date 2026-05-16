@@ -1,0 +1,8 @@
+precisionatk	0.0
+rprecision	UNK
+mainreciprocalrank	UNK
+map	UNK
+dcg	UNK
+ndcg	UNK
+err	UNK
+rbp	UNK
