@@ -1,0 +1,25 @@
+{
+  "metrics": {},
+  "files": {
+    "MissingTest.json": {
+      "name": "MissingTest.json",
+      "status": "FAIL",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: MissingTest.json.",
+      "errors": {
+        "FORMAT_EMPTY_FILE_ERROR": {
+          "description": "Empty file.\\nFile name: MissingTest.json.\\nThe evaluation STOP.",
+          "exception": null,
+          "status": "STOP"
+        }
+      }
+    },
+    "MissingTest.json_duplicate_0": {
+      "name": "MissingTest.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: MissingTest.json.",
+      "errors": {}
+    }
+  }
+}

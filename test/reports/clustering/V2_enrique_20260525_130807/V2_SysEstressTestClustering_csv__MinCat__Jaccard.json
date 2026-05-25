@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "Jaccard": {
+      "name": "Jaccard",
+      "acronym": "JACC",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MinCat",
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    }
+  },
+  "files": {
+    "pred_MinCat.json": {
+      "name": "pred_MinCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MinCat.json.",
+      "errors": {}
+    },
+    "gold_MinCat.json": {
+      "name": "gold_MinCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MinCat.json.",
+      "errors": {}
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "FolkesAndMallows": {
+      "name": "Folkes and Mallows",
+      "acronym": "Folk",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_CLUSTERING_NO_POSITIVE_PAIRS": {
+          "name": "METRIC_PRECONDITION_CLUSTERING_NO_POSITIVE_PAIRS",
+          "description": "The selected metric cannot be evaluated because there are no positive clustering pairs in gold or predictions.\\nThe metric name is: Folkes and Mallows.\\nTest case(s) name: MissmatchSingleCat.",
+          "status": "FAIL",
+          "test_cases": [
+            "MissmatchSingleCat"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "pred_MissmatchSingleCat.json": {
+      "name": "pred_MissmatchSingleCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MissmatchSingleCat.json.",
+      "errors": {}
+    },
+    "gold_MissmatchSingleCat.json": {
+      "name": "gold_MissmatchSingleCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MissmatchSingleCat.json.",
+      "errors": {}
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "metrics": {
+    "PrecisionAtK": {
+      "name": "Precision at k",
+      "acronym": "P@k",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": 0.0
+          }
+        ],
+        "average_per_test_case": 0.0
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Precision at k.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "RPrecision": {
+      "name": "R Precision",
+      "acronym": "RPre",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: R Precision.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "MRR": {
+      "name": "Mean Reciprocal Rank",
+      "acronym": "MRR",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Mean Reciprocal Rank.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "MAP": {
+      "name": "Mean Average Precision",
+      "acronym": "MAP",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Mean Average Precision.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "DCG": {
+      "name": "Discounted Cumulative Gain",
+      "acronym": "DCG",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Discounted Cumulative Gain.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "nDCG": {
+      "name": "Normalized Discounted Cumulative Gain",
+      "acronym": "nDCG",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Normalized Discounted Cumulative Gain.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "ERR": {
+      "name": "Expected Reciprocal Rank",
+      "acronym": "ERR",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Expected Reciprocal Rank.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    },
+    "RBP": {
+      "name": "Rank Biased Precision",
+      "acronym": "RBP",
+      "description": "Coming soon!\\nThe evaluation WARNING.",
+      "status": "WARNING",
+      "results": {
+        "test_cases": [
+          {
+            "name": "GOLD6",
+            "average": null
+          }
+        ],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING": {
+          "name": "METRIC_PRECONDITION_DUPLICATED_VALUES_RANKING",
+          "description": "There are duplicated values in the attribute value. Evaluation cannot be accurate.\\nThe metric name is: Rank Biased Precision.\\nTest case(s) name: GOLD6.",
+          "status": "WARNING",
+          "test_cases": [
+            "GOLD6"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "SYS6.txt": {
+      "name": "SYS6.txt",
+      "status": "WARNING",
+      "gold": false,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: SYS6.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: SYS6.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    },
+    "GOLD6.txt": {
+      "name": "GOLD6.txt",
+      "status": "WARNING",
+      "gold": true,
+      "description": "The file contains errors or warnings, please review them.\\nFile name: GOLD6.txt.",
+      "errors": {
+        "FORMAT_TSV_FORMAT_IDENTIFIED_WARNING": {
+          "description": "PyEvALL has identified a tsv format and has converted it to json.\\nFile name: GOLD6.txt.\\nThe evaluation CONTINUE.",
+          "status": "CONTINUE"
+        }
+      }
+    }
+  }
+}

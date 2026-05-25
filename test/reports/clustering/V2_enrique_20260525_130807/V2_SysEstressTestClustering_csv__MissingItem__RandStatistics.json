@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "RandStatistics": {
+      "name": "Rand Statistics",
+      "acronym": "RandS",
+      "description": "Coming soon!\\nThe evaluation FAIL.",
+      "status": "FAIL",
+      "results": {
+        "test_cases": [],
+        "average_per_test_case": null
+      },
+      "preconditions": {
+        "METRIC_PRECONDITION_CLUSTERING_PREDICTION_MISSING_GOLD_ITEMS": {
+          "name": "METRIC_PRECONDITION_CLUSTERING_PREDICTION_MISSING_GOLD_ITEMS",
+          "description": "The selected metric cannot be evaluated because the system output is missing items that appear in the gold standard.\\nThe metric name is: Rand Statistics.\\nTest case(s) name: MissingItem.",
+          "status": "FAIL",
+          "test_cases": [
+            "MissingItem"
+          ]
+        }
+      }
+    }
+  },
+  "files": {
+    "pred_MissingItem.json": {
+      "name": "pred_MissingItem.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MissingItem.json.",
+      "errors": {}
+    },
+    "gold_MissingItem.json": {
+      "name": "gold_MissingItem.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MissingItem.json.",
+      "errors": {}
+    }
+  }
+}

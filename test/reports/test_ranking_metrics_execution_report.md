@@ -1,6 +1,6 @@
 # Pytest execution report: test_ranking_metrics.py
 
-- Generated: 2026-05-16T16:26:42
+- Generated: 2026-05-25T13:08:15
 - Total tests: 1
 - PASS: 1
 - FAIL: 0

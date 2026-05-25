@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "InversePurity": {
+      "name": "Inverse Purity",
+      "acronym": "InPur",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "SIZE_VS_QUANTITY",
+            "average": 0.6923076923076923
+          }
+        ],
+        "average_per_test_case": 0.6923076923076923
+      }
+    }
+  },
+  "files": {
+    "pred_SIZE_VS_QUANTITY.json": {
+      "name": "pred_SIZE_VS_QUANTITY.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_SIZE_VS_QUANTITY.json.",
+      "errors": {}
+    },
+    "gold_SIZE_VS_QUANTITY.json": {
+      "name": "gold_SIZE_VS_QUANTITY.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_SIZE_VS_QUANTITY.json.",
+      "errors": {}
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "InversePurity": {
+      "name": "Inverse Purity",
+      "acronym": "InPur",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "SomeItemMissing",
+            "average": 0.5
+          }
+        ],
+        "average_per_test_case": 0.5
+      }
+    }
+  },
+  "files": {
+    "pred_SomeItemMissing.json": {
+      "name": "pred_SomeItemMissing.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_SomeItemMissing.json.",
+      "errors": {}
+    },
+    "gold_SomeItemMissing.json": {
+      "name": "gold_SomeItemMissing.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_SomeItemMissing.json.",
+      "errors": {}
+    }
+  }
+}

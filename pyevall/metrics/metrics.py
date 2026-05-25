@@ -61,6 +61,9 @@ class PyEvALLMetric(object):
         if warning is not None and warning not in self.warnings:
             self.warnings.append(warning)
 
+    def log_evaluation_start(self, comparator, message):
+        self.logger.info("%s for testcase %s", message, comparator.get_testcase(), stacklevel=2)
+
 
     def get_numeric_param(self, params, param_name, default, warning, min_value=None, max_value=None, integer=False):
         if param_name not in params:
@@ -136,7 +139,7 @@ class Accuracy(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):  
         # Compute the ratio of correctly classified gold instances.
-        self.logger.info("Executing accuracy evaluation method")      
+        self.log_evaluation_start(comparator, "Executing accuracy evaluation method")      
         
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
@@ -178,7 +181,7 @@ class SystemPrecision(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute correct predictions over valid predicted instances.
-        self.logger.info("Executing System Precision evaluation method")
+        self.log_evaluation_start(comparator, "Executing System Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -226,7 +229,7 @@ class Kappa(PyEvALLMetric):
         
     def evaluate(self, comparator, **params):
         # Compute chance-corrected agreement from the confusion matrix.
-        self.logger.info("Executing kappa evaluation method")
+        self.log_evaluation_start(comparator, "Executing kappa evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -289,7 +292,7 @@ class Precision(PyEvALLMetric):
         
     def evaluate(self, comparator, **params):
         # Compute per-class precision and average over defined classes.
-        self.logger.info("Executing precision evaluation method")
+        self.log_evaluation_start(comparator, "Executing precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -349,7 +352,7 @@ class Recall(PyEvALLMetric):
         
     def evaluate(self, comparator, **params):
         # Compute per-class recall and macro-average it.
-        self.logger.info("Executing recall evaluation method")
+        self.log_evaluation_start(comparator, "Executing recall evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return
@@ -402,7 +405,7 @@ class FMeasure(PyEvALLMetric):
                 
     def evaluate(self, comparator, **params):
         # Compute weighted harmonic F-measure per class and average it.
-        self.logger.info("Executing fmeasure evaluation method")
+        self.log_evaluation_start(comparator, "Executing fmeasure evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return 
@@ -599,7 +602,7 @@ class ICM(PyEvALLMetric):
     ###################################################################### 
     def evaluate(self, comparator, **params):   
         # Compute average ICM over all gold instances.
-        self.logger.info("Executing ICM evaluation method")
+        self.log_evaluation_start(comparator, "Executing ICM evaluation method")
         if self.fire_preconditions(comparator):
             return
         
@@ -741,7 +744,7 @@ class ICMNorm(PyEvALLMetric):
     
     def evaluate(self, comparator, **params):   
         # Normalize ICM by comparing predictions against the gold self-score.
-        self.logger.info("Executing ICM Normalized evaluation method")
+        self.log_evaluation_start(comparator, "Executing ICM Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
@@ -948,7 +951,7 @@ class ICMSoft(PyEvALLMetric):
     ######################################################################    
     def evaluate(self, comparator, **params):   
         # Compute average soft ICM over all gold instances.
-        self.logger.info("Executing ICM Soft evaluation method")
+        self.log_evaluation_start(comparator, "Executing ICM Soft evaluation method")
         if self.fire_preconditions(comparator):
             return
           
@@ -1107,7 +1110,7 @@ class ICMSoftNorm(PyEvALLMetric):
    
     def evaluate(self, comparator, **params):   
         # Normalize soft ICM by comparing predictions against the gold self-score.
-        self.logger.info("Executing ICM-Soft Normalized evaluation method")
+        self.log_evaluation_start(comparator, "Executing ICM-Soft Normalized evaluation method")
         if self.fire_preconditions(comparator):
             return
         
@@ -1207,7 +1210,7 @@ class CrossEntropy(PyEvALLMetric):
     
     def evaluate(self, comparator, **params):
         # Compute average cross entropy over all gold instances.
-        self.logger.info("Executing Cross Entropy evaluation method")
+        self.log_evaluation_start(comparator, "Executing Cross Entropy evaluation method")
         if self.fire_preconditions(comparator):
             return
         pred_df = comparator.pred_df.copy()
@@ -1291,7 +1294,7 @@ class MAE(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute average MAE over expanded LeWiDi distributions.
-        self.logger.info("Executing MAE evaluation method")
+        self.log_evaluation_start(comparator, "Executing MAE evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1368,7 +1371,7 @@ class PrecisionAtK(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute relevant items retrieved in the first k predicted ranks.
-        self.logger.info("Executing Precision at K evaluation method")
+        self.log_evaluation_start(comparator, "Executing Precision at K evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1412,7 +1415,7 @@ class RPrecision(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute precision at R, where R is the number of relevant gold items.
-        self.logger.info("Executing R Precision evaluation method")
+        self.log_evaluation_start(comparator, "Executing R Precision evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1455,7 +1458,7 @@ class MRR(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute reciprocal rank of the first relevant predicted item.
-        self.logger.info("Executing Main Reciprocal Rank evaluation method")
+        self.log_evaluation_start(comparator, "Executing Main Reciprocal Rank evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1504,7 +1507,7 @@ class MAP(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute average precision over relevant predicted positions.
-        self.logger.info("Executing MAP evaluation method")
+        self.log_evaluation_start(comparator, "Executing MAP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1557,7 +1560,7 @@ class DCG(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute discounted gain over the predicted ranking.
-        self.logger.info("Executing DCG evaluation method")
+        self.log_evaluation_start(comparator, "Executing DCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1613,7 +1616,7 @@ class nDCG(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute DCG normalized by the ideal gold ranking DCG.
-        self.logger.info("Executing nDCG evaluation method")
+        self.log_evaluation_start(comparator, "Executing nDCG evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1683,7 +1686,7 @@ class ERR(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute expected reciprocal rank with graded relevance.
-        self.logger.info("Executing ERR evaluation method")
+        self.log_evaluation_start(comparator, "Executing ERR evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1756,7 +1759,7 @@ class RBP(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):   
         # Compute rank-biased precision over the predicted ranking.
-        self.logger.info("Executing RBP evaluation method")
+        self.log_evaluation_start(comparator, "Executing RBP evaluation method")
         #Check preconditions of the metric
         if self.fire_preconditions(comparator):
             return   
@@ -1820,7 +1823,7 @@ class Purity(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute weighted cluster purity over valid predicted clusters.
-        self.logger.info("Executing purity evaluation method")
+        self.log_evaluation_start(comparator, "Executing purity evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -1864,7 +1867,7 @@ class InversePurity(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute weighted inverse purity over gold classes.
-        self.logger.info("Executing inverse purity evaluation method")
+        self.log_evaluation_start(comparator, "Executing inverse purity evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -1907,7 +1910,7 @@ class FMeasurePurityInversePurity(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute the harmonic combination of purity and inverse purity.
-        self.logger.info("Executing fmeasure purity/inverse purity evaluation method")
+        self.log_evaluation_start(comparator, "Executing fmeasure purity/inverse purity evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -1972,7 +1975,7 @@ class FMeasureClustering(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute best matching cluster F-measure for each gold class.
-        self.logger.info("Executing fmeasure clustering evaluation method")
+        self.log_evaluation_start(comparator, "Executing fmeasure clustering evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2015,7 +2018,7 @@ class RandStatistics(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute Rand index from clustering pair agreements.
-        self.logger.info("Executing rand statistics evaluation method")
+        self.log_evaluation_start(comparator, "Executing rand statistics evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2066,7 +2069,7 @@ class Jaccard(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute Jaccard over positive clustering pairs.
-        self.logger.info("Executing jaccard evaluation method")
+        self.log_evaluation_start(comparator, "Executing jaccard evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2121,7 +2124,7 @@ class FolkesAndMallows(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute geometric mean of pairwise precision and recall.
-        self.logger.info("Executing folkes and mallows evaluation method")
+        self.log_evaluation_start(comparator, "Executing folkes and mallows evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2184,7 +2187,7 @@ class NMISG(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute normalized mutual information for non-overlapping clusters.
-        self.logger.info("Executing normalized mutual information SG evaluation method")
+        self.log_evaluation_start(comparator, "Executing normalized mutual information SG evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2260,7 +2263,7 @@ class ReliabilityBCubed(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute extended BCubed precision over predicted memberships.
-        self.logger.info("Executing reliability bcubed evaluation method")
+        self.log_evaluation_start(comparator, "Executing reliability bcubed evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2328,7 +2331,7 @@ class SensitivityBCubed(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute extended BCubed recall over gold memberships.
-        self.logger.info("Executing sensitivity bcubed evaluation method")
+        self.log_evaluation_start(comparator, "Executing sensitivity bcubed evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2382,7 +2385,7 @@ class Entropy(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute entropy of gold classes inside predicted clusters.
-        self.logger.info("Executing entropy evaluation method")
+        self.log_evaluation_start(comparator, "Executing entropy evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2445,7 +2448,7 @@ class ClassEntropy(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute entropy of predicted clusters inside each gold class.
-        self.logger.info("Executing class entropy evaluation method")
+        self.log_evaluation_start(comparator, "Executing class entropy evaluation method")
         if self.fire_preconditions(comparator):
             return
 
@@ -2507,7 +2510,7 @@ class VariationOfInformation(PyEvALLMetric):
 
     def evaluate(self, comparator, **params):
         # Compute variation of information between gold and predicted clusters.
-        self.logger.info("Executing variation of information evaluation method")
+        self.log_evaluation_start(comparator, "Executing variation of information evaluation method")
         if self.fire_preconditions(comparator):
             return
 

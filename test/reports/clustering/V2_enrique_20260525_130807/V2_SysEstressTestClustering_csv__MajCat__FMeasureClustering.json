@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "FMeasureClustering": {
+      "name": "F Measure",
+      "acronym": "F(P, R)",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "MajCat",
+            "average": 0.7428571428571428
+          }
+        ],
+        "average_per_test_case": 0.7428571428571428
+      }
+    }
+  },
+  "files": {
+    "pred_MajCat.json": {
+      "name": "pred_MajCat.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_MajCat.json.",
+      "errors": {}
+    },
+    "gold_MajCat.json": {
+      "name": "gold_MajCat.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_MajCat.json.",
+      "errors": {}
+    }
+  }
+}

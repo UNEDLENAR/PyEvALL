@@ -1,0 +1,35 @@
+{
+  "metrics": {
+    "ReliabilityBCubed": {
+      "name": "Reliability",
+      "acronym": "R",
+      "description": "Coming soon!",
+      "status": "OK",
+      "results": {
+        "test_cases": [
+          {
+            "name": "RAG_BAG",
+            "average": 0.4888888888888888
+          }
+        ],
+        "average_per_test_case": 0.4888888888888888
+      }
+    }
+  },
+  "files": {
+    "pred_RAG_BAG.json": {
+      "name": "pred_RAG_BAG.json",
+      "status": "OK",
+      "gold": false,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: pred_RAG_BAG.json.",
+      "errors": {}
+    },
+    "gold_RAG_BAG.json": {
+      "name": "gold_RAG_BAG.json",
+      "status": "OK",
+      "gold": true,
+      "description": "The file is correctly parser without errors or warnings.\\nFile name: gold_RAG_BAG.json.",
+      "errors": {}
+    }
+  }
+}
